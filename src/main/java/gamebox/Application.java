@@ -1,4 +1,4 @@
-package consolegame;
+package gamebox;
 
 public class Application {
 
