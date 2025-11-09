@@ -92,8 +92,8 @@ public class Tile {
      * @return 타일 값에 따른 배경색
      */
     public Color getBackgroundColor() {
-        // Todo : enum 생성
-        return null;
+        TileValue tileValue = TileValue.fromValue(this.number);
+        return tileValue.getBackground();
     }
 
     /**
@@ -101,8 +101,8 @@ public class Tile {
      * @return 타일 값에 따른 텍스트 색상
      */
     public Color getTextColor() {
-        // Todo : enum 생성
-        return null;
+        TileValue tileValue = TileValue.fromValue(this.number);
+        return tileValue.getTextColor();
     }
     
     /**
