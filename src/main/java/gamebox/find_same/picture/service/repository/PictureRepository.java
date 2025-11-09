@@ -10,7 +10,7 @@ public class PictureRepository {
     private final Map<Integer, Picture> pictureMap = new HashMap<>();
     private static PictureRepository pictureRepository;
 
-    public PictureRepository getInstance() {
+    public static PictureRepository getInstance() {
         if (pictureRepository == null) {
             pictureRepository = new PictureRepository();
         }
