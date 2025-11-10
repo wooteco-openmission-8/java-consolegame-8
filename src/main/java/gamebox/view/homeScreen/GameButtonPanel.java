@@ -15,7 +15,6 @@ public class GameButtonPanel extends JPanel{
         setLayout(null);
         setButtonSize();
         setButtonLocation();
-//        addListener();
         addComponents();
     }
 

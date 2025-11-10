@@ -105,17 +105,24 @@ startButton.addActionListener(new ActionListener() {
     - 같은 그림 찾기
   - [x] 버튼의 사이즈와 위치를 설정한다.
   - [x] 패널에 버튼을 추가한다.
+- `MainPanel`
+  - [x] 패널 레이아웃 설정 ➡ BorderLayout
+  - [x] 상단에 BackgroundPanel 추가
+  - [x] 중앙에 contentPanel 추가
+  - [x] 초기 화면으로 GameButtonPanel을 contentPanel에 추가
+  - [x] 버튼 클릭 시 contentPanel 교체 가능
 
 ### 📌 Listener
 
 - [x] 사용자가 원하는 게임을 누르면 해당 게임으로 이동한다.
-- [ ]
+- [x] 게임 화면에서 홈 화면으로 돌아가는 기능을 추가한다.
+    - [x] "홈" 버튼 추가
+    - [x] 버튼 클릭 시 contentPanel을 초기 상태로 복원
 
 
 - [ ] 각 게임의 보드를 그리드로 생성한다.
   - [ ] 2048: 4x4 그리드
   - [ ] 같은 그림 찾기: 4x4 / 6x6 / 8x8
-  - [ ] 테트리스: 10x20
 
 ### 📌 출력기
 

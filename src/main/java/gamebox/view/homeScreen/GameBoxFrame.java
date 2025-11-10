@@ -1,39 +1,22 @@
 package gamebox.view.homeScreen;
 
-import gamebox.controller.GameBoxListener;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 public class GameBoxFrame extends JFrame {
-    private final JPanel contentPanel = new JPanel();
-    private static final BackgroundPanel backGroundPanel = new BackgroundPanel();
-    private static final GameButtonPanel gameSelectButtonPanel = new GameButtonPanel();
+    private final MainPanel mainPanel = new MainPanel();
 
     public GameBoxFrame(){
         setInit();
-        addGameButtonListener();
-        addPanels();
+        add(mainPanel);
+        setVisible(true);
     }
 
     private void setInit(){
+        setTitle("GameBox");
         setSize(1000, 800);
         setResizable(false);
         setBackground(Color.white);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setVisible(true);
-    }
-
-    private void addGameButtonListener(){
-        gameSelectButtonPanel.addGameButtonListener(new GameBoxListener(contentPanel) {
-        });
-    }
-
-    private void addPanels(){
-        contentPanel.setLayout(new BorderLayout());
-        contentPanel.add(backGroundPanel, BorderLayout.NORTH);
-        contentPanel.add(gameSelectButtonPanel, BorderLayout.CENTER);
-        add(contentPanel);
     }
 }
