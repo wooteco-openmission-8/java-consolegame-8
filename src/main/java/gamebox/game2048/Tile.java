@@ -75,7 +75,17 @@ public class Tile {
         this.merged = true;
         return this.number;
     }
-    
+
+    /**
+     * 인수의 타일과 자신을 병합한 새로운 타일을 반환
+     *
+     * @return 병합된 값이 들어간 새로운 타일
+     */
+    public Tile merge(Tile other) {
+        int newNumber = this.number + other.number;
+        return new Tile(newNumber);//현재 타일 반환
+    }
+
     /**
      * 빈 칸에 새로운 값 생성
      * @param value 생성할 값 (2 또는 4)
