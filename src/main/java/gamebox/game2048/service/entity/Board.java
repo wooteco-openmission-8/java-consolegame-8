@@ -18,10 +18,10 @@ public class Board {
     }
 
     /**
-     * 보드 무작위 위치에 타일 생성
+     * 보드 무작위 위치에 2개의 타일 생성
      */
     private void init() {
-        randomSpawn((int) (Math.random() * CAPACITY) + 1);
+        randomSpawn(2);
     }
 
     /**
@@ -29,7 +29,9 @@ public class Board {
      * 타일을 생성할 갯수
      */
     public void randomSpawn(int n) {
-        for (int i = 0; i < n; i++) {
+        int spawnCount = 0;
+
+        while (spawnCount < n) {
             int x = (int) (Math.random() * board.length);
             int y = (int) (Math.random() * board[0].length);
 
@@ -37,8 +39,24 @@ public class Board {
                 Tile tile = get(x, y);
                 tile.spawn();
                 board[x][y] = tile;
+                spawnCount++;
+            }
+
+            if (spawnCount < n && isFull()){
+                break;
             }
         }
+    }
+
+    private boolean isFull(){
+        for (int row=0; row<board.length; row++){
+            for (int col=0; col<board[0].length; col++){
+                if (Objects.equals(get(row, col).getNumber(), 0)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**

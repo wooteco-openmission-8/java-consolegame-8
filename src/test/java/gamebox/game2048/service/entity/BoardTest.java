@@ -57,4 +57,22 @@ class BoardTest {
         }
         assertThat(empty).isEqualTo(0);
     }
+
+    @Test
+    @DisplayName("보드 생성 시 타일 2개 생성")
+    void initTwoTiles(){
+        int tileCount = 0;
+
+        Board board = new Board(4, 4);
+        for (int r=0; r<4; r++){
+            for (int c=0; c<4; c++){
+                Tile tile = board.get(r, c);
+                if (tile.getNumber() != 0) {
+                    tileCount++;
+                }
+            }
+        }
+
+        assertThat(tileCount).isEqualTo(2);
+    }
 }
