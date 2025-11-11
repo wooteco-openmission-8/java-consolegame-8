@@ -75,4 +75,29 @@ class BoardTest {
 
         assertThat(tileCount).isEqualTo(2);
     }
+
+    @Test
+    @DisplayName("upTile 테스트")
+    void testUpTile() {
+        Board board = new Board(4, 4);
+
+        int[][] initial = {
+                {0, 0, 0, 0},
+                {2, 0, 4, 0},
+                {2, 0, 0, 0},
+                {2, 0, 2, 0}
+        };
+        board.loadFrom(initial);
+
+        board.upTile();
+
+        int[][] expected = {
+                {4, 0, 4, 0},
+                {2, 0, 2, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0}
+        };
+
+        assertThat(board.snapshotNumbers()).isDeepEqualTo(expected);
+    }
 }

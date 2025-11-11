@@ -2,10 +2,11 @@ package gamebox.game2048.service.entity;
 
 import gamebox.game2048.Tile;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Board {
-    private static final int CAPACITY = 3;
     private final Tile[][] board;
 
     /**
@@ -48,6 +49,9 @@ public class Board {
         }
     }
 
+    /**
+     * 보드가 꽉 차있는지
+     */
     private boolean isFull(){
         for (int row=0; row<board.length; row++){
             for (int col=0; col<board[0].length; col++){
@@ -73,9 +77,100 @@ public class Board {
         return tile;
     }
 
+    /**
+     * 타일을 위로 올렸을 떄.
+     * 숫자를 먼저 머지한 후,
+     * 타일을 올릴 수 있을 때까지 반복.
+     */
     public void upTile() {
-        //y축을 아래로 내려가면서 현재 인덱스가 비어있으면 다음 y(n)을 위로 올림
-        //모두 밀착 후 투 포인터로 병합 가능한지 확인
+        mergeNumbersWhenUpTile();
+        while (moveTilesWhenUpTile()) {
+
+        }
+    }
+
+    /**
+     * 타일을 위로 올리는 함수
+     * @return 이동한 타일이 있는지
+     */
+    private boolean moveTilesWhenUpTile() {
+        boolean movedAny = false;
+
+        for (int r=1; r<board.length; r++) {
+            for (int c=0; c<board.length; c++) {
+                Tile targetTile = get(r-1, c);
+                Tile currentTile = get(r, c);
+                if (currentTile.moveTo(targetTile)) {
+                    movedAny = true;
+                }
+            }
+        }
+
+        return movedAny;
+    }
+
+    /**
+     * 위로 올렸을 때, 합칠 수 있는 숫자를 합침
+     */
+    private void mergeNumbersWhenUpTile() {
+        for (int c=0; c<board.length; c++) {
+            if (hasAtLeastTwoTilesInColumn(c)) {
+                List<Tile> mergableTiles = getMergableTiles(c);
+                Tile aboveTile = mergableTiles.get(0);
+                Tile bottomTile = mergableTiles.get(1);
+
+                if (hasSameNumber(aboveTile, bottomTile)) {
+                    aboveTile.mergeWith(bottomTile);
+                    bottomTile.delete();
+                }
+            }
+        }
+    }
+
+    /**
+     * @param c 열 번호
+     * 합쳐질 수 있는 위에 타일과 아래 타일을 설정.
+     */
+    private List<Tile> getMergableTiles(int c) {
+        List<Tile> mergableTiles = new ArrayList<>();
+        for (int r = 0; r < board.length; r++) {
+            Tile currentTile = get(r, c);
+            if (currentTile.getNumber() != 0) {
+                mergableTiles.add(currentTile);
+            }
+
+            if (mergableTiles.size() == 2) {
+                break;
+            }
+        }
+
+        return mergableTiles;
+    }
+
+    /**
+     * @param c 열 번호
+     * @return 0이 아닌 타일이 2개 이상
+     * 한 열에서 0이 아닌 타일이 2개 이상이어야 합치든 말든 할 수 있는 기본 조건이 됨.
+     */
+    private boolean hasAtLeastTwoTilesInColumn(int c) {
+        int tileCount = 0;
+        for (int r = 0; r < board.length; r++) {
+            Tile tile = get(r, c);
+            if (tile.getNumber() != 0){
+                tileCount++;
+            }
+        }
+
+        return tileCount >= 2;
+    }
+
+    /**
+     * @param aboveTile 위에 있는 타일
+     * @param bottomTile 아래 있는 타일
+     * @return 두 타일의 번호가 같음
+     */
+    private boolean hasSameNumber(Tile aboveTile, Tile bottomTile) {
+        return aboveTile.getNumber() == bottomTile.getNumber();
     }
 
     public void downTile() {
@@ -85,5 +180,31 @@ public class Board {
     }
 
     public void rightTile() {
+    }
+
+    /**
+     * 테스트용 함수
+     * @param numbers
+     */
+    public void loadFrom(int[][] numbers) {
+        for (int i = 0; i < numbers.length; i++) {
+            for (int j = 0; j < numbers[0].length; j++) {
+                board[i][j] = new Tile(numbers[i][j]); // 0도 실제 타일로 깔아둠(merge 로직 일관성)
+            }
+        }
+    }
+
+    /**
+     * 테스트용 함수
+     * @return
+     */
+    public int[][] snapshotNumbers() {
+        int[][] out = new int[board.length][board[0].length];
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                out[i][j] = get(i, j).getNumber();
+            }
+        }
+        return out;
     }
 }

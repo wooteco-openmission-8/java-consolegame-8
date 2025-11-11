@@ -102,6 +102,20 @@ public class Tile {
         return new Tile(newNumber);//현재 타일 반환
     }
 
+    public void mergeWith(Tile other) {
+        this.number = this.number + other.number;
+    }
+
+    public boolean moveTo(Tile other) {
+        if (other.number == 0 && this.number != 0) {
+            other.number = this.number;
+            this.number = 0;
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * 빈 칸에 새로운 값 생성
      *
@@ -120,6 +134,10 @@ public class Tile {
 
             this.merged = false;
         }
+    }
+
+    public void delete(){
+        this.number = 0;
     }
 
     /**
