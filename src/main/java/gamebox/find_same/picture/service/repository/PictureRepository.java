@@ -45,6 +45,14 @@ public class PictureRepository {
         pictureMap.remove(id);
     }
 
+    public Picture findById(int id) {
+        Picture picture = pictureMap.get(id);
+        if (picture == null) {
+            throw new IllegalArgumentException(ErrorType.NOT_EXIST_PICTURE.getMessage() + id);
+        }
+        return picture;
+    }
+
     public Collection<Picture> findAll(){
         return Collections.unmodifiableCollection(pictureMap.values());
     }
