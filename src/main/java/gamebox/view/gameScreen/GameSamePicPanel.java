@@ -32,7 +32,7 @@ public class GameSamePicPanel extends JPanel {
 
                 @Override
                 public String getPicturePath() {
-                    return "/images/find_same/pic" + (id + 8) + ".png"; //테스트용, 이후 동적으로 변경
+                    return "/images/find_same/pic" + (id + 1) + ".png"; //테스트용, 이후 동적으로 변경
                 }
             }).getButton();
 
