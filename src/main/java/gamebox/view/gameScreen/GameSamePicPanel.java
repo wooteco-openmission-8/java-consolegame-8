@@ -16,10 +16,10 @@ public class GameSamePicPanel extends JPanel {
         setLayout(new BorderLayout());
         add(new JLabel("Game 같은 그림 찾기", SwingConstants.CENTER), BorderLayout.CENTER);
 
-        JPanel gridPanel = Grid.createGridPanel(5, 5);
+        JPanel gridPanel = Grid.createGridPanel(2, 2);
 
         // 테스트용 버튼 추가
-        for (int i = 0; i < 5 * 5; i++) {
+        for (int i = 0; i < 2 * 2; i++) {
             int id = i;
             //picture는 백엔드에서 받아와야함 임시로 인터페이스 구현
             ImageButton btn = new ImageButton(new Picture() {
@@ -70,5 +70,10 @@ public class GameSamePicPanel extends JPanel {
         }
 
         add(gridPanel, BorderLayout.CENTER);
+    }
+
+    private static String pathFor(int id) {
+        int n = (id % 5) + 1;
+        return "images/find_same/pic" + n + ".png";
     }
 }

@@ -22,7 +22,7 @@ public class GameService {
             Picture pic = new Picture.Builder()
                     .id(i)
                     .title("Picture " + i)
-                    .path("images/pic" + i + ".png")
+                    .path("images/find_same/pic" + i + ".png")
                     .visible(false)
                     .checkCount(0)
                     .build();
