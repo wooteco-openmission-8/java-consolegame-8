@@ -1,7 +1,6 @@
 package gamebox.view.components;
 
-import gamebox.view.gameScreen.Picture;
-
+import gamebox.find_same.picture.service.entity.Picture;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -10,35 +9,27 @@ import java.net.URL;
 
 public class ImageButton extends JButton {
     private Picture picture;
+
     public ImageButton(Picture picture) {
         this.picture = picture;
+        initButton();
     }
 
     public ImageButton() {}
 
-    public ImageButton getButton() {
-        try {
-            return createImageButton(picture.getPicturePath(), picture.getId());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    private void initButton() {
+        if (picture != null) {
+            putClientProperty("imageId", picture.getId());
+            putClientProperty("imagePath", picture.getPath());
+            setBorderPainted(false);
+            setContentAreaFilled(true);
+            setFocusPainted(false);
+            setOpaque(true);
         }
     }
 
-    public ImageButton createImageButton(String imagePath, int imageId) throws IOException {
-        ImageIcon icon = getImageIcon(imagePath);
-
-        // 버튼 생성
-        ImageButton button = new ImageButton();
-
-        button.putClientProperty("imageId", imageId);
-        button.putClientProperty("imagePath", imagePath);
-        button.setBorderPainted(false);
-        button.setContentAreaFilled(false);
-        button.setFocusPainted(false);
-        button.setOpaque(false);
-        button.setIcon(icon);
-
-        return button;
+    public JButton getButton() {
+        return this;
     }
 
     public ImageIcon getImageIcon(String imagePath) throws IOException {

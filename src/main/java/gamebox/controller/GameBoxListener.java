@@ -1,6 +1,6 @@
 package gamebox.controller;
 
-import gamebox.view.gameScreen.Game2048Panel;
+import gamebox.view.gameScreen.game2048.Game2048Panel;
 import gamebox.view.gameScreen.GameSamePicPanel;
 import gamebox.view.homeScreen.BackgroundPanel;
 import gamebox.view.homeScreen.GameButtonPanel;

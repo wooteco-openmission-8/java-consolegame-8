@@ -1,6 +1,5 @@
 package gamebox.view.components;
 
-import gamebox.view.gameScreen.Picture;
 
 import javax.swing.*;
 import java.awt.*;
