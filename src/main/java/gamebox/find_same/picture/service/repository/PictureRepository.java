@@ -44,6 +44,14 @@ public class PictureRepository {
         pictureMap.remove(id);
     }
 
+    public Picture findById(int id) {
+        Picture picture = pictureMap.get(id);
+        if (picture == null) {
+            throw new IllegalArgumentException("[Error] Picture를 찾을 수 없습니다. ID: " + id);
+        }
+        return picture;
+    }
+
     public Collection<Picture> findAll(){
         return Collections.unmodifiableCollection(pictureMap.values());
     }
