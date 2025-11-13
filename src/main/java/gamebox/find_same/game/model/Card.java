@@ -17,7 +17,7 @@ public class Card {
         }
     }
 
-    public boolean samePicture(Card other){ return this.pictureId == other.pictureId; }
+    public boolean samePicture(Card other){ return Objects.equals(this.pictureId, other.pictureId); }
 
     public void setMatched(){ matched = true; }
 
