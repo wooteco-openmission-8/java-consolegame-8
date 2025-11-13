@@ -85,32 +85,32 @@ startButton.addActionListener(new ActionListener() {
 ### 📌 GameBoxFrame
 
 - [x] 프레임 기본 세팅을 한다.
-  - [x] 창 사이즈 (사이즈는 사용자가 조절할 수 없음)
-  - [x] 프레임 레이아웃 설정
-    - [x] GridLayout으로 패널 2개를 위아래로 배치한다.
+    - [x] 창 사이즈 (사이즈는 사용자가 조절할 수 없음)
+    - [x] 프레임 레이아웃 설정
+        - [x] GridLayout으로 패널 2개를 위아래로 배치한다.
 - [x] 프레임에 패널을 추가한다.
 
 ### 📌 Panel
 
 - `BackgroundPanel`
-  - [x] 텍스트를 추가한다.
-    - title: 게임 제목
-    - selectGame: "게임을 선택하세요."
-  - [x] 패널 레이아웃 설정 ➡ GridLayout
-  - [x] 텍스트들을 패널에 추가한다.
+    - [x] 텍스트를 추가한다.
+        - title: 게임 제목
+        - selectGame: "게임을 선택하세요."
+    - [x] 패널 레이아웃 설정 ➡ GridLayout
+    - [x] 텍스트들을 패널에 추가한다.
 - `GameButtonPanel`
-  - [x] 패널 레이아웃 설정 ➡ null (Component들의 사이즈와 위치를 직접 지정)
-  - [x] 버튼을 추가한다.
-    - 2048
-    - 같은 그림 찾기
-  - [x] 버튼의 사이즈와 위치를 설정한다.
-  - [x] 패널에 버튼을 추가한다.
+    - [x] 패널 레이아웃 설정 ➡ null (Component들의 사이즈와 위치를 직접 지정)
+    - [x] 버튼을 추가한다.
+        - 2048
+        - 같은 그림 찾기
+    - [x] 버튼의 사이즈와 위치를 설정한다.
+    - [x] 패널에 버튼을 추가한다.
 - `MainPanel`
-  - [x] 패널 레이아웃 설정 ➡ BorderLayout
-  - [x] 상단에 BackgroundPanel 추가
-  - [x] 중앙에 contentPanel 추가
-  - [x] 초기 화면으로 GameButtonPanel을 contentPanel에 추가
-  - [x] 버튼 클릭 시 contentPanel 교체 가능
+    - [x] 패널 레이아웃 설정 ➡ BorderLayout
+    - [x] 상단에 BackgroundPanel 추가
+    - [x] 중앙에 contentPanel 추가
+    - [x] 초기 화면으로 GameButtonPanel을 contentPanel에 추가
+    - [x] 버튼 클릭 시 contentPanel 교체 가능
 
 ### 📌 Listener
 
@@ -120,9 +120,9 @@ startButton.addActionListener(new ActionListener() {
     - [x] 버튼 클릭 시 contentPanel을 초기 상태로 복원
 
 
-- [ ] 각 게임의 보드를 그리드로 생성한다.
-  - [ ] 2048: 4x4 그리드
-  - [ ] 같은 그림 찾기: 4x4 / 6x6 / 8x8
+- [x] 각 게임의 보드를 그리드로 생성한다.
+    - [x] 2048: 4x4 그리드
+    - [x] 같은 그림 찾기: 4x4 / 6x6 / 8x8
 
 ### 📌 출력기
 
@@ -134,6 +134,6 @@ startButton.addActionListener(new ActionListener() {
 
 - [ ] 각 게임의 입력을 클릭 또는 키보드 이벤트로 처리한다.
 - [ ] 게임 종료 후 새 게임 시작 버튼을 통해 게임 초기화가 가능하다.
-  - [ ] 게임 보드와 점수를 초기 상태로 되돌린다.
+    - [ ] 게임 보드와 점수를 초기 상태로 되돌린다.
 
 
