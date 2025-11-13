@@ -2,11 +2,10 @@ package gamebox.game2048.service.entity;
 
 import gamebox.game2048.Tile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Board {
+    private static final int FILTER = 0;
     private final Tile[][] board;
 
     /**
@@ -237,10 +236,67 @@ public class Board {
     }
 
 
+    /**
+     * 타일을 왼쪽으로 이동 시켰을때 동작<br>
+     * 수행 후 무작위 위치에 타일 생성 필요
+     */
     public void leftTile() {
+        for (int i = FILTER; i < board.length; i++) {
+            board[i] = merge(filterTiles(i));
+        }
     }
 
+    /**
+     * @param index
+     * @return 0이 아닌 Tile만 필터
+     */
+    private List<Tile> filterTiles(int index) {
+        List<Tile> tiles = new ArrayList<>();
+        for (int i = 0; i < board.length; i++) {
+            Tile tile = get(index, i);
+            if (tile.getNumber() > FILTER) {
+                tiles.add(tile);
+            }
+        }
+
+        return tiles;
+    }
+
+    /**
+     * @param tiles 0이 포함되지 않은 리스트를 인수로 받음
+     * @return 병합이 가능한경우 병합한 배열을 반환
+     */
+    private Tile[] merge(List<Tile> tiles) {
+        int n = board.length;
+        Tile[] result = new Tile[n];
+
+        int write = 0;
+        for (int read = 0; read < tiles.size(); read++) {
+            Tile curentTile = tiles.get(read);
+            //현재 인덱스 + 1이 전체 리스트 길이보다 작고 다음 값이 현재 값이랑 같으면 병합
+            if (read + 1 < tiles.size() && curentTile.getNumber() == tiles.get(read + 1).getNumber()) {
+                result[write++] = curentTile.merge(tiles.get(read + 1));
+                read++;//{1,2,3,4}
+                continue;
+            }
+            result[write++] = curentTile;
+        }
+
+        return result;
+    }
+
+    /**
+     * 타일을 오른쪽으로 이동 시켰을 때 동작<br>
+     * 수행 후 무작위 위치에 타일 생성 필요
+     */
     public void rightTile() {
+        for (int i = 0; i < board.length; i++) {
+            List<Tile> tiles = filterTiles(i);
+            Collections.reverse(tiles);// i번째 행 타일 뒤집기 {2,2,0,2} -> {2,0,2,2}
+            Tile[] merge = merge(tiles);//병합
+            Collections.reverse(Arrays.asList(merge)); // 다시 뒤집기  {4,2,0,0} -> {0,0,2,4}
+            board[i] = merge;
+        }
     }
 
     /**

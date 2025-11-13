@@ -1,4 +1,4 @@
-package gamebox.view.gameScreen;
+package gamebox.view.gameScreen.game2048;
 
 import javax.swing.*;
 import java.awt.*;
