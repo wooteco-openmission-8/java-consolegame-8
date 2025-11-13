@@ -67,4 +67,8 @@ public class GameService {
         if (board == null) return 0;
         return board.getMoves();
     }
+
+    public Picture getPicture(int pictureId) {
+        return pictureRepository.findById(pictureId);
+    }
 }
