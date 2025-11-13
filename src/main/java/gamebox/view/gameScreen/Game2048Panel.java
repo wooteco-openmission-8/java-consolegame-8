@@ -1,19 +1,47 @@
 package gamebox.view.gameScreen;
 
+import gamebox.game2048.Tile;
+import gamebox.game2048.service.entity.Board;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class Game2048Panel extends JPanel {
+    private static final int GRID_GAP = 3;
     private static final int GRID_SIZE = 4;
+    TilePanel[][] tile = new TilePanel[GRID_SIZE][GRID_SIZE];
+
+    Board board = new Board(GRID_SIZE, GRID_SIZE);
 
     public Game2048Panel() {
         setupPanel();
+        setInitTiles();
     }
 
     private void setupPanel() {
-        setOpaque(true);
-        setLayout(new GridLayout(GRID_SIZE, GRID_SIZE, 5, 5)); // 5픽셀 간격
-        setBackground(Color.lightGray);
+        setLayout(new GridLayout(GRID_SIZE, GRID_SIZE, GRID_GAP, GRID_GAP)); // 5픽셀 간격
+        setBackground(Color.white);
+        setTiles();
+    }
+
+    private void setTiles() {
+        for (int r=0; r<GRID_SIZE; r++) {
+            for (int c=0; c<GRID_SIZE; c++) {
+                TilePanel currentTile = tile[r][c];
+                currentTile = new TilePanel();
+
+                Tile tile = board.get(r, c);
+                if (tile.getNumber() != 0) {
+                    currentTile.setTile(tile.getNumber());
+                }
+
+                add(currentTile);
+            }
+        }
+    }
+
+    private void setInitTiles() {
+
     }
 
     private void initBoard() {
