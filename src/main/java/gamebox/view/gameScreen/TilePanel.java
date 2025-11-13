@@ -8,6 +8,7 @@ public class TilePanel extends JPanel {
 
     private int number;
     private JLabel label;
+    private Color color;
 
     public TilePanel() {
         setLayout(new GridLayout(TILE_SIZE, TILE_SIZE));
@@ -19,5 +20,10 @@ public class TilePanel extends JPanel {
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setVerticalAlignment(SwingConstants.CENTER);
         add(label);
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+        setBackground(this.color);
     }
 }

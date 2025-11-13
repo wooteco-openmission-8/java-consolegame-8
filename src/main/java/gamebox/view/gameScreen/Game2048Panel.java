@@ -15,7 +15,6 @@ public class Game2048Panel extends JPanel {
 
     public Game2048Panel() {
         setupPanel();
-        setInitTiles();
     }
 
     private void setupPanel() {
@@ -30,18 +29,18 @@ public class Game2048Panel extends JPanel {
                 TilePanel currentTile = tile[r][c];
                 currentTile = new TilePanel();
 
+                /**
+                 * 2048 컨트롤러 구현 완료 후 수정
+                 */
                 Tile tile = board.get(r, c);
                 if (tile.getNumber() != 0) {
                     currentTile.setTile(tile.getNumber());
+                    currentTile.setColor(tile.getBackgroundColor());
                 }
 
                 add(currentTile);
             }
         }
-    }
-
-    private void setInitTiles() {
-
     }
 
     private void initBoard() {
