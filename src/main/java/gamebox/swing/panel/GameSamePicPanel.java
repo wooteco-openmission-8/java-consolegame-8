@@ -161,6 +161,16 @@ public class GameSamePicPanel extends JPanel {
             resetMismatchedCards();
         }
 
+        if (controller.isGameOver()) {
+            controller.removePictures(imageButtons.stream()
+                    .map(i -> i.getClientProperty("imageGroup").toString())
+                    .findAny().orElse("")
+            );
+            JOptionPane.showMessageDialog(this,
+                    "게임 클리어!\n이동 횟수: " + controller.getMoves());
+        }
+
+
         checkGameOver();
     }
 

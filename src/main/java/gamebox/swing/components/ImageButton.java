@@ -11,7 +11,6 @@ public class ImageButton extends JButton {
     private static final String IMAGE_PATH_KEY = "imagePath";
     private static final String IMAGE_ID_KEY = "imageId";
     private static final String IMAGE_GROUP_KEY = "imageGroup";
-
     private static final int IMAGE_SIZE = 128;
 
     private final Picture picture;
