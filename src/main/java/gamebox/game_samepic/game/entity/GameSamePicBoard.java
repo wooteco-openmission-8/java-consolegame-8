@@ -39,7 +39,9 @@ public class GameSamePicBoard {
     }
 
     public Optional<Boolean> flip(int index) {
-        if (waiting) return Optional.empty();
+        if (waiting) {
+            return Optional.empty();
+        }
 
         Card target = get(index);
         if (target == null) {
@@ -115,8 +117,12 @@ public class GameSamePicBoard {
     }
 
     public void resetUnmatched() {
-        if (firstOpen != null && !firstOpen.isMatched()) firstOpen.flip();
-        if (secondOpen != null && !secondOpen.isMatched()) secondOpen.flip();
+        if (firstOpen != null && !firstOpen.isMatched()) {
+            firstOpen.flip();
+        }
+        if (secondOpen != null && !secondOpen.isMatched()) {
+            secondOpen.flip();
+        }
         firstOpen = null;
         secondOpen = null;
         waiting = false;
