@@ -33,8 +33,6 @@ public class GameSamePicBoard {
         firstOpen = null;
         secondOpen = null;
         Collections.shuffle(cards);
-
-        moves = matches = 0;
     }
 
     public Optional<Boolean> flip(int index) {
