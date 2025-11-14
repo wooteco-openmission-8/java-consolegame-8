@@ -30,8 +30,6 @@ public class GameSamePicBoard {
             cards.add(new Card(pid));
             cards.add(new Card(pid));
         }
-        firstOpen = null;
-        secondOpen = null;
         Collections.shuffle(cards);
     }
 
