@@ -124,8 +124,7 @@ public class GameSamePicPanel extends JPanel {
         List<Card> cards = gameSamePicBoard.getCards();
 
         for (int i = 0; i < cards.size(); i++) {
-            final int index = i;
-            ImageButton btn = createImageButton(cards.get(i), index);
+            ImageButton btn = createImageButton(cards.get(i), i);
             imageButtons.add(btn);
             gridPanel.add(btn);
         }
