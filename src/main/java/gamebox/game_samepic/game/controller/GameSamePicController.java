@@ -17,7 +17,6 @@ public class GameSamePicController implements Game {
 
     @Override
     public void start() {
-        gameSamePicService.initializePictures();
     }
 
     @Override
@@ -26,6 +25,7 @@ public class GameSamePicController implements Game {
     }
 
     public void start(Difficulty difficulty) {
+        gameSamePicService.initializePictures();
         int rows = difficulty.getRows();
         int cols = difficulty.getCols();
         gameSamePicService.newGame(rows, cols);
