@@ -16,9 +16,6 @@ public class GameSamePicBoard {
     private Card firstOpen;
     private Card secondOpen;
     private final List<Card> cards = new ArrayList<>();
-    private Card firstOpen, secondOpen;
-    private int moves, matches;
-    private boolean waiting = false;
 
     public GameSamePicBoard(int rows, int cols) {
         if ((rows * cols) % 2 != 0) {
