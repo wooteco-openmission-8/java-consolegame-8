@@ -6,6 +6,7 @@ import gamebox.game_samepic.picture.service.repository.PictureRepository;
 import gamebox.util.HashMaker;
 import gamebox.util.exceptions.ErrorType;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -36,7 +37,7 @@ public class GameSamePicService {
     public void newGame(int rows, int cols) {
         int needed = (rows * cols) / 2;
         List<String> pictures = pictureRepository.findAllIds();
-
+        Collections.shuffle(pictures);
         if (pictures.size() < needed) {
             throw new IllegalStateException(ErrorType.NOT_ENOUGH_PICTURES.getMessage());
         }
