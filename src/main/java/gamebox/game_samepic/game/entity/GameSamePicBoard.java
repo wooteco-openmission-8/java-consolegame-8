@@ -128,4 +128,8 @@ public class GameSamePicBoard {
         secondOpen = null;
         waiting = false;
     }
+
+    public Card getCard(int index) {
+        return cards.get(index);
+    }
 }
