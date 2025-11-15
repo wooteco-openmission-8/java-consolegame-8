@@ -21,29 +21,37 @@ public class GameBoxListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton source = (JButton) e.getSource();
+        String selectedButton = source.getText();
 
-        if (source.getText().equals("2048")) {
-            System.out.println("2048 클릭");
-            contentPanel.removeAll();
-            contentPanel.add(new Game2048Panel());
-            backgroundPanel.showHomeButton(true); // 홈버튼 보이기, selectGame 숨김
+        if (selectedButton.equals("2048")) {
+            openGame2048();
         }
-
-        if (source.getText().equals("같은 그림 찾기")) {
-            System.out.println("같은 그림 찾기 클릭");
-            contentPanel.removeAll();
-            contentPanel.add(new GameSamePicPanel());
-            backgroundPanel.showHomeButton(true);
+        if (selectedButton.equals("같은 그림 찾기")) {
+            openGameSamePic();
         }
-
-        if (source.getText().equals("홈버튼")) {
-            System.out.println("홈버튼 클릭");
-            contentPanel.removeAll();
-            contentPanel.add(new GameButtonPanel());
-            backgroundPanel.showHomeButton(false);
+        if (selectedButton.equals("홈버튼")) {
+            goBackToHome();
         }
 
         contentPanel.revalidate();
         contentPanel.repaint();
+    }
+
+    private void openGame2048() {
+        contentPanel.removeAll();
+        contentPanel.add(new Game2048Panel());
+        backgroundPanel.showHomeButton(true); // 홈버튼 보이기, selectGame 숨김
+    }
+
+    private void openGameSamePic() {
+        contentPanel.removeAll();
+        contentPanel.add(new GameSamePicPanel());
+        backgroundPanel.showHomeButton(true);
+    }
+
+    private void goBackToHome() {
+        contentPanel.removeAll();
+        contentPanel.add(new GameButtonPanel());
+        backgroundPanel.showHomeButton(false);
     }
 }
