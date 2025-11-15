@@ -11,6 +11,7 @@ import gamebox.game_samepic.game.entity.Difficulty;
 import gamebox.swing.components.Grid;
 import gamebox.swing.components.ImageButton;
 import gamebox.swing.listener.GameListener;
+import gamebox.swing.util.SwingUtils;
 
 import java.util.Optional;
 import javax.swing.*;
@@ -63,8 +64,7 @@ public class GameSamePicPanel extends JPanel {
 
         containerPanel.removeAll();
         containerPanel.add(gamePanel, "GAME");
-        containerPanel.revalidate();
-        containerPanel.repaint();
+        SwingUtils.refresh(containerPanel);
     }
 
     private void handleCardClick(int index) {

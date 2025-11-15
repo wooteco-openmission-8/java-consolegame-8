@@ -1,5 +1,7 @@
 package gamebox.swing.panel;
 
+import gamebox.swing.util.SwingUtils;
+
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.*;
@@ -37,7 +39,6 @@ public class BackgroundPanel extends JPanel {
     public void showHomeButton(boolean show) {
         homeButton.setVisible(show);
         selectGame.setVisible(!show);
-        revalidate();
-        repaint();
+        SwingUtils.refresh(this);
     }
 }

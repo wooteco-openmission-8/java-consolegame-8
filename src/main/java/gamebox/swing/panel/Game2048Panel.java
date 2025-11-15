@@ -5,6 +5,7 @@ import gamebox.game_2048.entity.Tile;
 import gamebox.game_2048.entity.GameStatus;
 import gamebox.game_samepic.game.controller.GameSamePicController;
 import gamebox.swing.components.TilePanel;
+import gamebox.swing.util.SwingUtils;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -54,8 +55,7 @@ public class Game2048Panel extends JPanel {
             }
         }
 
-        revalidate();
-        repaint();
+        SwingUtils.refresh(this);
     }
 
     public void updateBoard() {
