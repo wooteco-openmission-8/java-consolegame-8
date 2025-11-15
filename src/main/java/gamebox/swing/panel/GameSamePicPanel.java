@@ -37,7 +37,6 @@ public class GameSamePicPanel extends JPanel {
 
     private final GameSamePicController controller;
     private final JPanel topPanel = new JPanel(new BorderLayout());
-    private final JPanel gamePanel = new JPanel(new BorderLayout());
     private final JPanel containerPanel;
     private final List<ImageButton> imageButtons = new ArrayList<>();
     private final CardLayout cardLayout = new CardLayout();
@@ -69,10 +68,11 @@ public class GameSamePicPanel extends JPanel {
     }
 
     private void buildGameScreen() {
+        JPanel gamePanel = new JPanel(new BorderLayout());
         imageButtons.clear();
 
-        setTopPanel();
-        drawBoard();
+        setTopPanel(gamePanel);
+        drawBoard(gamePanel);
 
         containerPanel.removeAll();
         containerPanel.add(gamePanel, CARD_GAME);
@@ -170,7 +170,7 @@ public class GameSamePicPanel extends JPanel {
         topPanel.add(backButton, BorderLayout.WEST);
     }
 
-    private void setTopPanel() {
+    private void setTopPanel(JPanel gamePanel) {
         setGameName(topPanel);
         setBackButton(topPanel);
         gamePanel.add(topPanel, BorderLayout.NORTH);
@@ -181,7 +181,7 @@ public class GameSamePicPanel extends JPanel {
         topPanel.add(titleLabel, BorderLayout.CENTER);
     }
 
-    private void drawBoard() {
+    private void drawBoard(JPanel gamePanel) {
         GameSamePicBoard gameSamePicBoard = controller.getBoard();
         JPanel gridPanel = Grid.createGridPanel(gameSamePicBoard.getRows(), gameSamePicBoard.getCols());
 
