@@ -1,6 +1,7 @@
 package gamebox.swing.panel;
 
 import gamebox.swing.listener.AppListener;
+import gamebox.swing.util.SwingUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,7 +36,6 @@ public class MainPanel extends JPanel {
     public void setContent(JPanel newContent) {
         contentPanel.removeAll();
         contentPanel.add(newContent, BorderLayout.CENTER);
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        SwingUtils.refresh(contentPanel);
     }
 }
