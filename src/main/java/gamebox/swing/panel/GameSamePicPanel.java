@@ -124,8 +124,7 @@ public class GameSamePicPanel extends JPanel {
         List<Card> cards = gameSamePicBoard.getCards();
 
         for (int i = 0; i < cards.size(); i++) {
-            final int index = i;
-            ImageButton btn = createImageButton(cards.get(i), index);
+            ImageButton btn = createImageButton(cards.get(i), i);
             imageButtons.add(btn);
             gridPanel.add(btn);
         }
@@ -160,6 +159,16 @@ public class GameSamePicPanel extends JPanel {
         if (!isMatched) {
             resetMismatchedCards();
         }
+
+        if (controller.isGameOver()) {
+            controller.removePictures(imageButtons.stream()
+                    .map(i -> i.getClientProperty("imageGroup").toString())
+                    .findAny().orElse("")
+            );
+            JOptionPane.showMessageDialog(this,
+                    "게임 클리어!\n이동 횟수: " + controller.getMoves());
+        }
+
 
         checkGameOver();
     }

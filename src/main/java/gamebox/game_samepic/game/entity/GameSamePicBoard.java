@@ -8,11 +8,14 @@ import java.util.List;
 import java.util.Optional;
 
 public class GameSamePicBoard {
-    private final int rows, cols;
-    private final List<Card> cards = new ArrayList<>();
-    private Card firstOpen, secondOpen;
-    private int moves, matches;
+    private final int rows;
+    private final int cols;
+    private int moves;
+    private int matches;
     private boolean waiting = false;
+    private Card firstOpen;
+    private Card secondOpen;
+    private final List<Card> cards = new ArrayList<>();
 
     public GameSamePicBoard(int rows, int cols) {
         if ((rows * cols) % 2 != 0) {
@@ -28,12 +31,12 @@ public class GameSamePicBoard {
             cards.add(new Card(pid));
         }
         Collections.shuffle(cards);
-        firstOpen = secondOpen = null;
-        moves = matches = 0;
     }
 
     public Optional<Boolean> flip(int index) {
-        if (waiting) return Optional.empty();
+        if (waiting) {
+            return Optional.empty();
+        }
 
         Card target = get(index);
         if (target == null) {
@@ -88,6 +91,12 @@ public class GameSamePicBoard {
         return cards.get(index);
     }
 
+    /**
+     * 게임 종료 조건 <br>
+     * 카드는 사진 * 2 개만큼 존재 맞춘 갯수 * 2가 카드 사이즈와 같다면 모든 사진을 맞춤
+     *
+     * @return - 게임 종료 여부 boolean
+     */
     public boolean gameOver() {
         return matches * 2 == cards.size();
     }
@@ -109,8 +118,12 @@ public class GameSamePicBoard {
     }
 
     public void resetUnmatched() {
-        if (firstOpen != null && !firstOpen.isMatched()) firstOpen.flip();
-        if (secondOpen != null && !secondOpen.isMatched()) secondOpen.flip();
+        if (firstOpen != null && !firstOpen.isMatched()) {
+            firstOpen.flip();
+        }
+        if (secondOpen != null && !secondOpen.isMatched()) {
+            secondOpen.flip();
+        }
         firstOpen = null;
         secondOpen = null;
         waiting = false;
