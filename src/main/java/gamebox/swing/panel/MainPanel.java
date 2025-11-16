@@ -1,15 +1,20 @@
 package gamebox.swing.panel;
 
-import gamebox.swing.listener.GameBoxListener;
+import gamebox.swing.listener.AppListener;
+import gamebox.swing.swing_util.SwingUtils;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class MainPanel extends JPanel {
-    private final JPanel contentPanel = new JPanel(new BorderLayout());
     private final BackgroundPanel backgroundPanel = new BackgroundPanel();
+    private final JPanel contentPanel = new JPanel(new BorderLayout());
     private final GameButtonPanel gameButtonPanel = new GameButtonPanel();
 
+    /**
+     * MainPanel(BorderLayout) -> backgroundPanel(NORTH) + contentPanel(CENTER)
+     * contentPanel(BorderLayout) -> GameButtonPanel(CENTER)
+     */
     public MainPanel() {
         setLayout(new BorderLayout());
         addPanels();
@@ -27,7 +32,7 @@ public class MainPanel extends JPanel {
     }
 
     private void addListeners() {
-        GameBoxListener listener = new GameBoxListener(contentPanel,backgroundPanel);
+        AppListener listener = new AppListener(contentPanel,backgroundPanel);
         gameButtonPanel.addGameButtonListener(listener);
         backgroundPanel.addHomeButtonListener(listener);
     }
@@ -35,7 +40,6 @@ public class MainPanel extends JPanel {
     public void setContent(JPanel newContent) {
         contentPanel.removeAll();
         contentPanel.add(newContent, BorderLayout.CENTER);
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        SwingUtils.refresh(contentPanel);
     }
 }

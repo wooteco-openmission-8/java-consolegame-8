@@ -10,6 +10,8 @@ import gamebox.swing.components.DifficultySelectPanel;
 import gamebox.game_samepic.game.entity.Difficulty;
 import gamebox.swing.components.Grid;
 import gamebox.swing.components.ImageButton;
+import gamebox.swing.listener.GameListener;
+import gamebox.swing.swing_util.SwingUtils;
 
 import java.util.Optional;
 import javax.swing.*;
@@ -19,22 +21,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameSamePicPanel extends JPanel {
-    private final List<ImageButton> imageButtons = new ArrayList<>();
-    private final GameSamePicController controller;
-    private final CardLayout cardLayout;
-    private final JPanel containerPanel;
+    private static final String GAME_SELECT = "SELECT";
+    private static final String CARD_GAME = "GAME";
+    private static final String GAME_SAME_PIC_TITLE = "Game 같은 그림 찾기";
+    private static final String BACK_BUTTON_NAME = "뒤로가기";
+    private static final String GO_BACK_TO_SELECT_DIFFICULTY = "난이도 선택 화면으로 돌아가시겠습니까?\n현재 게임이 초기화됩니다.";
+    private static final String YES = "확인";
+    private static final String HIDDEN_CARD_TEXT = "?";
+    private static final String IMAGE_PATH_KEY = "imagePath";
+    private static final String VISIBLE_CARD_TEXT = "";
+    private static final String GAME_CLEAR_MESSAGE = "게임 클리어!\n이동 횟수: ";
+    private static final int IMAGE_BUTTON_SIZE = 128;
+    private static final int FLIP_BACK_DELAY_MS = 1000;
 
+    private final GameSamePicController controller;
+    private final JPanel containerPanel;
+    private final CardLayout cardLayout;
+    private final JPanel topPanel = new JPanel(new BorderLayout());
+    private final List<ImageButton> imageButtons = new ArrayList<>();
+
+    /**
+     * 같은 그림 찾기 -> 난이도 선택(selectPanel) -> 게임 시작(gamePanel)
+     *
+     * GameSamePicPanel(BorderLayout) -> containerPanel(CENTER)
+     * containerPanel(CardLayout) -> selectPanel
+     *                            -> gamePanel
+     * gamePanel(BorderLayout) -> topPanel(NORTH) + gridPanel(CENTER)
+     */
     public GameSamePicPanel() {
         PictureRepository repo = PictureRepository.getInstance();
         GameSamePicService service = new GameSamePicService(repo);
         this.controller = new GameSamePicController(service);
-
         controller.start();
+
+        setLayout(new BorderLayout());
 
         cardLayout = new CardLayout();
         containerPanel = new JPanel(cardLayout);
-
-        setLayout(new BorderLayout());
         add(containerPanel, BorderLayout.CENTER);
 
         showDifficultySelect();
@@ -42,58 +65,70 @@ public class GameSamePicPanel extends JPanel {
 
     private void showDifficultySelect() {
         DifficultySelectPanel selectPanel = new DifficultySelectPanel(this::startGame);
-        containerPanel.add(selectPanel, "SELECT");
-        cardLayout.show(containerPanel, "SELECT");
+        containerPanel.add(selectPanel, GAME_SELECT);
+        cardLayout.show(containerPanel, GAME_SELECT);
     }
 
     private void startGame(Difficulty difficulty) {
         controller.start(difficulty);
-        initializeGameUI();
-        cardLayout.show(containerPanel, "GAME");
+        buildGameScreen();
+        cardLayout.show(containerPanel, CARD_GAME);
     }
 
-    private void initializeGameUI() {
+    private void buildGameScreen() {
         JPanel gamePanel = new JPanel(new BorderLayout());
         imageButtons.clear();
 
-        JPanel topPanel = new JPanel(new BorderLayout());
+        setTopPanel(gamePanel);
+        drawBoard(gamePanel);
 
-        JButton backButton = new JButton("뒤로 가기");
-        backButton.addActionListener(e -> {
-            int choice = JOptionPane.showConfirmDialog(
-                    this,
-                    "난이도 선택 화면으로 돌아가시겠습니까?\n현재 게임이 초기화됩니다.",
-                    "확인",
-                    JOptionPane.YES_NO_OPTION
-            );
-            if (choice == JOptionPane.YES_OPTION) {
-                showDifficultySelect();
-            }
-        });
-        topPanel.add(backButton, BorderLayout.WEST);
+        containerPanel.removeAll();
+        containerPanel.add(gamePanel, CARD_GAME);
+        SwingUtils.refresh(containerPanel);
+    }
 
-        JLabel titleLabel = new JLabel("Game 같은 그림 찾기", SwingConstants.CENTER);
-        topPanel.add(titleLabel, BorderLayout.CENTER);
-
+    private void setTopPanel(JPanel gamePanel) {
+        setGameName(topPanel);
+        setBackButton(topPanel);
         gamePanel.add(topPanel, BorderLayout.NORTH);
+    }
 
+    private void setGameName(JPanel topPanel) {
+        JLabel titleLabel = new JLabel(GAME_SAME_PIC_TITLE, SwingConstants.CENTER);
+        topPanel.add(titleLabel, BorderLayout.CENTER);
+    }
+
+    private void setBackButton(JPanel topPanel) {
+        JButton backButton = new JButton(BACK_BUTTON_NAME);
+        backButton.addActionListener(
+                new GameListener(
+                        this,
+                        GO_BACK_TO_SELECT_DIFFICULTY,
+                        YES,
+                        this::showDifficultySelect
+                )
+        );
+        topPanel.add(backButton, BorderLayout.WEST);
+    }
+
+    private void drawBoard(JPanel gamePanel) {
         GameSamePicBoard gameSamePicBoard = controller.getBoard();
         JPanel gridPanel = Grid.createGridPanel(gameSamePicBoard.getRows(), gameSamePicBoard.getCols());
 
+        createPictureButtons(gameSamePicBoard, gridPanel);
+
+        gamePanel.add(gridPanel, BorderLayout.CENTER);
+    }
+
+    private void createPictureButtons(GameSamePicBoard gameSamePicBoard, JPanel gridPanel) {
         List<Card> cards = gameSamePicBoard.getCards();
+
         for (int i = 0; i < cards.size(); i++) {
             final int index = i;
             ImageButton btn = createImageButton(cards.get(i), index);
             imageButtons.add(btn);
             gridPanel.add(btn);
         }
-
-        gamePanel.add(gridPanel, BorderLayout.CENTER);
-
-        containerPanel.removeAll();
-        containerPanel.add(gamePanel, "GAME");
-        containerPanel.revalidate();
-        containerPanel.repaint();
     }
 
     private ImageButton createImageButton(Card card, int index) {
@@ -101,8 +136,8 @@ public class GameSamePicPanel extends JPanel {
         Picture picture = controller.getPicture(pictureId);
         ImageButton btn = new ImageButton(picture);
 
-        btn.setPreferredSize(new Dimension(128, 128));
-        btn.setText("?");
+        btn.setPreferredSize(new Dimension(IMAGE_BUTTON_SIZE, IMAGE_BUTTON_SIZE));
+        btn.setText(HIDDEN_CARD_TEXT);
         btn.setBackground(Color.LIGHT_GRAY);
         btn.setIcon(null);
 
@@ -122,24 +157,24 @@ public class GameSamePicPanel extends JPanel {
         updateCard(index);
 
         boolean isMatched = result.get();
-
         if (!isMatched) {
-            List<Integer> flippedIndices = findFlippedCardIndices();
-
-            Timer timer = new Timer(1000, ev -> {
-                controller.getBoard().resetUnmatched();
-                for (int i : flippedIndices) {
-                    updateCard(i);
-                }
-            });
-            timer.setRepeats(false);
-            timer.start();
+            resetMismatchedCards();
         }
 
-        if (controller.isGameOver()) {
-            JOptionPane.showMessageDialog(this,
-                    "게임 클리어!\n이동 횟수: " + controller.getMoves());
-        }
+        checkGameOver();
+    }
+
+    private void resetMismatchedCards() {
+        List<Integer> flippedIndices = findFlippedCardIndices();
+
+        Timer timer = new Timer(FLIP_BACK_DELAY_MS, ev -> {
+            controller.getBoard().resetUnmatched();
+            for (int i : flippedIndices) {
+                updateCard(i);
+            }
+        });
+        timer.setRepeats(false);
+        timer.start();
     }
 
     private List<Integer> findFlippedCardIndices() {
@@ -157,11 +192,11 @@ public class GameSamePicPanel extends JPanel {
     }
 
     private void updateCard(int index) {
-        Card card = controller.getBoard().getCards().get(index);
+        Card card = controller.getBoard().getCard(index);
         ImageButton btn = imageButtons.get(index);
 
         if (card.isFaceUp() || card.isMatched()) {
-            showCardFront(btn, card, index);
+            showCardFront(btn);
         } else {
             showCardBack(btn, index);
         }
@@ -172,11 +207,11 @@ public class GameSamePicPanel extends JPanel {
         }
     }
 
-    private void showCardFront(ImageButton btn, Card card, int index) {
-        String imagePath = (String) btn.getClientProperty("imagePath");
+    private void showCardFront(ImageButton btn) {
+        String imagePath = (String) btn.getClientProperty(IMAGE_PATH_KEY);
         try {
             btn.setIcon(btn.getImageIcon(imagePath));
-            btn.setText("");
+            btn.setText(VISIBLE_CARD_TEXT);
             btn.setBackground(Color.WHITE);
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -185,7 +220,15 @@ public class GameSamePicPanel extends JPanel {
 
     private void showCardBack(ImageButton btn, int index) {
         btn.setIcon(null);
-        btn.setText("?");
+        btn.setText(HIDDEN_CARD_TEXT);
         btn.setBackground(Color.LIGHT_GRAY);
+    }
+
+    private void checkGameOver() {
+        if (controller.isGameOver()) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    GAME_CLEAR_MESSAGE + controller.getMoves());
+        }
     }
 }
