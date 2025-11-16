@@ -13,7 +13,6 @@ public class DifficultySelectPanel extends JPanel {
     private static final String EASY_BUTTON_TITLE = "쉬움 (4x4)";
     private static final String MEDIUM_BUTTON_TITLE = "보통 (6x6)";
     private static final String HARD_BUTTON_TITLE = "어려움 (8x8)";
-
     private static final int TITLE_FONT_SIZE = 24;
     private static final int ROW_COUNT = 3;
     private static final int COL_COUNT = 1;

@@ -14,14 +14,12 @@ public class ImageButton extends JButton {
 
     private static final int IMAGE_SIZE = 128;
 
-    private Picture picture;
+    private final Picture picture;
 
     public ImageButton(Picture picture) {
         this.picture = picture;
         initButton();
     }
-
-    public ImageButton() {}
 
     private void initButton() {
         if (picture != null) {
@@ -33,10 +31,6 @@ public class ImageButton extends JButton {
             setFocusPainted(false);
             setOpaque(true);
         }
-    }
-
-    public JButton getButton() {
-        return this;
     }
 
     public ImageIcon getImageIcon(String imagePath) throws IOException {

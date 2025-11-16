@@ -13,20 +13,18 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class Game2048Panel extends JPanel {
-    private static final String WIN_MESSAGE = "You WIN!";
-    private static final String GAME_OVER_MESSAGE = "You WIN!";
     private static final String RESET_BUTTON_NAME = "Reset";
     private static final String RESET_MESSAGE = "게임을 초기화하시겠습니까?";
     private static final String YES = "확인";
-
-    private static final int GRID_GAP = 10;
+    private static final String WIN_MESSAGE = "You WIN!";
+    private static final String GAME_OVER_MESSAGE = "You WIN!";
     private static final int GRID_SIZE = 4;
+    private static final int GRID_GAP = 10;
     private static final int PADDING_SIZE = 15;
 
     private final JPanel resetPanel = new JPanel();
     private final JPanel gamePanel = new JPanel();
     private final JButton resetButton = new JButton(RESET_BUTTON_NAME);
-
     private TilePanel[][] tilePanels;
     private final Game2048Controller controller;
 
@@ -44,43 +42,6 @@ public class Game2048Panel extends JPanel {
 
         controller.start();  // Service 초기화
         updateBoard();
-    }
-
-    private void drawTiles() {
-        gamePanel.removeAll();
-        tilePanels = new TilePanel[GRID_SIZE][GRID_SIZE];
-
-        createTile();
-
-        SwingUtils.refresh(this);
-    }
-
-    private void createTile() {
-        for (int r = 0; r < GRID_SIZE; r++) {
-            for (int c = 0; c < GRID_SIZE; c++) {
-                TilePanel tilePanel = new TilePanel();
-                Tile t = controller.getTile(r, c);
-
-                tilePanel.setTile(t.getNumber(), t.getTextColor(), t.getBackgroundColor());
-
-                tilePanels[r][c] = tilePanel;
-                gamePanel.add(tilePanel);
-            }
-        }
-    }
-
-    private void updateBoard() {
-        drawTiles();
-        checkGameStatus();
-    }
-
-    private void checkGameStatus() {
-        GameStatus status = controller.getGameStatus();
-        if (status == GameStatus.WIN) {
-            JOptionPane.showMessageDialog(this, WIN_MESSAGE);
-        } else if (status == GameStatus.GAME_OVER) {
-            JOptionPane.showMessageDialog(this, GAME_OVER_MESSAGE);
-        }
     }
 
     private void setResetPanel() {
@@ -123,5 +84,42 @@ public class Game2048Panel extends JPanel {
                 controller,
                 this::updateBoard
         ));
+    }
+
+    private void updateBoard() {
+        drawTiles();
+        checkGameStatus();
+    }
+
+    private void drawTiles() {
+        gamePanel.removeAll();
+        tilePanels = new TilePanel[GRID_SIZE][GRID_SIZE];
+
+        createTile();
+
+        SwingUtils.refresh(this);
+    }
+
+    private void createTile() {
+        for (int r = 0; r < GRID_SIZE; r++) {
+            for (int c = 0; c < GRID_SIZE; c++) {
+                TilePanel tilePanel = new TilePanel();
+                Tile t = controller.getTile(r, c);
+
+                tilePanel.setTile(t.getNumber(), t.getTextColor(), t.getBackgroundColor());
+
+                tilePanels[r][c] = tilePanel;
+                gamePanel.add(tilePanel);
+            }
+        }
+    }
+
+    private void checkGameStatus() {
+        GameStatus status = controller.getGameStatus();
+        if (status == GameStatus.WIN) {
+            JOptionPane.showMessageDialog(this, WIN_MESSAGE);
+        } else if (status == GameStatus.GAME_OVER) {
+            JOptionPane.showMessageDialog(this, GAME_OVER_MESSAGE);
+        }
     }
 }

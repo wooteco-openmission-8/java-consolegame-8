@@ -6,7 +6,6 @@ import java.awt.*;
 
 public class GameBoxFrame extends JFrame {
     private static final String APP_NAME = "GameBox";
-
     private static final int WINDOW_WIDTH = 1000;
     private static final int WINDOW_HEIGHT = 800;
 
