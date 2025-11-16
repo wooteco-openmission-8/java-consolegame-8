@@ -28,6 +28,10 @@ public class Game2048Panel extends JPanel {
     private TilePanel[][] tilePanels;
     private final Game2048Controller controller;
 
+    /**
+     * Game2048Panel(BorderLayout) -> resetPanel(NORTH) + gamePanel(CENTER)
+     * gamePanel(GridLayout) -> tilePanels(Grid)
+     */
     public Game2048Panel() {
         this.controller = new Game2048Controller();
 

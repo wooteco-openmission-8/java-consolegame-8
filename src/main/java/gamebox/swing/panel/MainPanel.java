@@ -7,10 +7,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainPanel extends JPanel {
-    private final JPanel contentPanel = new JPanel(new BorderLayout());
     private final BackgroundPanel backgroundPanel = new BackgroundPanel();
+    private final JPanel contentPanel = new JPanel(new BorderLayout());
     private final GameButtonPanel gameButtonPanel = new GameButtonPanel();
 
+    /**
+     * MainPanel(BorderLayout) -> backgroundPanel(NORTH) + contentPanel(CENTER)
+     * contentPanel(BorderLayout) -> GameButtonPanel(CENTER)
+     */
     public MainPanel() {
         setLayout(new BorderLayout());
         addPanels();

@@ -40,6 +40,14 @@ public class GameSamePicPanel extends JPanel {
     private final JPanel topPanel = new JPanel(new BorderLayout());
     private final List<ImageButton> imageButtons = new ArrayList<>();
 
+    /**
+     * 같은 그림 찾기 -> 난이도 선택(selectPanel) -> 게임 시작(gamePanel)
+     *
+     * GameSamePicPanel(BorderLayout) -> containerPanel(CENTER)
+     * containerPanel(CardLayout) -> selectPanel
+     *                            -> gamePanel
+     * gamePanel(BorderLayout) -> topPanel(NORTH) + gridPanel(CENTER)
+     */
     public GameSamePicPanel() {
         PictureRepository repo = PictureRepository.getInstance();
         GameSamePicService service = new GameSamePicService(repo);
