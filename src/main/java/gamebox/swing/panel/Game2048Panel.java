@@ -3,6 +3,7 @@ package gamebox.swing.panel;
 import gamebox.game_2048.controller.Game2048Controller;
 import gamebox.game_2048.entity.Tile;
 import gamebox.game_2048.entity.GameStatus;
+import gamebox.swing.components.Grid;
 import gamebox.swing.components.TilePanel;
 import gamebox.swing.listener.Game2048KeyListener;
 import gamebox.swing.listener.GameListener;
@@ -19,11 +20,9 @@ public class Game2048Panel extends JPanel {
     private static final String WIN_MESSAGE = "You WIN!";
     private static final String GAME_OVER_MESSAGE = "You WIN!";
     private static final int GRID_SIZE = 4;
-    private static final int GRID_GAP = 10;
-    private static final int PADDING_SIZE = 15;
 
     private final JPanel resetPanel = new JPanel();
-    private final JPanel gamePanel = new JPanel();
+    private JPanel gamePanel;
     private final JButton resetButton = new JButton(RESET_BUTTON_NAME);
     private TilePanel[][] tilePanels;
     private final Game2048Controller controller;
@@ -71,8 +70,7 @@ public class Game2048Panel extends JPanel {
     }
 
     private void setGamePanel() {
-        gamePanel.setLayout(new GridLayout(GRID_SIZE, GRID_SIZE, GRID_GAP, GRID_GAP));
-        gamePanel.setBorder(new EmptyBorder(PADDING_SIZE, PADDING_SIZE, PADDING_SIZE, PADDING_SIZE));
+        gamePanel = Grid.createGridPanel(GRID_SIZE, GRID_SIZE);
         gamePanel.setBackground(Color.WHITE);
 
         addKeyListenerToPanel();
