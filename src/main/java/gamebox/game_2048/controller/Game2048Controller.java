@@ -1,6 +1,7 @@
 package gamebox.game_2048.controller;
 
 import gamebox.common.Game;
+import gamebox.game_2048.entity.Direction;
 import gamebox.game_2048.entity.GameStatus;
 import gamebox.game_2048.entity.Tile;
 import gamebox.game_2048.service.Game2048Service;
@@ -17,19 +18,19 @@ public class Game2048Controller implements Game {
 
     // 이동 메서드
     public boolean moveUp() {
-        return gameService.moveUp();
+        return gameService.move(Direction.UP);
     }
 
     public boolean moveDown() {
-        return gameService.moveDown();
+        return gameService.move(Direction.DOWN);
     }
 
     public boolean moveLeft() {
-        return gameService.moveLeft();
+        return gameService.move(Direction.LEFT);
     }
 
     public boolean moveRight() {
-        return gameService.moveRight();
+        return gameService.move(Direction.RIGHT);
     }
 
     public Tile getTile(int row, int col) {
