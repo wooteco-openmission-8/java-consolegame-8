@@ -38,7 +38,9 @@
 ## ⚡ 실행 방법 (How to run)
 
 // TODO : 실행방법 추가
+
 https://github.com/wooteco-openmission-8/java-gamebox-8/releases/download/v0.0.0-macOStest/MySwingApp.app.zip
+
 https://github.com/wooteco-openmission-8/java-gamebox-8/releases/download/v0.0.0-windowtest/GameBox.zip
 
 ## 👥 협업 방식
