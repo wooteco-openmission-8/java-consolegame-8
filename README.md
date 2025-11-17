@@ -28,53 +28,54 @@ gamebox.game_2048/
     └── Game2048Service.java        # 게임 로직 서비스
 ```
 
-## 구현 기능 목록
+## 기능 구현 목록
 
-### 1. 게임 컨트롤러 (`Game2048Controller`)
-- ✅ `Game` 인터페이스 구현
-- ✅ `start()` - 4x4 보드로 게임 서비스 초기화
-- ✅ `getName()` - "2048" 반환
-- ✅ 방향별 이동 메서드 (`moveUp()`, `moveDown()`, `moveLeft()`, `moveRight()`)
-- ✅ `getTile(row, col)` - 특정 위치 타일 조회
-- ✅ `getGameStatus()` - 게임 상태 반환 (RUNNING/WIN/GAME_OVER)
+### 📌 1. 게임 컨트롤러 (`Game2048Controller`)
+- [x] `Game` 인터페이스 구현
+- [x] `start()` - 4x4 보드로 게임 서비스 초기화
+- [x] `getName()` - "2048" 반환
+- [x] 방향별 이동 메서드 (`moveUp()`, `moveDown()`, `moveLeft()`, `moveRight()`)
+- [x] `getTile(row, col)` - 특정 위치 타일 조회
+- [x] `getGameStatus()` - 게임 상태 반환 (RUNNING/WIN/GAME_OVER)
 
-### 2. 타일 클래스 (`Tile`)
-- ✅ 타일 값 유효성 검증 (0 또는 2~2048 사이의 2의 거듭제곱)
-- ✅ `isEmpty()` - 빈 타일 여부 확인
-- ✅ `canMergeWith(Tile other)` - 병합 가능 여부 확인
-- ✅ `merge()` - 타일 값 두 배로 병합
-- ✅ `merge(Tile other)` - 두 타일을 병합한 새 타일 반환
-- ✅ `moveTo(Tile other)` - 타일 이동
-- ✅ `spawn()` - 빈 타일에 2(90%) 또는 4(10%) 생성
-- ✅ `getBackgroundColor()`, `getTextColor()` - TileValue enum 연동 색상 반환
-- ✅ `resetMerged()` - 병합 플래그 초기화
+### 📌 2. 타일 클래스 (`Tile`)
+- [x] 타일 값 유효성 검증 (0 또는 2~2048 사이의 2의 거듭제곱)
+- [x] `isEmpty()` - 빈 타일 여부 확인
+- [x] `canMergeWith(Tile other)` - 병합 가능 여부 확인
+- [x] `merge()` - 타일 값 두 배로 병합
+- [x] `merge(Tile other)` - 두 타일을 병합한 새 타일 반환
+- [x] `moveTo(Tile other)` - 타일 이동
+- [x] `spawn()` - 빈 타일에 2(90%) 또는 4(10%) 생성
+- [x] `getBackgroundColor()`, `getTextColor()` - TileValue enum 연동 색상 반환
+- [x] `resetMerged()` - 병합 플래그 초기화
 
-### 3. 게임 보드 (`Game2048Board`)
-- ✅ `Tile[][]` 2차원 배열로 보드 관리
-- ✅ 생성자에서 초기 타일 2개 자동 스폰
-- ✅ `filterColumn(int)`, `filterRow(int)` - 0이 아닌 타일 필터링
-- ✅ `randomSpawn(int n)` - n개의 타일 랜덤 생성
-- ✅ `isFull()` - 보드 가득 참 여부 확인
-- ✅ `canMove()` - 이동 가능 여부 확인 (인접 타일 병합 가능 체크)
-- ✅ `isWin()`, `setWin()` - 승리 상태 관리
-- ✅ 테스트용 메서드:
-  - `loadFrom(int[][])` - 특정 숫자 배열로 보드 로드
-  - `snapshotNumbers()` - 현재 보드 상태 스냅샷
+### 📌 3. 게임 보드 (`Game2048Board`)
+- [x] `Tile[][]` 2차원 배열로 보드 관리
+- [x] 생성자에서 초기 타일 2개 자동 스폰
+- [x] `filterColumn(int)`, `filterRow(int)` - 0이 아닌 타일 필터링
+- [x] `randomSpawn(int n)` - n개의 타일 랜덤 생성
+- [x] `isFull()` - 보드 가득 참 여부 확인
+- [x] `canMove()` - 이동 가능 여부 확인 (인접 타일 병합 가능 체크)
+- [x] `isWin()`, `setWin()` - 승리 상태 관리
+- [x] 테스트용 메서드:
+  - [x] `loadFrom(int[][])` - 특정 숫자 배열로 보드 로드
+  - [x] `snapshotNumbers()` - 현재 보드 상태 스냅샷
 
-### 4. 게임 서비스 (`Game2048Service`)
-- ✅ `move(Direction)` - 타일 이동 + 새 타일 생성
-- ✅ `tileMove(Direction)` - 방향별 타일 이동 처리
-- ✅ `moveVertical(boolean reverse)` - 수직 이동 (위/아래)
-- ✅ `moveHorizontal(boolean reverse)` - 수평 이동 (좌/우)
-- ✅ `merge(List<Tile>)` - 타일 리스트 병합 로직
-- ✅ `isGameOver()` - 게임 오버 판정
-- ✅ `isWin()` - 승리 판정
-- ✅ `getGameStatus()` - 게임 상태 반환
-- ✅ 테스트용 메서드:
-  - `loadBoard(int[][])` - 보드 상태 로드
-  - `snapshotBoard()` - 보드 상태 스냅샷
+### 📌 4. 게임 서비스 (`Game2048Service`)
+- [x] `move(Direction)` - 타일 이동 + 새 타일 생성
+- [x] `tileMove(Direction)` - 방향별 타일 이동 처리
+- [x] `moveVertical(boolean reverse)` - 수직 이동 (위/아래)
+- [x] `moveHorizontal(boolean reverse)` - 수평 이동 (좌/우)
+- [x] `merge(List<Tile>)` - 타일 리스트 병합 로직
+- [x] `isGameOver()` - 게임 오버 판정
+- [x] `isWin()` - 승리 판정
+- [x] `getGameStatus()` - 게임 상태 반환
+- [x] 테스트용 메서드:
+  - [x] `loadBoard(int[][])` - 보드 상태 로드
+  - [x] `snapshotBoard()` - 보드 상태 스냅샷
 
-### 5. 열거형 타입
+
+### 📌 5. 열거형 타입
 
 #### Direction
 ```java
