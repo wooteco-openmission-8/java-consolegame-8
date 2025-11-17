@@ -32,8 +32,8 @@
 
 ### 3. 같은 그림 찾기
 
-![같은 그림 찾기 화면](images/find_same_screen.png)
-- 세부 기능 및 구현 내용: [같은그림찾기 README](https://github.com/wooteco-openmission-8/java-gamebox-8/tree/feature/find-same)
+![같은 그림 찾기 화면](images/samepic_screen.png)
+- 세부 기능 및 구현 내용: [같은그림찾기 README](https://github.com/wooteco-openmission-8/java-gamebox-8/tree/feature/samepic)
 
 ## 실행방법(How to run)
 
@@ -58,7 +58,7 @@
 ```java
 main
 ├── feature/2048        // 2048 기능 구현
-├── feature/find-same   // 같은 그림 찾기 기능 구현
+├── feature/samepic     // 같은 그림 찾기 기능 구현
 └── feature/swing       // GUI(Swing) 관련 기능 구현
 ```
 
