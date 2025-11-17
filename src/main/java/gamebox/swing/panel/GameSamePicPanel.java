@@ -213,7 +213,9 @@ public class GameSamePicPanel extends JPanel {
     private void showCardFront(ImageButton btn) {
         String imagePath = (String) btn.getClientProperty(IMAGE_PATH_KEY);
         try {
-            btn.setIcon(btn.getImageIcon(imagePath));
+            int size = controller.getDifficulty().getImageSize();
+
+            btn.setIcon(btn.getImageIcon(imagePath, size));
             btn.setText(VISIBLE_CARD_TEXT);
             btn.setBackground(Color.WHITE);
         } catch (IOException ex) {

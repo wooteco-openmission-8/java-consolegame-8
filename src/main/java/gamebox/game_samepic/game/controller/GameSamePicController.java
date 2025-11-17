@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public class GameSamePicController implements Game {
     private final GameSamePicService gameSamePicService;
+    private Difficulty difficulty;
 
     public GameSamePicController(GameSamePicService gameSamePicService){
         this.gameSamePicService = gameSamePicService;
@@ -25,10 +26,16 @@ public class GameSamePicController implements Game {
     }
 
     public void start(Difficulty difficulty) {
+        this.difficulty = difficulty;
+
         gameSamePicService.initializePictures();
         int rows = difficulty.getRows();
         int cols = difficulty.getCols();
         gameSamePicService.newGame(rows, cols);
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
     }
 
     public Picture getPicture(String pictureId) {
