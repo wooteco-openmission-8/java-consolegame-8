@@ -32,14 +32,13 @@ public class ImageButton extends JButton {
         }
     }
 
-    public ImageIcon getImageIcon(String imagePath) throws IOException {
+    public ImageIcon getImageIcon(String imagePath, int size) throws IOException {
         URL resource = ImageButton.class.getResource(imagePath);
         if (resource == null) {
             return new ImageIcon("");
         }
 
-        Image image = scaleImage(ImageIO.read(resource), IMAGE_SIZE, IMAGE_SIZE);
-
+        Image image = scaleImage(ImageIO.read(resource), size, size);
         return new ImageIcon(image);
     }
 

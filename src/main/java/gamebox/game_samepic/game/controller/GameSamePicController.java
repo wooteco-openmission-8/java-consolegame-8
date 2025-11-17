@@ -1,6 +1,7 @@
 package gamebox.game_samepic.game.controller;
 
 import gamebox.common.Game;
+import gamebox.game_samepic.game.entity.Card;
 import gamebox.game_samepic.game.entity.GameSamePicBoard;
 import gamebox.game_samepic.game.service.GameSamePicService;
 
@@ -10,6 +11,7 @@ import java.util.Optional;
 
 public class GameSamePicController implements Game {
     private final GameSamePicService gameSamePicService;
+    private Difficulty difficulty;
 
     public GameSamePicController(GameSamePicService gameSamePicService){
         this.gameSamePicService = gameSamePicService;
@@ -25,10 +27,16 @@ public class GameSamePicController implements Game {
     }
 
     public void start(Difficulty difficulty) {
+        this.difficulty = difficulty;
+
         gameSamePicService.initializePictures();
         int rows = difficulty.getRows();
         int cols = difficulty.getCols();
         gameSamePicService.newGame(rows, cols);
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
     }
 
     public Picture getPicture(String pictureId) {
@@ -43,6 +51,10 @@ public class GameSamePicController implements Game {
     // 보드 조회
     public GameSamePicBoard getBoard(){
         return gameSamePicService.getBoard();
+    }
+
+    public Card getCard(int index) {
+        return getBoard().getCard(index);
     }
 
     // 게임 종료 확인

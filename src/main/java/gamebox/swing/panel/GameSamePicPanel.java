@@ -29,6 +29,7 @@ public class GameSamePicPanel extends JPanel {
     private static final String YES = "확인";
     private static final String HIDDEN_CARD_TEXT = "?";
     private static final String IMAGE_PATH_KEY = "imagePath";
+    private static final String IMAGE_GROUP_KEY = "imageGroup";
     private static final String VISIBLE_CARD_TEXT = "";
     private static final String GAME_CLEAR_MESSAGE = "게임 클리어!\n이동 횟수: ";
     private static final int IMAGE_BUTTON_SIZE = 128;
@@ -105,7 +106,10 @@ public class GameSamePicPanel extends JPanel {
                         this,
                         GO_BACK_TO_SELECT_DIFFICULTY,
                         YES,
-                        this::showDifficultySelect
+                        () -> {
+                            showDifficultySelect();
+                            resetPictures();
+                        }
                 )
         );
         topPanel.add(backButton, BorderLayout.WEST);
@@ -160,16 +164,6 @@ public class GameSamePicPanel extends JPanel {
             resetMismatchedCards();
         }
 
-        if (controller.isGameOver()) {
-            controller.removePictures(imageButtons.stream()
-                    .map(i -> i.getClientProperty("imageGroup").toString())
-                    .findAny().orElse("")
-            );
-            JOptionPane.showMessageDialog(this,
-                    "게임 클리어!\n이동 횟수: " + controller.getMoves());
-        }
-
-
         checkGameOver();
     }
 
@@ -201,7 +195,7 @@ public class GameSamePicPanel extends JPanel {
     }
 
     private void updateCard(int index) {
-        Card card = controller.getBoard().getCard(index);
+        Card card = controller.getCard(index);
         ImageButton btn = imageButtons.get(index);
 
         if (card.isFaceUp() || card.isMatched()) {
@@ -219,7 +213,9 @@ public class GameSamePicPanel extends JPanel {
     private void showCardFront(ImageButton btn) {
         String imagePath = (String) btn.getClientProperty(IMAGE_PATH_KEY);
         try {
-            btn.setIcon(btn.getImageIcon(imagePath));
+            int size = controller.getDifficulty().getImageSize();
+
+            btn.setIcon(btn.getImageIcon(imagePath, size));
             btn.setText(VISIBLE_CARD_TEXT);
             btn.setBackground(Color.WHITE);
         } catch (IOException ex) {
@@ -238,6 +234,15 @@ public class GameSamePicPanel extends JPanel {
             JOptionPane.showMessageDialog(
                     this,
                     GAME_CLEAR_MESSAGE + controller.getMoves());
+
+            resetPictures();
         }
+    }
+
+    private void resetPictures() {
+        controller.removePictures(imageButtons.stream()
+                .map(i -> i.getClientProperty(IMAGE_GROUP_KEY).toString())
+                .findAny().orElse("")
+        );
     }
 }
