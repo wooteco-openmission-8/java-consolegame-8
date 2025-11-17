@@ -195,7 +195,7 @@ public class GameSamePicPanel extends JPanel {
     }
 
     private void updateCard(int index) {
-        Card card = controller.getBoard().getCard(index);
+        Card card = controller.getCard(index);
         ImageButton btn = imageButtons.get(index);
 
         if (card.isFaceUp() || card.isMatched()) {

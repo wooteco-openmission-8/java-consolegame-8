@@ -1,6 +1,7 @@
 package gamebox.game_samepic.game.controller;
 
 import gamebox.common.Game;
+import gamebox.game_samepic.game.entity.Card;
 import gamebox.game_samepic.game.entity.GameSamePicBoard;
 import gamebox.game_samepic.game.service.GameSamePicService;
 
@@ -50,6 +51,10 @@ public class GameSamePicController implements Game {
     // 보드 조회
     public GameSamePicBoard getBoard(){
         return gameSamePicService.getBoard();
+    }
+
+    public Card getCard(int index) {
+        return getBoard().getCard(index);
     }
 
     // 게임 종료 확인
