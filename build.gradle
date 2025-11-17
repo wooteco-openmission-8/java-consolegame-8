@@ -1,9 +1,12 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group = 'camp.nextstep.edu'
 version = '1.0-SNAPSHOT'
+mainClassName = 'gamebox.Application'
 
 java {
     toolchain {
@@ -22,4 +25,16 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+shadowJar {
+    archiveBaseName.set('GameBox')
+    archiveClassifier.set('')
+    archiveVersion.set(project.version)
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+}
+
+application {
+    mainClass = mainClassName
 }
