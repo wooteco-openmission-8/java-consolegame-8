@@ -41,7 +41,7 @@
 
 [macOS](https://github.com/wooteco-openmission-8/java-gamebox-8/releases/download/v-1.0.0-macOS/GameBox-1.0.0.dmg)
 
-[windows](https://github.com/wooteco-openmission-8/java-gamebox-8/releases/download/v1.0.0-windows/GameBox-1.0.0.exe)
+[windows](https://github.com/wooteco-openmission-8/java-gamebox-8/releases/download/v1.0.0-windows/GameBox.zip)
 
 ## 👥 협업 방식
 
