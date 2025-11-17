@@ -1,202 +1,92 @@
-# Swing 구현
+# 🎮 2048 Game
 
-## 학습 목표
+## 🎯 게임 규칙
 
-- Java Swing을 활용해 **그래픽 기반 GUI 애플리케이션**을 설계하고 구현한다.
-- **이벤트 기반 프로그래밍**을 이해하고, 사용자 입력(키보드/마우스)에 반응하는 구조를 만든다.
-- 공통 클래스(`GameWindow`)를 통해 **객체지향적 구조와 코드 재사용성**을 높인다.
+1. **게임 보드**: 4x4 격자
+2. **시작**: 무작위 두 칸에 2 또는 4가 생성 (90% 확률로 2, 10% 확률로 4)
+3. **이동 메커니즘**:
+   - 상하좌우 방향키로 모든 타일 이동
+   - 같은 숫자의 타일이 충돌하면 병합 (두 배의 값)
+   - 한 번의 이동에서 같은 타일은 한 번만 병합
+4. **새 타일 생성**: 이동 후 무작위 빈 칸에 2 또는 4 생성
+5. **승리 조건**: 2048 타일 생성
+6. **패배 조건**: 보드가 가득 차고 더 이상 이동 불가능
 
----
+## 📁 프로젝트 구조
 
-## Swing 기본 구조
-
-Swing의 기본 구조는 크게 컨테이너(Container), 컴포넌드(Component), 그리고 레이아웃(Layout)으로 나눠진다.
-
-### 1. 컨테이너 (Container)
-
-컨테이너는 다른 컴포넌트들을 **담고 관리**하는 역할을 한다. `JFrame`이라는 최상위 컨테이너를 사용하여 애플리케이션 창을 만든다.
-
----
-
-## DTO (요청/응답)
-
-* [ ] `PictureRequestDto`
-
-    * `String gameId`
-    * `int index`
-    * `int id` (클라이언트 보유 id, 검증용 선택필드)
-    * `String path` (검증용 선택필드)
-* [ ] `PictureResponseDto`
-
-    * `int index`
-    * `int id`
-    * `String path`
-    * `boolean visible`
-    * (선택) `boolean matched`
-* [ ] `StartGameResponseDto`
-
-    * `String gameId`
-    * `List<PictureResponseDto> pictures` (초기 상태, 모두 `visible=false`)
-* [ ] `GameInfoDto`
-
-    * `GameInfo` 필드들
-
----
-
-## 리포지토리 (in-memory)
-
-* [ ] `GameRepository` (POJO 클래스, 싱글톤 권장)
-
-    * 내부구조: `ConcurrentHashMap<String, Game> games`
-    * 메서드:
-
-        * `Game createGame(int rows, int cols)` — 새 게임 생성(랜덤 섞기 포함), `gameId` 반환
-        * `Optional<Game> getGame(String gameId)` — 없으면 Optional.empty()
-        * `void saveGame(Game game)` — map에 저장(업데이트)
-        * `void deleteGame(String gameId)`
-        * `List<GameInfo> listGames()`
-    * (선택) 파일 영속화:
-
-        * `void persistGameToFile(String gameId)` — JSON 직렬화
-        * `Game loadGameFromFile(String gameId)`
-
-ex)
-```angular2html
-JFrame frame = new JFrame("Game Window");
-frame.setSize(600, 600); // 창의 크기 설정
-frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 창을 닫을 때 애플리케이션 종료
-frame.setVisible(true); // 창을 보이게 설정
+```
+gamebox.game_2048/
+├── controller/
+│   └── Game2048Controller.java    # 게임 메인 컨트롤러
+├── entity/
+│   ├── Direction.java              # 이동 방향 열거형
+│   ├── Game2048Board.java          # 게임 보드 관리
+│   ├── GameStatus.java             # 게임 상태 열거형
+│   ├── Tile.java                   # 타일 엔티티
+│   └── TileValue.java              # 타일 값별 색상 정의
+└── service/
+    └── Game2048Service.java        # 게임 로직 서비스
 ```
 
-![JFrame과 JPanel의 구조](JFrame_JPanel_structure.png)
+## 구현 기능 목록
 
-### 2. 컴포넌트 (Component)
+### 1. 게임 컨트롤러 (`Game2048Controller`)
+- ✅ `Game` 인터페이스 구현
+- ✅ `start()` - 4x4 보드로 게임 서비스 초기화
+- ✅ `getName()` - "2048" 반환
+- ✅ 방향별 이동 메서드 (`moveUp()`, `moveDown()`, `moveLeft()`, `moveRight()`)
+- ✅ `getTile(row, col)` - 특정 위치 타일 조회
+- ✅ `getGameStatus()` - 게임 상태 반환 (RUNNING/WIN/GAME_OVER)
 
-* [ ] `GameNotFoundException extends RuntimeException`
-* [ ] `InvalidIndexException`
-* [ ] `PathMismatchException`
-* [ ] `GameStateConflictException`
+### 2. 타일 클래스 (`Tile`)
+- ✅ 타일 값 유효성 검증 (0 또는 2~2048 사이의 2의 거듭제곱)
+- ✅ `isEmpty()` - 빈 타일 여부 확인
+- ✅ `canMergeWith(Tile other)` - 병합 가능 여부 확인
+- ✅ `merge()` - 타일 값 두 배로 병합
+- ✅ `merge(Tile other)` - 두 타일을 병합한 새 타일 반환
+- ✅ `moveTo(Tile other)` - 타일 이동
+- ✅ `spawn()` - 빈 타일에 2(90%) 또는 4(10%) 생성
+- ✅ `getBackgroundColor()`, `getTextColor()` - TileValue enum 연동 색상 반환
+- ✅ `resetMerged()` - 병합 플래그 초기화
 
-- **JButton:** 버튼 컴포넌트. 클릭 이벤트를 처리할 수 있다.
-- **JLabel:** 텍스트나 이미지를 표시하는 컴포넌트.
-- **JTextField:** 사용자가 텍스트를 입력할 수 있는 필드.
-- **JCheckBox, JRadioButton:** 체크박스나 라디오 버튼과 같은 선택 UI를 제공한다.
+### 3. 게임 보드 (`Game2048Board`)
+- ✅ `Tile[][]` 2차원 배열로 보드 관리
+- ✅ 생성자에서 초기 타일 2개 자동 스폰
+- ✅ `filterColumn(int)`, `filterRow(int)` - 0이 아닌 타일 필터링
+- ✅ `randomSpawn(int n)` - n개의 타일 랜덤 생성
+- ✅ `isFull()` - 보드 가득 참 여부 확인
+- ✅ `canMove()` - 이동 가능 여부 확인 (인접 타일 병합 가능 체크)
+- ✅ `isWin()`, `setWin()` - 승리 상태 관리
+- ✅ 테스트용 메서드:
+  - `loadFrom(int[][])` - 특정 숫자 배열로 보드 로드
+  - `snapshotNumbers()` - 현재 보드 상태 스냅샷
 
-ex)
-```angular2html
-JButton startButton = new JButton("Start Game");
-JLabel scoreLabel = new JLabel("Score: 0");
-```
+### 4. 게임 서비스 (`Game2048Service`)
+- ✅ `move(Direction)` - 타일 이동 + 새 타일 생성
+- ✅ `tileMove(Direction)` - 방향별 타일 이동 처리
+- ✅ `moveVertical(boolean reverse)` - 수직 이동 (위/아래)
+- ✅ `moveHorizontal(boolean reverse)` - 수평 이동 (좌/우)
+- ✅ `merge(List<Tile>)` - 타일 리스트 병합 로직
+- ✅ `isGameOver()` - 게임 오버 판정
+- ✅ `isWin()` - 승리 판정
+- ✅ `getGameStatus()` - 게임 상태 반환
+- ✅ 테스트용 메서드:
+  - `loadBoard(int[][])` - 보드 상태 로드
+  - `snapshotBoard()` - 보드 상태 스냅샷
 
-### 3. 레이아웃 (Layout)
+### 5. 열거형 타입
 
-레이아웃은 컴포넌트가 **어떻게 배치**될지를 결정하는 방식이다.
-
-- **FlowLayout:** 컴포넌트를 **왼쪽에서 오른쪽으로, 위에서 아래**로 순차적으로 배치한다. 기본적인 레이아웃이다.
-- **BorderLayout:** **상, 하, 좌, 우, 중앙**의 5개 영역에 컴포넌트를 배치할 수 있다.
-- **GridLayout:** 컴포넌트를 **격자 형태**로 배치한다. 지정된 행과 열 수에 맞게 컴포넌트를 배치한다.
-- **BoxLayout:** 컴포넌트를 **수평 또는 수직**으로 배치한다.
-
-ex)
-```angular2html
-frame.setLayout(new FlowLayout());
-frame.add(startButton);
-frame.add(scoreLabel);
-```
-
-### 4. 이벤트 처리
-
-Swing에서 사용자의 입력에 반응하려면 **이벤트 처리**가 필요하다. 이벤트는 사용자가 버튼을 클릭하거나, 키를 누르는 등의 동작을 의미한다.
-
-- **ActionListener:** 버튼을 클릭하거나 특정 동작을 했을 때 이벤트를 처리한다.
-- **KeyListener:** 키보드 입력을 처리한다.
-- **MouseListener:** 마우스 클릭이나 드래그 등 마우스 이벤트를 처리한다.
-
-ex)
-```angular2html
-startButton.addActionListener(new ActionListener() {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        System.out.println("Game Started!");
-    }
-});
-```
-
+#### Direction
 ```java
-public class GameRepository {
-    private final ConcurrentHashMap<String, Game> games = new ConcurrentHashMap<>();
-
-    public Game createGame(int rows, int cols) { ... } // returns new Game and stores it
-    public Optional<Game> getGame(String id) { return Optional.ofNullable(games.get(id)); }
-    public void saveGame(Game game) { games.put(game.getGameId(), game); }
-}
+UP, DOWN, LEFT, RIGHT
 ```
----
 
-## 기능 목록
+#### GameStatus  
+```java
+RUNNING, WIN, GAME_OVER
+```
 
-### 📌 GameBoxFrame
-
-- [x] 프레임 기본 세팅을 한다.
-    - [x] 창 사이즈 (사이즈는 사용자가 조절할 수 없음)
-    - [x] 프레임 레이아웃 설정
-        - [x] GridLayout으로 패널 2개를 위아래로 배치한다.
-- [x] 프레임에 패널을 추가한다.
-
-### 📌 Panel
-
-- `BackgroundPanel`
-    - [x] 텍스트를 추가한다.
-        - title: 게임 제목
-        - selectGame: "게임을 선택하세요."
-    - [x] 패널 레이아웃 설정 ➡ GridLayout
-    - [x] 텍스트들을 패널에 추가한다.
-- `GameButtonPanel`
-    - [x] 패널 레이아웃 설정 ➡ null (Component들의 사이즈와 위치를 직접 지정)
-    - [x] 버튼을 추가한다.
-        - 2048
-        - 같은 그림 찾기
-    - [x] 버튼의 사이즈와 위치를 설정한다.
-    - [x] 패널에 버튼을 추가한다.
-- `MainPanel`
-    - [x] 패널 레이아웃 설정 ➡ BorderLayout
-    - [x] 상단에 BackgroundPanel 추가
-    - [x] 중앙에 contentPanel 추가
-    - [x] 초기 화면으로 GameButtonPanel을 contentPanel에 추가
-    - [x] 버튼 클릭 시 contentPanel 교체 가능
-- `Game2048Panel`
-    - [x] 패널 레이아웃 설정 ➡ BorderLayout
-    - [x] `resetPanel` (BorderLayout.NORTH)
-        - [x] 리셋 버튼 추가
-        - [x] 리셋 버튼을 누르면 보드를 다시 그린다.
-    - [x] `gamePanel` (BorderLayout.CENTER)
-        - [x] 패널 레이아웃 설정 ➡ GridLayout
-        - [x] 보드 그리기 (랜덤 위치에 2 또는 4 타일 2개 생성)
-        - [x] keyListener 추가
-        - [x] 위, 아래, 왼쪽, 오른쪽 방향키를 누르면 해당 방향으로 이동한다.
-
-### 📌 Listener
-
-- [x] 사용자가 원하는 게임을 누르면 해당 게임으로 이동한다.
-- [x] 게임 화면에서 홈 화면으로 돌아가는 기능을 추가한다.
-    - [x] "홈" 버튼 추가
-    - [x] 버튼 클릭 시 contentPanel을 초기 상태로 복원
-
-
-- [x] 각 게임의 보드를 그리드로 생성한다.
-    - [x] 2048: 4x4 그리드
-    - [x] 같은 그림 찾기: 4x4 / 6x6 / 8x8
-
-### 📌 출력기
-
-- [ ] 각 게임마다 점수를 표시한다.
-- [ ] 게임이 종료되면 결과 메세지를 표시한다.
-- [ ] 예외 상황이 발생할 경우 에러 메세지를 표시한다.
-
-### 📌 기타 UI 기능
-
-- [ ] 각 게임의 입력을 클릭 또는 키보드 이벤트로 처리한다.
-- [ ] 게임 종료 후 새 게임 시작 버튼을 통해 게임 초기화가 가능하다.
-    - [ ] 게임 보드와 점수를 초기 상태로 되돌린다.
-
-
+#### TileValue
+- 타일 값별 배경색과 텍스트 색상 정의
+- 0(EMPTY) ~ 2048까지 각 값에 대한 색상 매핑
+- `fromValue(int)` - 값으로 TileValue 조회
