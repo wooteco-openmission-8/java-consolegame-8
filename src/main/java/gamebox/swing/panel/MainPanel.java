@@ -16,7 +16,9 @@ public class MainPanel extends JPanel {
      * contentPanel(BorderLayout) -> GameButtonPanel(CENTER)
      */
     public MainPanel() {
-        setLayout(new BorderLayout());
+        setLayout(null);
+        backgroundPanel.setBounds(0, 0, 1000, 400);
+        contentPanel.setBounds(0, 350, 1000, 450);
         addPanels();
         addListeners();
         setInitialContent();
@@ -27,8 +29,8 @@ public class MainPanel extends JPanel {
     }
 
     private void addPanels() {
-        add(backgroundPanel, BorderLayout.NORTH);
-        add(contentPanel, BorderLayout.CENTER);
+        add(backgroundPanel);
+        add(contentPanel);
     }
 
     private void addListeners() {
