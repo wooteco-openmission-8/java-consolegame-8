@@ -5,20 +5,20 @@ import gamebox.game_2048.entity.Tile;
 import gamebox.game_2048.entity.GameStatus;
 import gamebox.swing.components.Grid;
 import gamebox.swing.components.TilePanel;
-import gamebox.swing.listener.Game2048KeyListener;
 import gamebox.swing.listener.GameListener;
 import gamebox.swing.swing_util.SwingUtils;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Game2048Panel extends JPanel {
     private static final String RESET_BUTTON_NAME = "Reset";
     private static final String RESET_MESSAGE = "게임을 초기화하시겠습니까?";
     private static final String YES = "확인";
     private static final String WIN_MESSAGE = "You WIN!";
-    private static final String GAME_OVER_MESSAGE = "You WIN!";
+    private static final String GAME_OVER_MESSAGE = "Game Over!";
     private static final int GRID_SIZE = 4;
 
     private final JPanel resetPanel = new JPanel();
@@ -43,7 +43,7 @@ public class Game2048Panel extends JPanel {
         add(resetPanel, BorderLayout.NORTH);
         add(gamePanel, BorderLayout.CENTER);
 
-        controller.start();  // Service 초기화
+        controller.start();
         updateBoard();
     }
 
@@ -82,10 +82,29 @@ public class Game2048Panel extends JPanel {
     }
 
     private void addKeyListenerToPanel() {
-        gamePanel.addKeyListener(new Game2048KeyListener(
-                controller,
-                this::updateBoard
-        ));
+        gamePanel.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                boolean moved = switch (e.getKeyCode()) {
+                    case KeyEvent.VK_UP -> controller.moveUp();
+                    case KeyEvent.VK_DOWN -> controller.moveDown();
+                    case KeyEvent.VK_LEFT -> controller.moveLeft();
+                    case KeyEvent.VK_RIGHT -> controller.moveRight();
+                    default -> false;
+                };
+
+                if (moved) {
+                    updateBoard();
+                    Timer timer = new Timer(150, evt -> {
+                        Point newTilePos = controller.spawn();
+                        updateBoard();
+                        ((Timer) evt.getSource()).stop();
+                    });
+                    timer.setRepeats(false);
+                    timer.start();
+                }
+            }
+        });
     }
 
     private void updateBoard() {
