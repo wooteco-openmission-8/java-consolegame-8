@@ -11,6 +11,7 @@ public class HeaderPanel extends JPanel {
     private final RoundedButton homeButton = new RoundedButton("홈으로");
     private final RoundedButton resetButton = new RoundedButton("새 게임");
     private final JLabel game2048Title = new JLabel("2048");
+    private final JLabel gameSamePicTitle = new JLabel("같은그림찾기");
 
     public HeaderPanel() {
         setBounds(0, 0, 1000, 100);
@@ -40,6 +41,15 @@ public class HeaderPanel extends JPanel {
 
         resetButton.setVisible(true);
         game2048Title.setVisible(true);
+    }
+
+    public void setSamePicContents() {
+        gameSamePicTitle.setFont(new Font("맑은 고딕", Font.BOLD, 80));
+        gameSamePicTitle.setBounds(331, 20, 338, 76);
+        gameSamePicTitle.setHorizontalAlignment(SwingConstants.CENTER);
+
+        resetButton.setVisible(false);
+        game2048Title.setVisible(false);
     }
 
     private void addContents() {

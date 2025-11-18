@@ -59,6 +59,7 @@ public class AppListener implements ActionListener {
     private void openGameSamePic() {
         mainPanel.remove(backgroundPanel);
         mainPanel.addHeaderPanel();
+        mainPanel.setSamePicContents();
 
         contentPanel.removeAll();
         contentPanel.setBounds(0, 100, 1000, 750);

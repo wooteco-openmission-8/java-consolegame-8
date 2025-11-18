@@ -54,6 +54,10 @@ public class MainPanel extends JPanel {
         headerPanel.set2048Contents();
     }
 
+    public void setSamePicContents() {
+        headerPanel.setSamePicContents();
+    }
+
     public void removeHeader() {
         remove(headerPanel);
     }
