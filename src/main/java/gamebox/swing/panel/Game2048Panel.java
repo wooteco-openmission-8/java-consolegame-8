@@ -27,6 +27,7 @@ public class Game2048Panel extends JPanel {
     private TilePanel[][] tilePanels;
     private final Game2048Controller controller;
 
+    private boolean isProcessing = false;
     /**
      * Game2048Panel(BorderLayout) -> resetPanel(NORTH) + gamePanel(CENTER)
      * gamePanel(GridLayout) -> tilePanels(Grid)
@@ -40,8 +41,12 @@ public class Game2048Panel extends JPanel {
         setResetPanel();
         setGamePanel();
 
+        JPanel wrapper = new JPanel(new GridBagLayout());
+        wrapper.setBackground(Color.WHITE);
+        wrapper.add(gamePanel);
+
         add(resetPanel, BorderLayout.NORTH);
-        add(gamePanel, BorderLayout.CENTER);
+        add(wrapper, BorderLayout.CENTER);
 
         controller.start();
         updateBoard();
@@ -71,7 +76,8 @@ public class Game2048Panel extends JPanel {
 
     private void setGamePanel() {
         gamePanel = Grid.createGridPanel(GRID_SIZE, GRID_SIZE);
-        gamePanel.setBackground(Color.WHITE);
+        gamePanel.setBackground(Color.BLACK);
+        gamePanel.setPreferredSize(new Dimension(400, 400));
 
         addKeyListenerToPanel();
 
@@ -85,6 +91,8 @@ public class Game2048Panel extends JPanel {
         gamePanel.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
+                if (isProcessing) return;
+
                 boolean moved = switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP -> controller.moveUp();
                     case KeyEvent.VK_DOWN -> controller.moveDown();
@@ -94,10 +102,12 @@ public class Game2048Panel extends JPanel {
                 };
 
                 if (moved) {
+                    isProcessing = true;
                     updateBoard();
                     Timer timer = new Timer(150, evt -> {
                         Point newTilePos = controller.spawn();
                         updateBoard();
+                        isProcessing = false;
                         ((Timer) evt.getSource()).stop();
                     });
                     timer.setRepeats(false);
