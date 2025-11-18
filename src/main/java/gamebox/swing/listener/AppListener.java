@@ -15,11 +15,13 @@ public class AppListener implements ActionListener {
     private final MainPanel mainPanel;
     private final JPanel contentPanel;
     private final BackgroundPanel backgroundPanel; // 추가
+    private final HeaderPanel headerPanel;
 
-    public AppListener(MainPanel mainPanel, JPanel contentPanel, BackgroundPanel backgroundPanel){
+    public AppListener(MainPanel mainPanel, JPanel contentPanel, BackgroundPanel backgroundPanel, HeaderPanel headerPanel){
         this.mainPanel = mainPanel;
         this.contentPanel = contentPanel;
         this.backgroundPanel = backgroundPanel;
+        this.headerPanel = headerPanel;
     }
 
     @Override
@@ -41,30 +43,37 @@ public class AppListener implements ActionListener {
     }
 
     private void openGame2048() {
+        mainPanel.remove(backgroundPanel);
+        mainPanel.addHeaderPanel();
+        mainPanel.set2048Contents();
+
         contentPanel.removeAll();
-        contentPanel.add(new Game2048Panel());
-        backgroundPanel.showHomeButton(true); // 홈버튼 보이기, selectGame 숨김
+        contentPanel.setBounds(0, 100, 1000, 750);
+        Game2048Panel game2048Panel = new Game2048Panel();
+        game2048Panel.setResetButton(headerPanel.getResetButton());
+        contentPanel.add(game2048Panel);
+
+        SwingUtils.refresh(mainPanel);
     }
 
     private void openGameSamePic() {
-        backgroundPanel.removeContents();
-        backgroundPanel.setBounds(0, 0, 1000, 100);
+        mainPanel.remove(backgroundPanel);
+        mainPanel.addHeaderPanel();
 
         contentPanel.removeAll();
         contentPanel.setBounds(0, 100, 1000, 750);
         contentPanel.add(new GameSamePicPanel());
-        SwingUtils.refresh(contentPanel);
-        backgroundPanel.showHomeButton(true);
+
+        SwingUtils.refresh(mainPanel);
     }
 
     private void goBackToHome() {
-        backgroundPanel.setBounds(0, 0, 1000, 350);
-        backgroundPanel.setVisibleContents();
+        mainPanel.removeHeader();
+        mainPanel.add(backgroundPanel);
 
         contentPanel.removeAll();
         contentPanel.setBounds(0, 350, 1000, 450);
         contentPanel.add(new GameButtonPanel());
-        backgroundPanel.showHomeButton(false);
-        SwingUtils.refresh(contentPanel);
+        SwingUtils.refresh(mainPanel);
     }
 }

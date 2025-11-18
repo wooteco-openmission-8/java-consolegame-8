@@ -16,16 +16,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class Game2048Panel extends JPanel {
-    private static final String RESET_BUTTON_NAME = "Reset";
     private static final String RESET_MESSAGE = "게임을 초기화하시겠습니까?";
     private static final String YES = "확인";
     private static final String WIN_MESSAGE = "You WIN!";
     private static final String GAME_OVER_MESSAGE = "Game Over!";
     private static final int GRID_SIZE = 4;
 
-    private final JPanel resetPanel = new JPanel();
+    private RoundedButton resetButton;
     private JPanel gamePanel;
-    private final RoundedButton resetButton = new RoundedButton(RESET_BUTTON_NAME);
     private TilePanel[][] tilePanels;
     private final Game2048Controller controller;
 
@@ -40,27 +38,28 @@ public class Game2048Panel extends JPanel {
         setLayout(new BorderLayout());
         setFocusable(false);
 
-        setResetPanel();
         setGamePanel();
 
         JPanel wrapper = new JPanel(new GridBagLayout());
         wrapper.setBackground(Color.WHITE);
         wrapper.add(gamePanel);
 
-        add(resetPanel, BorderLayout.NORTH);
         add(wrapper, BorderLayout.CENTER);
 
         controller.start(Difficulty.EASY);  // Service 초기화
         updateBoard();
     }
 
-    private void setResetPanel() {
-        resetPanel.setBackground(Color.WHITE);
-        createResetButton();
-        resetPanel.add(resetButton);
+    public void setResetButton(RoundedButton resetButton) {
+        this.resetButton = resetButton;
+        addResetButtonListener();
     }
 
-    private void createResetButton() {
+    private void addResetButtonListener() {
+        for (var listener : resetButton.getActionListeners()) {
+            resetButton.removeActionListener(listener);
+        }
+
         resetButton.setFocusable(false);
         resetButton.addActionListener(
                 new GameListener(
@@ -79,7 +78,7 @@ public class Game2048Panel extends JPanel {
     private void setGamePanel() {
         gamePanel = Grid.createGridPanel(GRID_SIZE, GRID_SIZE);
         gamePanel.setBackground(Color.BLACK);
-        gamePanel.setPreferredSize(new Dimension(400, 400));
+        gamePanel.setPreferredSize(new Dimension(550, 550));
 
         addKeyListenerToPanel();
 
