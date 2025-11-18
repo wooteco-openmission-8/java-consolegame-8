@@ -3,6 +3,7 @@ package gamebox.swing.panel;
 import gamebox.game_2048.controller.Game2048Controller;
 import gamebox.game_2048.entity.Tile;
 import gamebox.game_2048.entity.GameStatus;
+import gamebox.game_samepic.game.entity.Difficulty;
 import gamebox.swing.components.Grid;
 import gamebox.swing.components.RoundedButton;
 import gamebox.swing.components.TilePanel;
@@ -49,7 +50,7 @@ public class Game2048Panel extends JPanel {
         add(resetPanel, BorderLayout.NORTH);
         add(wrapper, BorderLayout.CENTER);
 
-        controller.start();
+        controller.start(Difficulty.EASY);  // Service 초기화
         updateBoard();
     }
 
@@ -67,7 +68,7 @@ public class Game2048Panel extends JPanel {
                         RESET_MESSAGE,
                         YES,
                         () -> {
-                            controller.start();
+                            controller.start(Difficulty.EASY);
                             updateBoard();
                             SwingUtilities.invokeLater(() -> gamePanel.requestFocusInWindow());
                         }

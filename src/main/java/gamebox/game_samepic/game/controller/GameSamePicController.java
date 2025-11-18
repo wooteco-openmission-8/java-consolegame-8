@@ -18,14 +18,6 @@ public class GameSamePicController implements Game {
     }
 
     @Override
-    public void start() {
-    }
-
-    @Override
-    public String getName() {
-        return "find-same";
-    }
-
     public void start(Difficulty difficulty) {
         this.difficulty = difficulty;
 
@@ -33,6 +25,11 @@ public class GameSamePicController implements Game {
         int rows = difficulty.getRows();
         int cols = difficulty.getCols();
         gameSamePicService.newGame(rows, cols);
+    }
+
+    @Override
+    public String getName() {
+        return "find-same";
     }
 
     public Difficulty getDifficulty() {

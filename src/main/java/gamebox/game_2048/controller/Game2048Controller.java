@@ -5,6 +5,7 @@ import gamebox.game_2048.entity.Direction;
 import gamebox.game_2048.entity.GameStatus;
 import gamebox.game_2048.entity.Tile;
 import gamebox.game_2048.service.Game2048Service;
+import gamebox.game_samepic.game.entity.Difficulty;
 
 import java.awt.Point;
 
@@ -14,8 +15,8 @@ public class Game2048Controller implements Game {
     private Game2048Service gameService;
 
     @Override
-    public void start() {
-        gameService = new Game2048Service(4, 4);
+    public void start(Difficulty difficulty) {
+        gameService = new Game2048Service(difficulty.getRows(), difficulty.getCols());
     }
 
     public boolean moveUp() {
