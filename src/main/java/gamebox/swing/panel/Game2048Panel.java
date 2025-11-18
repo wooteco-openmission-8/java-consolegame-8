@@ -6,20 +6,20 @@ import gamebox.game_2048.entity.GameStatus;
 import gamebox.swing.components.Grid;
 import gamebox.swing.components.RoundedButton;
 import gamebox.swing.components.TilePanel;
-import gamebox.swing.listener.Game2048KeyListener;
 import gamebox.swing.listener.GameListener;
 import gamebox.swing.swing_util.SwingUtils;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Game2048Panel extends JPanel {
     private static final String RESET_BUTTON_NAME = "Reset";
     private static final String RESET_MESSAGE = "게임을 초기화하시겠습니까?";
     private static final String YES = "확인";
     private static final String WIN_MESSAGE = "You WIN!";
-    private static final String GAME_OVER_MESSAGE = "You WIN!";
+    private static final String GAME_OVER_MESSAGE = "Game Over!";
     private static final int GRID_SIZE = 4;
 
     private final JPanel resetPanel = new JPanel();
@@ -28,6 +28,7 @@ public class Game2048Panel extends JPanel {
     private TilePanel[][] tilePanels;
     private final Game2048Controller controller;
 
+    private boolean isProcessing = false;
     /**
      * Game2048Panel(BorderLayout) -> resetPanel(NORTH) + gamePanel(CENTER)
      * gamePanel(GridLayout) -> tilePanels(Grid)
@@ -41,10 +42,14 @@ public class Game2048Panel extends JPanel {
         setResetPanel();
         setGamePanel();
 
-        add(resetPanel, BorderLayout.NORTH);
-        add(gamePanel, BorderLayout.CENTER);
+        JPanel wrapper = new JPanel(new GridBagLayout());
+        wrapper.setBackground(Color.WHITE);
+        wrapper.add(gamePanel);
 
-        controller.start();  // Service 초기화
+        add(resetPanel, BorderLayout.NORTH);
+        add(wrapper, BorderLayout.CENTER);
+
+        controller.start();
         updateBoard();
     }
 
@@ -72,7 +77,8 @@ public class Game2048Panel extends JPanel {
 
     private void setGamePanel() {
         gamePanel = Grid.createGridPanel(GRID_SIZE, GRID_SIZE);
-        gamePanel.setBackground(Color.WHITE);
+        gamePanel.setBackground(Color.BLACK);
+        gamePanel.setPreferredSize(new Dimension(400, 400));
 
         addKeyListenerToPanel();
 
@@ -83,10 +89,33 @@ public class Game2048Panel extends JPanel {
     }
 
     private void addKeyListenerToPanel() {
-        gamePanel.addKeyListener(new Game2048KeyListener(
-                controller,
-                this::updateBoard
-        ));
+        gamePanel.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (isProcessing) return;
+
+                boolean moved = switch (e.getKeyCode()) {
+                    case KeyEvent.VK_UP -> controller.moveUp();
+                    case KeyEvent.VK_DOWN -> controller.moveDown();
+                    case KeyEvent.VK_LEFT -> controller.moveLeft();
+                    case KeyEvent.VK_RIGHT -> controller.moveRight();
+                    default -> false;
+                };
+
+                if (moved) {
+                    isProcessing = true;
+                    updateBoard();
+                    Timer timer = new Timer(150, evt -> {
+                        Point newTilePos = controller.spawn();
+                        updateBoard();
+                        isProcessing = false;
+                        ((Timer) evt.getSource()).stop();
+                    });
+                    timer.setRepeats(false);
+                    timer.start();
+                }
+            }
+        });
     }
 
     private void updateBoard() {

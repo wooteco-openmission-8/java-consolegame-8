@@ -1,5 +1,6 @@
 package gamebox.game_2048.entity;
 
+import java.awt.Point;
 import java.util.*;
 
 public class Game2048Board {
@@ -14,7 +15,8 @@ public class Game2048Board {
                 board[r][c] = new Tile(EMPTY_TILE);
             }
         }
-        randomSpawn(2);
+        randomSpawn();
+        randomSpawn();
     }
 
     public Tile get(int x, int y) {
@@ -33,9 +35,6 @@ public class Game2048Board {
         this.win = win;
     }
 
-    /**
-     * 열의 0이 아닌 타일들을 필터링
-     */
     public List<Tile> filterColumn(int columnIndex) {
         List<Tile> tiles = new ArrayList<>();
         for (int r = 0; r < board.length; r++) {
@@ -47,9 +46,6 @@ public class Game2048Board {
         return tiles;
     }
 
-    /**
-     * 행의 0이 아닌 타일들을 필터링
-     */
     public List<Tile> filterRow(int rowIndex) {
         List<Tile> tiles = new ArrayList<>();
         for (int c = 0; c < board[0].length; c++) {
@@ -61,42 +57,36 @@ public class Game2048Board {
         return tiles;
     }
 
-    public void randomSpawn(int n) {
-        int spawnCount = 0;
+    public Point randomSpawn() {
+        List<Point> emptyTiles = getEmptyTiles();
 
-        while (spawnCount < n) {
-            if (spawnAtEmptyTile()) {
-                spawnCount++;
-            }
-
-            if (spawnCount < n && isFull()) {
-                break;
-            }
+        if (emptyTiles.isEmpty()) {
+            return null;
         }
-    }
 
-    private boolean spawnAtEmptyTile() {
-        int x = (int) (Math.random() * board.length);
-        int y = (int) (Math.random() * board[0].length);
+        Point selected = emptyTiles.get((int) (Math.random() * emptyTiles.size()));
 
-        if (get(x, y).getNumber() == EMPTY_TILE) {
-            Tile tile = get(x, y);
-            tile.spawn();
-            board[x][y] = tile;
-            return true;
-        }
-        return false;
+        Tile tile = get(selected.x, selected.y);
+        tile.spawn();
+        board[selected.x][selected.y] = tile;
+
+        return selected;
     }
 
     public boolean isFull() {
-        for (int row = 0; row < board.length; row++) {
-            for (int col = 0; col < board[0].length; col++) {
-                if (get(row, col).getNumber() == EMPTY_TILE) {
-                    return false;
+        return getEmptyTiles().isEmpty();
+    }
+
+    private List<Point> getEmptyTiles() {
+        List<Point> emptyTiles = new ArrayList<>();
+        for (int r = 0; r < board.length; r++) {
+            for (int c = 0; c < board[0].length; c++) {
+                if (get(r, c).getNumber() == EMPTY_TILE) {
+                    emptyTiles.add(new Point(r, c));
                 }
             }
         }
-        return true;
+        return emptyTiles;
     }
 
     public boolean canMove() {
@@ -113,8 +103,6 @@ public class Game2048Board {
         }
         return false;
     }
-
-    // 테스트용
     public void loadFrom(int[][] numbers) {
         for (int i = 0; i < numbers.length; i++) {
             for (int j = 0; j < numbers[0].length; j++) {
@@ -122,7 +110,6 @@ public class Game2048Board {
             }
         }
     }
-
     public int[][] snapshotNumbers() {
         int[][] out = new int[board.length][board[0].length];
         for (int i = 0; i < board.length; i++) {

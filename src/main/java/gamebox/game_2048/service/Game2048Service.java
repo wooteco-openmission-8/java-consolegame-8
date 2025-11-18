@@ -5,6 +5,7 @@ import gamebox.game_2048.entity.GameStatus;
 import gamebox.game_2048.entity.Tile;
 import gamebox.game_2048.entity.Game2048Board;
 
+import java.awt.Point;
 import java.util.*;
 
 public class Game2048Service {
@@ -21,21 +22,6 @@ public class Game2048Service {
         return board.get(row, col);
     }
 
-    /**
-     * 이동 (타일 이동 + 타일 생성)
-     */
-    public boolean move(Direction direction) {
-        boolean changed = tileMove(direction);
-        if (changed) {
-            spawn();
-        }
-        return changed;
-    }
-
-
-    /**
-     * 타일 이동
-     */
     public boolean tileMove(Direction direction) {
         return switch (direction) {
             case UP -> moveVertical(false);
@@ -45,17 +31,10 @@ public class Game2048Service {
         };
     }
 
-    /**
-     * 타일 생성
-     */
-    public void spawn() {
-        board.randomSpawn(1);
+    public Point spawn() {
+        return board.randomSpawn();
     }
 
-
-    /**
-     * 수직 이동
-     */
     private boolean moveVertical(boolean reverse) {
         boolean changed = false;
         for (int c = 0; c < BOARD_SIZE; c++) {
@@ -78,9 +57,6 @@ public class Game2048Service {
         return changed;
     }
 
-    /**
-     * 수평 이동
-     */
     private boolean moveHorizontal(boolean reverse) {
         boolean changed = false;
         for (int r = 0; r < BOARD_SIZE; r++) {
@@ -103,9 +79,6 @@ public class Game2048Service {
         return changed;
     }
 
-    /**
-     * 타일 병합
-     */
     private Tile[] merge(List<Tile> tiles) {
         Tile[] result = new Tile[BOARD_SIZE];
         int write = 0;
@@ -125,9 +98,6 @@ public class Game2048Service {
         return result;
     }
 
-    /**
-     * 게임 종료 여부
-     */
     public boolean isGameOver() {
         return board.isFull() && !board.canMove();
     }
@@ -142,16 +112,10 @@ public class Game2048Service {
         return GameStatus.RUNNING;
     }
 
-    /**
-     * 테스트용 - 보드 상태 로드
-     */
     public void loadBoard(int[][] numbers) {
         board.loadFrom(numbers);
     }
 
-    /**
-     * 테스트용 - 보드 상태 스냅샷
-     */
     public int[][] snapshotBoard() {
         return board.snapshotNumbers();
     }
