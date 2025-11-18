@@ -53,7 +53,6 @@ public class GameSamePicPanel extends JPanel {
         PictureRepository repo = PictureRepository.getInstance();
         GameSamePicService service = new GameSamePicService(repo);
         this.controller = new GameSamePicController(service);
-        controller.start();
 
         setLayout(new BorderLayout());
 
@@ -201,7 +200,7 @@ public class GameSamePicPanel extends JPanel {
         if (card.isFaceUp() || card.isMatched()) {
             showCardFront(btn);
         } else {
-            showCardBack(btn, index);
+            showCardBack(btn);
         }
 
         if (card.isMatched()) {
@@ -223,7 +222,7 @@ public class GameSamePicPanel extends JPanel {
         }
     }
 
-    private void showCardBack(ImageButton btn, int index) {
+    private void showCardBack(ImageButton btn) {
         btn.setIcon(null);
         btn.setText(HIDDEN_CARD_TEXT);
         btn.setBackground(Color.LIGHT_GRAY);
