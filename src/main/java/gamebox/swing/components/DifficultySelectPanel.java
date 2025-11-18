@@ -9,26 +9,21 @@ import java.util.function.Consumer;
 
 public class DifficultySelectPanel extends JPanel {
     private static final String FONT = "맑은 고딕";
-    private static final String SELECT_DIFFICULTY = "난이도를 선택하세요";
+    private static final String SELECT_DIFFICULTY = "난이도를 선택하세요.";
     private static final String EASY_BUTTON_TITLE = "쉬움 (4x4)";
     private static final String MEDIUM_BUTTON_TITLE = "보통 (6x6)";
     private static final String HARD_BUTTON_TITLE = "어려움 (8x8)";
-    private static final int TITLE_FONT_SIZE = 24;
-    private static final int ROW_COUNT = 3;
-    private static final int COL_COUNT = 1;
-    private static final int BUTTON_HORIZONTAL_GAP = 20;
-    private static final int BUTTON_VERTICAL_GAP = 20;
-    private static final int VERTICAL_PADDING = 50;
-    private static final int HORIZONTAL_PADDING = 100;
-    private static final int DIFFICULTY_BUTTON_FONT_SIZE = 18;
-    private static final int DIFFICULTY_BUTTON_WIDTH = 200;
-    private static final int DIFFICULTY_BUTTON_HEIGHT = 60;
+    private static final int TITLE_FONT_SIZE = 40;
+    private static final int DIFFICULTY_BUTTON_FONT_SIZE = 48;
+    private static final int DIFFICULTY_BUTTON_WIDTH = 560;
+    private static final int DIFFICULTY_BUTTON_HEIGHT = 134;
 
     private final Consumer<Difficulty> onDifficultySelected;
 
     public DifficultySelectPanel(Consumer<Difficulty> onDifficultySelected) {
         this.onDifficultySelected = onDifficultySelected;
-        setLayout(new BorderLayout());
+        setBackground(Color.white);
+        setLayout(null);
         initializeUI();
     }
 
@@ -38,39 +33,41 @@ public class DifficultySelectPanel extends JPanel {
     }
 
     private void setTitle() {
-        JLabel titleLabel = new JLabel(SELECT_DIFFICULTY, SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel(SELECT_DIFFICULTY);
         titleLabel.setFont(new Font(FONT, Font.BOLD, TITLE_FONT_SIZE));
-        add(titleLabel, BorderLayout.NORTH);
+        titleLabel.setHorizontalAlignment(JLabel.CENTER);
+        titleLabel.setBounds(177, 20, 645, 76);
+        add(titleLabel);
     }
 
     private void setButtonPanel() {
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(
-                ROW_COUNT, COL_COUNT, BUTTON_HORIZONTAL_GAP, BUTTON_VERTICAL_GAP
-        ));
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(
-                VERTICAL_PADDING, HORIZONTAL_PADDING, VERTICAL_PADDING, HORIZONTAL_PADDING
-        ));
+        buttonPanel.setBounds(0, 80, 1000, 500);
+        buttonPanel.setBackground(Color.white);
+        buttonPanel.setLayout(null);
 
         createButtons(buttonPanel);
 
-        add(buttonPanel, BorderLayout.CENTER);
+        add(buttonPanel);
     }
 
     private void createButtons(JPanel buttonPanel) {
-        JButton easyButton = createDifficultyButton(EASY_BUTTON_TITLE, Difficulty.EASY);
-        JButton mediumButton = createDifficultyButton(MEDIUM_BUTTON_TITLE, Difficulty.MEDIUM);
-        JButton hardButton = createDifficultyButton(HARD_BUTTON_TITLE, Difficulty.HARD);
+        RoundedButton easyButton = createDifficultyButton(EASY_BUTTON_TITLE, Difficulty.EASY);
+        RoundedButton mediumButton = createDifficultyButton(MEDIUM_BUTTON_TITLE, Difficulty.MEDIUM);
+        RoundedButton hardButton = createDifficultyButton(HARD_BUTTON_TITLE, Difficulty.HARD);
+
+        easyButton.setBounds(220, 40, 560, 134);
+        mediumButton.setBounds(220, 194, 560, 134);
+        hardButton.setBounds(220, 348, 560, 134);
 
         buttonPanel.add(easyButton);
         buttonPanel.add(mediumButton);
         buttonPanel.add(hardButton);
     }
 
-    private JButton createDifficultyButton(String text, Difficulty difficulty) {
-        JButton button = new JButton(text);
+    private RoundedButton createDifficultyButton(String text, Difficulty difficulty) {
+        RoundedButton button = new RoundedButton(text);
         button.setFont(new Font(FONT, Font.PLAIN, DIFFICULTY_BUTTON_FONT_SIZE));
-        button.setPreferredSize(new Dimension(DIFFICULTY_BUTTON_WIDTH, DIFFICULTY_BUTTON_HEIGHT));
         button.addActionListener(e -> {
             if (onDifficultySelected == null) {
                 throw new IllegalStateException(ErrorType.INVALID_SELECTED_DIFFICULTY.getMessage());
