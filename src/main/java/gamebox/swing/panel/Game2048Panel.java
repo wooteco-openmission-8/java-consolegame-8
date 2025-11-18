@@ -4,6 +4,7 @@ import gamebox.game_2048.controller.Game2048Controller;
 import gamebox.game_2048.entity.Tile;
 import gamebox.game_2048.entity.GameStatus;
 import gamebox.swing.components.Grid;
+import gamebox.swing.components.RoundedButton;
 import gamebox.swing.components.TilePanel;
 import gamebox.swing.listener.Game2048KeyListener;
 import gamebox.swing.listener.GameListener;
@@ -23,7 +24,7 @@ public class Game2048Panel extends JPanel {
 
     private final JPanel resetPanel = new JPanel();
     private JPanel gamePanel;
-    private final JButton resetButton = new JButton(RESET_BUTTON_NAME);
+    private final RoundedButton resetButton = new RoundedButton(RESET_BUTTON_NAME);
     private TilePanel[][] tilePanels;
     private final Game2048Controller controller;
 
