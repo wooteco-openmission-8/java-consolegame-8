@@ -36,7 +36,7 @@ public class DifficultySelectPanel extends JPanel {
         JLabel titleLabel = new JLabel(SELECT_DIFFICULTY);
         titleLabel.setFont(new Font(FONT, Font.BOLD, TITLE_FONT_SIZE));
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
-        titleLabel.setBounds(177, 0, 645, 76);
+        titleLabel.setBounds(177, 20, 645, 76);
         add(titleLabel);
     }
 
@@ -56,9 +56,9 @@ public class DifficultySelectPanel extends JPanel {
         RoundedButton mediumButton = createDifficultyButton(MEDIUM_BUTTON_TITLE, Difficulty.MEDIUM);
         RoundedButton hardButton = createDifficultyButton(HARD_BUTTON_TITLE, Difficulty.HARD);
 
-        easyButton.setBounds(220, 20, 560, 134);
-        mediumButton.setBounds(220, 174, 560, 134);
-        hardButton.setBounds(220, 328, 560, 134);
+        easyButton.setBounds(220, 40, 560, 134);
+        mediumButton.setBounds(220, 194, 560, 134);
+        hardButton.setBounds(220, 348, 560, 134);
 
         buttonPanel.add(easyButton);
         buttonPanel.add(mediumButton);

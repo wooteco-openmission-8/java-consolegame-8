@@ -48,10 +48,10 @@ public class AppListener implements ActionListener {
 
     private void openGameSamePic() {
         backgroundPanel.removeContents();
-        backgroundPanel.setBounds(0, 0, 1000, 150);
+        backgroundPanel.setBounds(0, 0, 1000, 100);
 
         contentPanel.removeAll();
-        contentPanel.setBounds(0, 150, 1000, 650);
+        contentPanel.setBounds(0, 100, 1000, 750);
         contentPanel.add(new GameSamePicPanel());
         SwingUtils.refresh(contentPanel);
         backgroundPanel.showHomeButton(true);
