@@ -1,9 +1,6 @@
 package gamebox.swing.listener;
 
-import gamebox.swing.panel.Game2048Panel;
-import gamebox.swing.panel.GameSamePicPanel;
-import gamebox.swing.panel.BackgroundPanel;
-import gamebox.swing.panel.GameButtonPanel;
+import gamebox.swing.panel.*;
 import gamebox.swing.swing_util.SwingUtils;
 
 import javax.swing.*;
@@ -13,12 +10,14 @@ import java.awt.event.ActionListener;
 public class AppListener implements ActionListener {
     private static final String GAME_2048_BUTTON_NAME = "2048";
     private static final String GAME_SAME_PIC_BUTTON_NAME = "같은 그림 찾기";
-    private static final String HOME_BUTTON_NAME = "홈버튼";
+    private static final String HOME_BUTTON_NAME = "홈으로";
 
+    private final MainPanel mainPanel;
     private final JPanel contentPanel;
     private final BackgroundPanel backgroundPanel; // 추가
 
-    public AppListener(JPanel contentPanel, BackgroundPanel backgroundPanel){
+    public AppListener(MainPanel mainPanel, JPanel contentPanel, BackgroundPanel backgroundPanel){
+        this.mainPanel = mainPanel;
         this.contentPanel = contentPanel;
         this.backgroundPanel = backgroundPanel;
     }
@@ -48,14 +47,24 @@ public class AppListener implements ActionListener {
     }
 
     private void openGameSamePic() {
+        backgroundPanel.removeContents();
+        backgroundPanel.setBounds(0, 0, 1000, 150);
+
         contentPanel.removeAll();
+        contentPanel.setBounds(0, 150, 1000, 650);
         contentPanel.add(new GameSamePicPanel());
+        SwingUtils.refresh(contentPanel);
         backgroundPanel.showHomeButton(true);
     }
 
     private void goBackToHome() {
+        backgroundPanel.setBounds(0, 0, 1000, 350);
+        backgroundPanel.setVisibleContents();
+
         contentPanel.removeAll();
+        contentPanel.setBounds(0, 350, 1000, 450);
         contentPanel.add(new GameButtonPanel());
         backgroundPanel.showHomeButton(false);
+        SwingUtils.refresh(contentPanel);
     }
 }

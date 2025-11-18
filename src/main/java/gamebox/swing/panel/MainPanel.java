@@ -17,7 +17,7 @@ public class MainPanel extends JPanel {
      */
     public MainPanel() {
         setLayout(null);
-        backgroundPanel.setBounds(0, 0, 1000, 400);
+        backgroundPanel.setBounds(0, 0, 1000, 350);
         contentPanel.setBounds(0, 350, 1000, 450);
         addPanels();
         addListeners();
@@ -34,7 +34,7 @@ public class MainPanel extends JPanel {
     }
 
     private void addListeners() {
-        AppListener listener = new AppListener(contentPanel,backgroundPanel);
+        AppListener listener = new AppListener(this, contentPanel,backgroundPanel);
         gameButtonPanel.addGameButtonListener(listener);
         backgroundPanel.addHomeButtonListener(listener);
     }
