@@ -68,8 +68,7 @@ public class Game2048Board {
         Point selected = emptyTiles.get((int) (Math.random() * emptyTiles.size()));
 
         Tile tile = get(selected.x, selected.y);
-        tile.spawn();
-        board[selected.x][selected.y] = tile;
+        board[selected.x][selected.y] = tile.spawn();
 
         return selected;
     }
