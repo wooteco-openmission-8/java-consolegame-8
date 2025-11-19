@@ -5,8 +5,18 @@ import gamebox.swing.swing_util.SwingUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.PaintEvent;
 
 public class MainPanel extends JPanel {
+    private static final int BACKGROUND_POSITION_X = 0;
+    private static final int BACKGROUND_POSITION_Y = 0;
+    private static final int BACKGROUND_WIDTH = 1000;
+    private static final int BACKGROUND_HEIGHT = 350;
+    private static final int CONTENT_PANEL_POSITION_X = 0;
+    private static final int CONTENT_PANEL_POSITION_Y = 350;
+    private static final int CONTENT_PANEL_WIDTH = 1000;
+    private static final int CONTENT_PANEL_HEIGHT = 450;
+
     private final BackgroundPanel backgroundPanel = new BackgroundPanel();
     private final JPanel contentPanel = new JPanel(new BorderLayout());
     private final GameButtonPanel gameButtonPanel = new GameButtonPanel();
@@ -18,8 +28,12 @@ public class MainPanel extends JPanel {
      */
     public MainPanel() {
         setLayout(null);
-        backgroundPanel.setBounds(0, 0, 1000, 350);
-        contentPanel.setBounds(0, 350, 1000, 450);
+        backgroundPanel.setBounds(
+                BACKGROUND_POSITION_X, BACKGROUND_POSITION_Y, BACKGROUND_WIDTH, BACKGROUND_HEIGHT
+        );
+        contentPanel.setBounds(
+                CONTENT_PANEL_POSITION_X, CONTENT_PANEL_POSITION_Y, CONTENT_PANEL_WIDTH, CONTENT_PANEL_HEIGHT
+        );
         addPanels();
         addListeners();
         setInitialContent();
@@ -54,8 +68,8 @@ public class MainPanel extends JPanel {
         headerPanel.set2048Contents();
     }
 
-    public void setSamePicContents() {
-        headerPanel.setSamePicContents();
+    public void setSelectDifficultyContents() {
+        headerPanel.setSelectDifficultyContents();
     }
 
     public void removeHeader() {

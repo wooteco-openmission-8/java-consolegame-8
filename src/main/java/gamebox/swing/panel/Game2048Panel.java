@@ -35,16 +35,18 @@ public class Game2048Panel extends JPanel {
     public Game2048Panel() {
         this.controller = new Game2048Controller();
 
-        setLayout(new BorderLayout());
+        setLayout(null);
         setFocusable(false);
+        setBackground(Color.white);
 
         setGamePanel();
 
         JPanel wrapper = new JPanel(new GridBagLayout());
         wrapper.setBackground(Color.WHITE);
+        wrapper.setBounds(215, 35, 570, 570);
         wrapper.add(gamePanel);
 
-        add(wrapper, BorderLayout.CENTER);
+        add(wrapper);
 
         controller.start(Difficulty.EASY);  // Service 초기화
         updateBoard();
