@@ -65,10 +65,6 @@ public class Game2048Board {
     public Point randomSpawn() {
         List<Point> emptyTiles = getEmptyTiles();
 
-        if (emptyTiles.isEmpty()) {
-            return null;
-        }
-
         Point selected = emptyTiles.get((int) (Math.random() * emptyTiles.size()));
 
         Tile tile = get(selected.x, selected.y);
