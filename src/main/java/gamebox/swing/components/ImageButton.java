@@ -15,7 +15,8 @@ public class ImageButton extends JButton {
     private final Picture picture;
 
     public ImageButton(Picture picture) {
-        this.picture = picture;
+        this.picture = picture;;
+        setOpaque(false);
         initButton();
     }
 

@@ -24,7 +24,6 @@ public class GameSamePicPanel extends JPanel {
     private static final String GAME_SELECT = "SELECT";
     private static final String CARD_GAME = "GAME";
     private static final String GAME_SAME_PIC_TITLE = "Game 같은 그림 찾기";
-    private static final String BACK_BUTTON_NAME = "뒤로가기";
     private static final String GO_BACK_TO_SELECT_DIFFICULTY = "난이도 선택 화면으로 돌아가시겠습니까?\n현재 게임이 초기화됩니다.";
     private static final String YES = "확인";
     private static final String HIDDEN_CARD_TEXT = "?";
@@ -40,6 +39,7 @@ public class GameSamePicPanel extends JPanel {
     private final CardLayout cardLayout;
     private final JPanel topPanel = new JPanel(new BorderLayout());
     private final List<ImageButton> imageButtons = new ArrayList<>();
+    private final HeaderPanel headerPanel;
 
     /**
      * 같은 그림 찾기 -> 난이도 선택(selectPanel) -> 게임 시작(gamePanel)
@@ -49,7 +49,9 @@ public class GameSamePicPanel extends JPanel {
      *                            -> gamePanel
      * gamePanel(BorderLayout) -> topPanel(NORTH) + gridPanel(CENTER)
      */
-    public GameSamePicPanel() {
+    public GameSamePicPanel(HeaderPanel headerPanel) {
+        this.headerPanel = headerPanel;
+
         PictureRepository repo = PictureRepository.getInstance();
         GameSamePicService service = new GameSamePicService(repo);
         this.controller = new GameSamePicController(service);
@@ -71,15 +73,19 @@ public class GameSamePicPanel extends JPanel {
 
     private void startGame(Difficulty difficulty) {
         controller.start(difficulty);
+        headerPanel.setSamePicContents();
+
+
         buildGameScreen();
         cardLayout.show(containerPanel, CARD_GAME);
     }
 
     private void buildGameScreen() {
-        JPanel gamePanel = new JPanel(new BorderLayout());
+        JPanel gamePanel = new JPanel(null);
+        gamePanel.setBackground(Color.white);
+
         imageButtons.clear();
 
-        setTopPanel(gamePanel);
         drawBoard(gamePanel);
 
         containerPanel.removeAll();
@@ -87,40 +93,15 @@ public class GameSamePicPanel extends JPanel {
         SwingUtils.refresh(containerPanel);
     }
 
-    private void setTopPanel(JPanel gamePanel) {
-        setGameName(topPanel);
-        setBackButton(topPanel);
-        gamePanel.add(topPanel, BorderLayout.NORTH);
-    }
-
-    private void setGameName(JPanel topPanel) {
-        JLabel titleLabel = new JLabel(GAME_SAME_PIC_TITLE, SwingConstants.CENTER);
-        topPanel.add(titleLabel, BorderLayout.CENTER);
-    }
-
-    private void setBackButton(JPanel topPanel) {
-        JButton backButton = new JButton(BACK_BUTTON_NAME);
-        backButton.addActionListener(
-                new GameListener(
-                        this,
-                        GO_BACK_TO_SELECT_DIFFICULTY,
-                        YES,
-                        () -> {
-                            showDifficultySelect();
-                            resetPictures();
-                        }
-                )
-        );
-        topPanel.add(backButton, BorderLayout.WEST);
-    }
-
     private void drawBoard(JPanel gamePanel) {
         GameSamePicBoard gameSamePicBoard = controller.getBoard();
         JPanel gridPanel = Grid.createGridPanel(gameSamePicBoard.getRows(), gameSamePicBoard.getCols());
+        gridPanel.setBackground(Color.black);
+        gridPanel.setBounds(20, 30, 946, 600);
 
         createPictureButtons(gameSamePicBoard, gridPanel);
 
-        gamePanel.add(gridPanel, BorderLayout.CENTER);
+        gamePanel.add(gridPanel);
     }
 
     private void createPictureButtons(GameSamePicBoard gameSamePicBoard, JPanel gridPanel) {
@@ -140,7 +121,8 @@ public class GameSamePicPanel extends JPanel {
 
         btn.setPreferredSize(new Dimension(IMAGE_BUTTON_SIZE, IMAGE_BUTTON_SIZE));
         btn.setText(HIDDEN_CARD_TEXT);
-        btn.setBackground(Color.LIGHT_GRAY);
+        btn.setFont(new Font("", Font.BOLD, 50));
+        btn.setBackground(new Color(245, 245, 245));
         btn.setIcon(null);
 
         btn.addActionListener(e -> handleCardClick(index));
@@ -225,7 +207,7 @@ public class GameSamePicPanel extends JPanel {
     private void showCardBack(ImageButton btn) {
         btn.setIcon(null);
         btn.setText(HIDDEN_CARD_TEXT);
-        btn.setBackground(Color.LIGHT_GRAY);
+        btn.setBackground(new Color(245, 245, 245));
     }
 
     private void checkGameOver() {
