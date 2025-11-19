@@ -22,17 +22,15 @@ public class MainPanel extends JPanel {
     private final GameButtonPanel gameButtonPanel = new GameButtonPanel();
     private final HeaderPanel headerPanel = new HeaderPanel();
 
-    /**
-     * MainPanel(BorderLayout) -> backgroundPanel(NORTH) + contentPanel(CENTER)
-     * contentPanel(BorderLayout) -> GameButtonPanel(CENTER)
-     */
     public MainPanel() {
         setLayout(null);
         backgroundPanel.setBounds(
-                BACKGROUND_POSITION_X, BACKGROUND_POSITION_Y, BACKGROUND_WIDTH, BACKGROUND_HEIGHT
+                BACKGROUND_POSITION_X, BACKGROUND_POSITION_Y,
+                BACKGROUND_WIDTH, BACKGROUND_HEIGHT
         );
         contentPanel.setBounds(
-                CONTENT_PANEL_POSITION_X, CONTENT_PANEL_POSITION_Y, CONTENT_PANEL_WIDTH, CONTENT_PANEL_HEIGHT
+                CONTENT_PANEL_POSITION_X, CONTENT_PANEL_POSITION_Y,
+                CONTENT_PANEL_WIDTH, CONTENT_PANEL_HEIGHT
         );
         addPanels();
         addListeners();
