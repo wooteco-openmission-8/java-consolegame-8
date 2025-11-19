@@ -20,7 +20,12 @@ public class Game2048Board {
     }
 
     public Tile get(int x, int y) {
-        return board[x][y];
+        Tile tile = board[x][y];
+        if (tile == null || tile.isEmpty()) {
+            board[x][y] = new Tile(EMPTY_TILE);
+            return board[x][y];
+        }
+        return tile;
     }
 
     public void set(int x, int y, Tile tile) {
@@ -60,15 +65,10 @@ public class Game2048Board {
     public Point randomSpawn() {
         List<Point> emptyTiles = getEmptyTiles();
 
-        if (emptyTiles.isEmpty()) {
-            return null;
-        }
-
         Point selected = emptyTiles.get((int) (Math.random() * emptyTiles.size()));
 
         Tile tile = get(selected.x, selected.y);
-        tile.spawn();
-        board[selected.x][selected.y] = tile;
+        board[selected.x][selected.y] = tile.spawn();
 
         return selected;
     }
