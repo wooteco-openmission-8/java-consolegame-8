@@ -102,17 +102,11 @@ public class Tile {
      * 나머지 10%는 4 생성.
      *
      */
-    public void spawn() {
+    public Tile spawn() {
         if (isEmpty()) {
-            double probability = Math.random();
-
-            this.number = 4;
-            if (probability <= PROBABILITY_OF_SPAWN_2) {
-                this.number = 2;
-            }
-
-            this.merged = false;
+            return new Tile(RandomSpawner.spawn());
         }
+        return this;
     }
 
     /**
