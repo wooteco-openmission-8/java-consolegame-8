@@ -1,13 +1,14 @@
 package gamebox.game_2048.entity;
 
+import gamebox.game_2048.service.RandomSpawner;
+
 import java.awt.Color;
 
 /**
  * 2048 게임의 개별 타일을 나타내는 클래스
  */
 public class Tile {
-    private static final double PROBABILITY_OF_SPAWN_2 = 0.9;
-    private int number;        // 타일의 숫자 값 (0은 빈 칸)
+    private final int number;        // 타일의 숫자 값 (0은 빈 칸)
     private boolean merged;    // 현재 턴에 병합되었는지 여부
 
     /**
@@ -81,17 +82,6 @@ public class Tile {
     }
 
     /**
-     * 타일을 병합 처리 (값을 두 배로 만들고 병합 플래그 설정)
-     *
-     * @return 병합된 값 (점수 계산용)
-     */
-    public int merge() {
-        this.number *= 2;
-        this.merged = true;
-        return this.number;
-    }
-
-    /**
      * 인수의 타일과 자신을 병합한 새로운 타일을 반환
      *
      * @return 병합된 값이 들어간 새로운 타일
@@ -103,20 +93,6 @@ public class Tile {
 
         int newNumber = this.number + other.number;
         return new Tile(newNumber);//현재 타일 반환
-    }
-
-    public void mergeWith(Tile other) {
-        this.number = this.number + other.number;
-    }
-
-    public boolean moveTo(Tile other) {
-        if (other.number == 0 && this.number != 0) {
-            other.number = this.number;
-            this.number = 0;
-            return true;
-        }
-
-        return false;
     }
 
     /**
@@ -137,10 +113,6 @@ public class Tile {
 
             this.merged = false;
         }
-    }
-
-    public void delete(){
-        this.number = 0;
     }
 
     /**
