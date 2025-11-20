@@ -1,6 +1,7 @@
 package gamebox.swing.components;
 
 import gamebox.game_samepic.picture.service.entity.Picture;
+import gamebox.swing.components.constants.ComponentsNumber;
 import gamebox.swing.components.constants.ComponentsString;
 
 import javax.imageio.ImageIO;
@@ -15,7 +16,7 @@ public class ImageButton extends JButton {
     public ImageButton(Picture picture) {
         this.picture = picture;
         initButton();
-        setContentAreaFilled(false);   // 기본 배경 제거
+        setContentAreaFilled(false);
         setFocusPainted(false);
         setBorderPainted(false);
     }
@@ -29,7 +30,7 @@ public class ImageButton extends JButton {
 
         // 배경색
         g2.setColor(getBackground());
-        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30);  // ← 30,30이 둥글기 정도
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), ComponentsNumber.IMAGE_BUTTON_ARC, ComponentsNumber.IMAGE_BUTTON_ARC);
 
         super.paintComponent(g2);
         g2.dispose();
@@ -41,7 +42,7 @@ public class ImageButton extends JButton {
 
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(getForeground());
-        g2.drawRoundRect(0, 0, getWidth(), getHeight(), 30, 30);
+        g2.drawRoundRect(0, 0, getWidth(), getHeight(), ComponentsNumber.IMAGE_BUTTON_ARC, ComponentsNumber.IMAGE_BUTTON_ARC);
 
         g2.dispose();
     }

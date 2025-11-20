@@ -9,7 +9,9 @@ import java.awt.*;
 public class Grid {
 
     public static JPanel createGridPanel(int rows, int cols) {
-        JPanel panel = new JPanel(new GridLayout(rows, cols, rows, cols)); // (행, 열, 가로간격, 세로간격)
+        JPanel panel = new JPanel(new GridLayout(
+                rows, cols, ComponentsNumber.GRID_GAP, ComponentsNumber.GRID_GAP
+        ));
         panel.setBorder(BorderFactory.createEmptyBorder(
                 ComponentsNumber.PADDING_SIZE, ComponentsNumber.PADDING_SIZE,
                 ComponentsNumber.PADDING_SIZE, ComponentsNumber.PADDING_SIZE

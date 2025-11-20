@@ -21,7 +21,7 @@ public class PanelNumber {
     public static final int HEADER_PANEL_WIDTH = 1000;
     public static final int HEADER_PANEL_HEIGHT = 100;
     // homeButton
-    public static final int HOME_BUTTON_FONT_SIZE = 32;;
+    public static final int HOME_BUTTON_FONT_SIZE = 32;
     public static final int HOME_BUTTON_POSITION_X = 739;
     public static final int HOME_BUTTON_POSITION_Y = 30;
     public static final int HOME_BUTTON_WIDTH = 211;
@@ -34,8 +34,8 @@ public class PanelNumber {
     public static final int RESET_BUTTON_HEIGHT = 66;
     // game2048Title
     public static final int GAME_2048_TITLE_FONT_SIZE = 80;
-    public static final int GAME_2048_TITLE_POSITION_X = 331;
-    public static final int GAME_2048_TITLE_POSITION_Y = 20;
+    public static final int GAME_2048_TITLE_POSITION_X = 329;
+    public static final int GAME_2048_TITLE_POSITION_Y = 24;
     public static final int GAME_2048_TITLE_WIDTH = 338;
     public static final int GAME_2048_TITLE_HEIGHT = 76;
     // selectDifficultyButton
@@ -46,8 +46,8 @@ public class PanelNumber {
     public static final int DIFFICULTY_BUTTON_HEIGHT = 66;
     // gameSamePicTitle
     public static final int GAME_SAME_PIC_TITLE_FONT_SIZE = 48;
-    public static final int GAME_SAME_PIC_TITLE_POSITION_X = 331;
-    public static final int GAME_SAME_PIC_TITLE_POSITION_Y = 20;
+    public static final int GAME_SAME_PIC_TITLE_POSITION_X = 320;
+    public static final int GAME_SAME_PIC_TITLE_POSITION_Y = 23;
     public static final int GAME_SAME_PIC_TITLE_WIDTH = 338;
     public static final int GAME_SAME_PIC_TITLE_HEIGHT = 76;
 
@@ -60,7 +60,7 @@ public class PanelNumber {
     public static final int GRID_POSITION_Y = 30;
     public static final int GRID_WIDTH = 946;
     public static final int GRID_HEIGHT = 600;
-    public static final int IMAGE_BUTTON_FONT_SIZE = 50;
+    public static final int IMAGE_BUTTON_FONT_SIZE = 30;
 
     /**
      * GameButtonPanel
