@@ -76,7 +76,7 @@ public class Game2048Panel extends JPanel {
 
     private void delayBoardUpdate() {
         isProcessing = true;
-        updateBoard();
+        drawTiles();
         Timer timer = new Timer(PanelNumber.BOARD_UPDATE_DELAY_MS, evt -> {
             Point newTilePos = controller.spawn();
             updateBoard();
