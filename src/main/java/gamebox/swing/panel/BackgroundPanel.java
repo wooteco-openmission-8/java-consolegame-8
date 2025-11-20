@@ -1,6 +1,8 @@
 package gamebox.swing.panel;
 
 import gamebox.swing.components.RoundedButton;
+import gamebox.swing.panel.constants.PanelNumber;
+import gamebox.swing.panel.constants.PanelString;
 import gamebox.swing.swing_util.SwingUtils;
 
 import java.awt.event.ActionListener;
@@ -10,8 +12,8 @@ import java.awt.*;
 public class BackgroundPanel extends JPanel {
     private ImageIcon logoImage = new ImageIcon(getClass().getResource("/images/logo.png"));
     private final JLabel logo = new JLabel(logoImage);
-    private final JLabel title = new JLabel("GameBox");
-    private final JLabel selectGame = new JLabel("게임을 선택하세요.");
+    private final JLabel title = new JLabel(PanelString.APP_TITLE);
+    private final JLabel selectGame = new JLabel(PanelString.SELECT_GAME_TITLE);
 
     public BackgroundPanel(){
         setBackground(Color.white);
@@ -21,14 +23,33 @@ public class BackgroundPanel extends JPanel {
     }
 
     private void setComponents() {
-        logo.setBounds(27, 10, 193, 60);
+        setLogo();
+        setTitle();
+        setSelectGameTitle();
+    }
 
-        title.setFont(new Font("맑은 고딕", Font.BOLD, 96));
-        title.setBounds(244, 139, 512, 84);
+    private void setLogo() {
+        logo.setBounds(
+                PanelNumber.LOGO_POSITION_X, PanelNumber.LOGO_POSITION_Y,
+                PanelNumber.LOGO_WIDTH, PanelNumber.LOGO_HEIGHT
+        );
+    }
+
+    private void setTitle() {
+        title.setFont(new Font(PanelString.FONT, Font.BOLD, PanelNumber.TITLE_FONT_SIZE));
+        title.setBounds(
+                PanelNumber.TITLE_POSITION_X, PanelNumber.TITLE_POSITION_Y,
+                PanelNumber.TITLE_WIDTH, PanelNumber.TITLE_HEIGHT
+        );
         title.setHorizontalAlignment(JLabel.CENTER);
+    }
 
-        selectGame.setFont(new Font("맑은 고딕", Font.BOLD, 40));
-        selectGame.setBounds(244, 233, 512, 84);
+    private void setSelectGameTitle() {
+        selectGame.setFont(new Font(PanelString.FONT, Font.BOLD, PanelNumber.SELECT_GAME_TITLE_FONT_SIZE));
+        selectGame.setBounds(
+                PanelNumber.SELECT_GAME_TITLE_POSITION_X, PanelNumber.SELECT_GAME_TITLE_POSITION_Y,
+                PanelNumber.SELECT_GAME_TITLE_WIDTH, PanelNumber.SELECT_GAME_TITLE_HEIGHT
+        );
         selectGame.setHorizontalAlignment(JLabel.CENTER);
     }
 
@@ -36,11 +57,5 @@ public class BackgroundPanel extends JPanel {
         add(logo);
         add(title);
         add(selectGame);
-    }
-
-    public void removeContents() {
-        logo.setVisible(false);
-        title.setVisible(false);
-        selectGame.setVisible(false);
     }
 }

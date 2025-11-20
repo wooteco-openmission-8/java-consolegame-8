@@ -8,6 +8,9 @@ import gamebox.swing.components.Grid;
 import gamebox.swing.components.RoundedButton;
 import gamebox.swing.components.TilePanel;
 import gamebox.swing.listener.GameListener;
+import gamebox.swing.listener.constants.ListenerString;
+import gamebox.swing.panel.constants.PanelNumber;
+import gamebox.swing.panel.constants.PanelString;
 import gamebox.swing.swing_util.SwingUtils;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,20 +24,12 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 public class Game2048Panel extends JPanel {
-    private static final String RESET_MESSAGE = "게임을 초기화하시겠습니까?";
-    private static final String YES = "확인";
-    private static final String WIN_MESSAGE = "You WIN!";
-    private static final String GAME_OVER_MESSAGE = "Game Over!";
-    private static final int GRID_SIZE = 4;
-    private final Game2048Controller controller;
     private RoundedButton resetButton;
     private JPanel gamePanel;
     private TilePanel[][] tilePanels;
+    private final Game2048Controller controller;
     private boolean isProcessing = false;
 
-    /**
-     * Game2048Panel(BorderLayout) -> resetPanel(NORTH) + gamePanel(CENTER) gamePanel(GridLayout) -> tilePanels(Grid)
-     */
     public Game2048Panel() {
         this.controller = new Game2048Controller();
 
@@ -43,47 +38,16 @@ public class Game2048Panel extends JPanel {
         setBackground(Color.white);
 
         setGamePanel();
-
-        JPanel wrapper = new JPanel(new GridBagLayout());
-        wrapper.setBackground(Color.WHITE);
-        wrapper.setBounds(215, 35, 570, 570);
-        wrapper.add(gamePanel);
-
-        add(wrapper);
+        setGridWrapper();
 
         controller.start(Difficulty.EASY);  // Service 초기화
         updateBoard();
     }
 
-    public void setResetButton(RoundedButton resetButton) {
-        this.resetButton = resetButton;
-        addResetButtonListener();
-    }
-
-    private void addResetButtonListener() {
-        for (var listener : resetButton.getActionListeners()) {
-            resetButton.removeActionListener(listener);
-        }
-
-        resetButton.setFocusable(false);
-        resetButton.addActionListener(
-                new GameListener(
-                        this,
-                        RESET_MESSAGE,
-                        YES,
-                        () -> {
-                            controller.start(Difficulty.EASY);
-                            updateBoard();
-                            SwingUtilities.invokeLater(() -> gamePanel.requestFocusInWindow());
-                        }
-                )
-        );
-    }
-
     private void setGamePanel() {
-        gamePanel = Grid.createGridPanel(GRID_SIZE, GRID_SIZE);
+        gamePanel = Grid.createGridPanel(PanelNumber.GRID_SIZE, PanelNumber.GRID_SIZE);
         gamePanel.setBackground(Color.BLACK);
-        gamePanel.setPreferredSize(new Dimension(550, 550));
+        gamePanel.setPreferredSize(new Dimension(PanelNumber.GAME_PANEL_WIDTH, PanelNumber.GAME_PANEL_HEIGHT));
 
         addKeyListenerToPanel();
 
@@ -97,9 +61,7 @@ public class Game2048Panel extends JPanel {
         gamePanel.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (isProcessing) {
-                    return;
-                }
+                if (isProcessing) return;
 
                 boolean moved = switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP -> controller.moveUp();
@@ -110,19 +72,57 @@ public class Game2048Panel extends JPanel {
                 };
 
                 if (moved) {
-                    isProcessing = true;
-                    updateBoard();
-                    Timer timer = new Timer(150, evt -> {
-                        Point newTilePos = controller.spawn();
-                        updateBoard();
-                        isProcessing = false;
-                        ((Timer) evt.getSource()).stop();
-                    });
-                    timer.setRepeats(false);
-                    timer.start();
+                    delayBoardUpdate();
                 }
             }
         });
+    }
+
+    private void delayBoardUpdate() {
+        isProcessing = true;
+        drawTiles();
+        Timer timer = new Timer(PanelNumber.BOARD_UPDATE_DELAY_MS, evt -> {
+            Point newTilePos = controller.spawn();
+            updateBoard();
+            isProcessing = false;
+            ((Timer) evt.getSource()).stop();
+        });
+        timer.setRepeats(false);
+        timer.start();
+    }
+
+    private void setGridWrapper() {
+        JPanel wrapper = new JPanel(new GridBagLayout());
+        wrapper.setBackground(Color.WHITE);
+        wrapper.setBounds(
+                PanelNumber.WRAPPER_POSITION_X, PanelNumber.WRAPPER_POSITION_Y,
+                PanelNumber.WRAPPER_WIDTH, PanelNumber.WRAPPER_HEIGHT
+        );
+        wrapper.add(gamePanel);
+        add(wrapper);
+    }
+
+    private void addResetButtonListener() {
+        resetPreviousListener();
+        resetButton.setFocusable(false);
+        resetButton.addActionListener(
+                new GameListener(
+                        this,
+                        ListenerString.RESET_MESSAGE,
+                        ListenerString.CONFIRM_MESSAGE,
+                        () -> {
+                            controller.start(Difficulty.EASY);
+                            updateBoard();
+                            SwingUtilities.invokeLater(() -> gamePanel.requestFocusInWindow());
+                        }
+                )
+        );
+    }
+
+    private void resetPreviousListener() {
+        for (var listener : resetButton.getActionListeners()) {
+            resetButton.removeActionListener(listener);
+        }
     }
 
     private void updateBoard() {
@@ -132,7 +132,7 @@ public class Game2048Panel extends JPanel {
 
     private void drawTiles() {
         gamePanel.removeAll();
-        tilePanels = new TilePanel[GRID_SIZE][GRID_SIZE];
+        tilePanels = new TilePanel[PanelNumber.GRID_SIZE][PanelNumber.GRID_SIZE];
 
         createTile();
 
@@ -140,8 +140,8 @@ public class Game2048Panel extends JPanel {
     }
 
     private void createTile() {
-        for (int r = 0; r < GRID_SIZE; r++) {
-            for (int c = 0; c < GRID_SIZE; c++) {
+        for (int r = 0; r < PanelNumber.GRID_SIZE; r++) {
+            for (int c = 0; c < PanelNumber.GRID_SIZE; c++) {
                 TilePanel tilePanel = new TilePanel();
                 Tile t = controller.getTile(r, c);
 
@@ -156,9 +156,14 @@ public class Game2048Panel extends JPanel {
     private void checkGameStatus() {
         GameStatus status = controller.getGameStatus();
         if (status == GameStatus.WIN) {
-            JOptionPane.showMessageDialog(this, WIN_MESSAGE);
+            JOptionPane.showMessageDialog(this, PanelString.WIN_MESSAGE);
         } else if (status == GameStatus.GAME_OVER) {
-            JOptionPane.showMessageDialog(this, GAME_OVER_MESSAGE);
+            JOptionPane.showMessageDialog(this, PanelString.GAME_OVER_MESSAGE);
         }
+    }
+
+    public void setResetButton(RoundedButton resetButton) {
+        this.resetButton = resetButton;
+        addResetButtonListener();
     }
 }

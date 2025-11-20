@@ -1,6 +1,9 @@
 package gamebox.swing.listener;
 
+import gamebox.swing.listener.constants.ListenerNumber;
+import gamebox.swing.listener.constants.ListenerString;
 import gamebox.swing.panel.*;
+import gamebox.swing.panel.constants.PanelString;
 import gamebox.swing.swing_util.SwingUtils;
 
 import javax.swing.*;
@@ -8,11 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class AppListener implements ActionListener {
-    private static final String GAME_2048_BUTTON_NAME = "2048";
-    private static final String GAME_SAME_PIC_BUTTON_NAME = "같은 그림 찾기";
-    private static final String HOME_BUTTON_NAME = "홈으로";
-    private static final String SELECT_DIFFICULTY_BUTTON_NAME = "난이도 선택";
-
     private final MainPanel mainPanel;
     private final JPanel contentPanel;
     private final BackgroundPanel backgroundPanel; // 추가
@@ -30,23 +28,17 @@ public class AppListener implements ActionListener {
         JButton source = (JButton) e.getSource();
         String selectedButton = source.getText();
 
-        if (selectedButton.equals(GAME_2048_BUTTON_NAME)) {
+        if (selectedButton.equals(PanelString.GAME_2048_TITLE)) {
             openGame2048();
         }
-        if (selectedButton.equals(GAME_SAME_PIC_BUTTON_NAME)) {
+        if (selectedButton.equals(PanelString.GAME_SAME_PIC_TITLE)) {
             openGameSamePic();
         }
-        if (selectedButton.equals(HOME_BUTTON_NAME)) {
+        if (selectedButton.equals(PanelString.HOME_BUTTON_TITLE)) {
             goBackToHome();
         }
-        if (selectedButton.equals(SELECT_DIFFICULTY_BUTTON_NAME)) {
-            GameListener listener = new GameListener(
-                    mainPanel,
-                    "난이도 선택 화면으로 돌아가시겠습니까?\n현재 게임이 초기화됩니다.",
-                    "확인",
-                    this::goBackToSelectDifficulty
-            );
-            listener.actionPerformed(e);
+        if (selectedButton.equals(PanelString.DIFFICULTY_BUTTON_TITLE)) {
+            addListener(e);
         }
 
         SwingUtils.refresh(contentPanel);
@@ -58,7 +50,7 @@ public class AppListener implements ActionListener {
         mainPanel.set2048Contents();
 
         contentPanel.removeAll();
-        contentPanel.setBounds(0, 100, 1000, 750);
+        setGamePanelBounds();
         Game2048Panel game2048Panel = new Game2048Panel();
         game2048Panel.setResetButton(headerPanel.getResetButton());
         contentPanel.add(game2048Panel);
@@ -72,10 +64,17 @@ public class AppListener implements ActionListener {
         mainPanel.setSelectDifficultyContents();
 
         contentPanel.removeAll();
-        contentPanel.setBounds(0, 100, 1000, 750);
+        setGamePanelBounds();
         contentPanel.add(new GameSamePicPanel(headerPanel));
 
         SwingUtils.refresh(mainPanel);
+    }
+
+    private void setGamePanelBounds() {
+        contentPanel.setBounds(
+                ListenerNumber.GAME_PANEL_POSITION_X, ListenerNumber.GAME_PANEL_POSITION_Y,
+                ListenerNumber.GAME_PANEL_WIDTH, ListenerNumber.GAME_PANEL_HEIGHT
+        );
     }
 
     private void goBackToHome() {
@@ -83,9 +82,22 @@ public class AppListener implements ActionListener {
         mainPanel.add(backgroundPanel);
 
         contentPanel.removeAll();
-        contentPanel.setBounds(0, 350, 1000, 450);
+        contentPanel.setBounds(
+                ListenerNumber.GAME_BUTTON_PANEL_POSITION_X, ListenerNumber.GAME_BUTTON_PANEL_POSITION_Y,
+                ListenerNumber.GAME_BUTTON_PANEL_WIDTH, ListenerNumber.GAME_BUTTON_PANEL_HEIGHT
+        );
         contentPanel.add(new GameButtonPanel());
         SwingUtils.refresh(mainPanel);
+    }
+
+    private void addListener(ActionEvent e) {
+        GameListener listener = new GameListener(
+                mainPanel,
+                ListenerString.GO_BACK_TO_SELECT_DIFFICULTY_MESSAGE,
+                ListenerString.CONFIRM_MESSAGE,
+                this::goBackToSelectDifficulty
+        );
+        listener.actionPerformed(e);
     }
 
     private void goBackToSelectDifficulty() {

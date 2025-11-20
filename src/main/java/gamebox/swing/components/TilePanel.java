@@ -1,16 +1,15 @@
 package gamebox.swing.components;
 
+import gamebox.swing.components.constants.ComponentsNumber;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class TilePanel extends JPanel {
-    private static final int TILE_SIZE = 1;
-    private static final int EMPTY_TILE_NUMBER = 0;
-
     private JLabel label;
 
     public TilePanel() {
-        setLayout(new GridLayout(TILE_SIZE, TILE_SIZE));
+        setLayout(new GridLayout(ComponentsNumber.TILE_SIZE, ComponentsNumber.TILE_SIZE));
         setOpaque(false);
         label = new JLabel("", SwingConstants.CENTER);
         label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -32,7 +31,7 @@ public class TilePanel extends JPanel {
 
     public void setTile(int number, Color textColor, Color backgroundColor) {
         label.setText(String.valueOf(number));
-        if (number == EMPTY_TILE_NUMBER) {
+        if (number == ComponentsNumber.EMPTY_TILE_NUMBER) {
             label.setText("");
         }
         label.setForeground(textColor);

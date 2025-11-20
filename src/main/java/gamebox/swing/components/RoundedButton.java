@@ -25,7 +25,7 @@ public class RoundedButton extends JButton {
          else if (getModel().isRollover()) { graphics.setColor(c.brighter()); } 
          else { graphics.setColor(c); }
 
-         graphics.fillRoundRect(0, 0, width, height, 10, 10); 
+         graphics.fillRoundRect(0, 0, width, height, 20, 20);
          FontMetrics fontMetrics = graphics.getFontMetrics(); 
          Rectangle stringBounds = fontMetrics.getStringBounds(this.getText(), graphics).getBounds(); 
          int textX = (width - stringBounds.width) / 2; 

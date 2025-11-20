@@ -73,13 +73,7 @@ public class Game2048Service {
         boolean changed = false;
         for (int c = 0; c < BOARD_SIZE; c++) {
             List<Tile> tiles = board.filterColumn(c);
-            if (reverse) {
-                Collections.reverse(tiles);
-            }
-            Tile[] merged = merge(tiles);
-            if (reverse) {
-                Collections.reverse(Arrays.asList(merged));
-            }
+            Tile[] merged = getTiles(reverse, tiles);
             for (int r = 0; r < BOARD_SIZE; r++) {
                 Tile newTile = (merged[r] != null) ? merged[r] : Tile.Default();
                 if (board.get(r, c).number() != newTile.number()) {
@@ -89,6 +83,19 @@ public class Game2048Service {
             }
         }
         return changed;
+    }
+
+
+
+    private Tile[] getTiles(boolean reverse, List<Tile> tiles) {
+        if (reverse) {
+            Collections.reverse(tiles);
+        }
+        Tile[] merged = merge(tiles);
+        if (reverse) {
+            Collections.reverse(Arrays.asList(merged));
+        }
+        return merged;
     }
 
     /**
@@ -101,13 +108,7 @@ public class Game2048Service {
         boolean changed = false;
         for (int r = 0; r < BOARD_SIZE; r++) {
             List<Tile> tiles = board.filterRow(r);
-            if (reverse) {
-                Collections.reverse(tiles);
-            }
-            Tile[] merged = merge(tiles);
-            if (reverse) {
-                Collections.reverse(Arrays.asList(merged));
-            }
+            Tile[] merged = getTiles(reverse, tiles);
             for (int c = 0; c < BOARD_SIZE; c++) {
                 Tile newTile = (merged[c] != null) ? merged[c] : Tile.Default();
                 if (board.get(r, c).number() != newTile.number()) {
@@ -132,9 +133,7 @@ public class Game2048Service {
             Tile currentTile = tiles.get(read);
             if (read + 1 < tiles.size() && currentTile.number() == tiles.get(read + 1).number()) {
                 Tile merged = currentTile.merge(tiles.get(read + 1));
-                if (merged.number() == WIN_TILE_VALUE) {
-                    board.setWin(true);
-                }
+                checkWin(merged);
                 result[write++] = merged;
                 read++;
                 continue;
@@ -149,6 +148,12 @@ public class Game2048Service {
      *
      * @return 게임이 끝났으면 true
      */
+    private void checkWin(Tile merged) {
+        if (merged.number() == WIN_TILE_VALUE) {
+            board.setWin(true);
+        }
+    }
+
     public boolean isGameOver() {
         return board.isFull() && !board.canMove();
     }
