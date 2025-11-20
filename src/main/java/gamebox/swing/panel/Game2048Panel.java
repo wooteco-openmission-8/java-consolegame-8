@@ -1,9 +1,9 @@
 package gamebox.swing.panel;
 
+import gamebox.common.Difficulty;
 import gamebox.game_2048.controller.Game2048Controller;
-import gamebox.game_2048.entity.Tile;
 import gamebox.game_2048.entity.GameStatus;
-import gamebox.game_samepic.game.entity.Difficulty;
+import gamebox.game_2048.entity.Tile;
 import gamebox.swing.components.Grid;
 import gamebox.swing.components.RoundedButton;
 import gamebox.swing.components.TilePanel;
@@ -12,18 +12,22 @@ import gamebox.swing.listener.constants.ListenerString;
 import gamebox.swing.panel.constants.PanelNumber;
 import gamebox.swing.panel.constants.PanelString;
 import gamebox.swing.swing_util.SwingUtils;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
+import java.awt.Point;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 public class Game2048Panel extends JPanel {
     private RoundedButton resetButton;
     private JPanel gamePanel;
     private TilePanel[][] tilePanels;
     private final Game2048Controller controller;
-
     private boolean isProcessing = false;
 
     public Game2048Panel() {
@@ -141,7 +145,7 @@ public class Game2048Panel extends JPanel {
                 TilePanel tilePanel = new TilePanel();
                 Tile t = controller.getTile(r, c);
 
-                tilePanel.setTile(t.getNumber(), t.getTextColor(), t.getBackgroundColor());
+                tilePanel.setTile(t.number(), t.getTextColor(), t.getBackgroundColor());
 
                 tilePanels[r][c] = tilePanel;
                 gamePanel.add(tilePanel);

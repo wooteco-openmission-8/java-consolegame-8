@@ -1,26 +1,30 @@
 package gamebox.swing.panel;
 
+import gamebox.common.Difficulty;
 import gamebox.game_samepic.game.controller.GameSamePicController;
-import gamebox.game_samepic.game.entity.GameSamePicBoard;
 import gamebox.game_samepic.game.entity.Card;
+import gamebox.game_samepic.game.entity.GameSamePicBoard;
 import gamebox.game_samepic.game.service.GameSamePicService;
 import gamebox.game_samepic.picture.service.entity.Picture;
 import gamebox.game_samepic.picture.service.repository.PictureRepository;
 import gamebox.swing.components.DifficultySelectPanel;
-import gamebox.game_samepic.game.entity.Difficulty;
 import gamebox.swing.components.Grid;
 import gamebox.swing.components.ImageButton;
-import gamebox.swing.listener.GameListener;
 import gamebox.swing.panel.constants.PanelNumber;
 import gamebox.swing.panel.constants.PanelString;
 import gamebox.swing.swing_util.SwingUtils;
-
-import java.util.Optional;
-import javax.swing.*;
-import java.awt.*;
-import java.io.*;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import static gamebox.swing.panel.constants.PanelString.CARD_GAME;
 import static gamebox.swing.panel.constants.PanelString.GAME_SELECT;
@@ -202,15 +206,6 @@ public class GameSamePicPanel extends JPanel {
             JOptionPane.showMessageDialog(
                     this,
                     PanelString.GAME_CLEAR_MESSAGE + controller.getMoves());
-
-            resetPictures();
         }
-    }
-
-    private void resetPictures() {
-        controller.removePictures(imageButtons.stream()
-                .map(i -> i.getClientProperty(PanelString.IMAGE_GROUP_KEY).toString())
-                .findAny().orElse("")
-        );
     }
 }

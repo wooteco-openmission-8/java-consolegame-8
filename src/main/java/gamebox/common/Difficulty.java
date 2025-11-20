@@ -1,4 +1,4 @@
-package gamebox.game_samepic.game.entity;
+package gamebox.common;
 
 public enum Difficulty {
     EASY(4, 4, 128),

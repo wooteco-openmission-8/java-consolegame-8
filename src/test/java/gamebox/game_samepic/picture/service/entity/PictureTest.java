@@ -1,27 +1,28 @@
 package gamebox.game_samepic.picture.service.entity;
 
-import gamebox.util.HashMaker;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-
-import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class PictureTest {
 
     @Test
     @DisplayName("Picture 빌더 테스트")
     void pictureBuilderTest() {
-        String hash = UUID.randomUUID().toString();
+        String id = "test-id";
+        String path = "/path";
+        String title = "title";
+
         Picture picture = new Picture.Builder()
-                .id(HashMaker.make(1, hash))
-                .checkCount(0)
-                .visible(false)
-                .path("/path")
-                .title("title")
+                .id(id)
+                .path(path)
+                .title(title)
                 .build();
+
         assertThat(picture).isInstanceOf(Picture.class);
+        assertThat(picture.getId()).isEqualTo(id);
+        assertThat(picture.getPath()).isEqualTo(path);
+        assertThat(picture.getTitle()).isEqualTo(title);
     }
 }

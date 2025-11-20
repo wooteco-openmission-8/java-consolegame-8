@@ -51,7 +51,6 @@ public class ImageButton extends JButton {
         if (picture != null) {
             putClientProperty(ComponentsString.IMAGE_ID_KEY, picture.getId());
             putClientProperty(ComponentsString.IMAGE_PATH_KEY, picture.getPath());
-            putClientProperty(ComponentsString.IMAGE_GROUP_KEY, picture.getGroup());
             setBorderPainted(false);
             setContentAreaFilled(true);
             setFocusPainted(false);
