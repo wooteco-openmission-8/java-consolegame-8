@@ -20,10 +20,10 @@ public class GameSamePicController implements Game {
     @Override
     public void start(Difficulty difficulty) {
         this.difficulty = difficulty;
-
-        gameSamePicService.initializePictures();
         int rows = difficulty.getRows();
         int cols = difficulty.getCols();
+
+        gameSamePicService.initializePictures();
         gameSamePicService.newGame(rows, cols);
     }
 

@@ -5,6 +5,7 @@ import java.util.*;
 
 public class Game2048Board {
     private static final int EMPTY_TILE = 0;
+    private static final int HEAD = 0;
     private final Tile[][] board;
     private boolean win = false;
 
@@ -53,7 +54,7 @@ public class Game2048Board {
 
     public List<Tile> filterRow(int rowIndex) {
         List<Tile> tiles = new ArrayList<>();
-        for (int c = 0; c < board[0].length; c++) {
+        for (int c = 0; c < board[HEAD].length; c++) {
             Tile tile = get(rowIndex, c);
             if (tile.getNumber() > EMPTY_TILE) {
                 tiles.add(tile);
@@ -80,7 +81,7 @@ public class Game2048Board {
     private List<Point> getEmptyTiles() {
         List<Point> emptyTiles = new ArrayList<>();
         for (int r = 0; r < board.length; r++) {
-            for (int c = 0; c < board[0].length; c++) {
+            for (int c = 0; c < board[HEAD].length; c++) {
                 if (get(r, c).getNumber() == EMPTY_TILE) {
                     emptyTiles.add(new Point(r, c));
                 }
@@ -91,29 +92,41 @@ public class Game2048Board {
 
     public boolean canMove() {
         for (int r = 0; r < board.length; r++) {
-            for (int c = 0; c < board[0].length; c++) {
-                Tile current = get(r, c);
-                if (c + 1 < board[0].length && current.getNumber() == get(r, c + 1).getNumber()) {
-                    return true;
-                }
-                if (r + 1 < board.length && current.getNumber() == get(r + 1, c).getNumber()) {
-                    return true;
-                }
+            if (checkColumn(r)) {
+                return true;
             }
         }
         return false;
     }
+
+    private boolean checkColumn(int r) {
+        for (int c = 0; c < board[HEAD].length; c++) {
+            if (checkTile(r, c)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkTile(int r, int c) {
+        Tile current = get(r, c);
+        if (c + 1 < board[HEAD].length && current.getNumber() == get(r, c + 1).getNumber()) {
+            return true;
+        }
+        return r + 1 < board.length && current.getNumber() == get(r + 1, c).getNumber();
+    }
+
     public void loadFrom(int[][] numbers) {
         for (int i = 0; i < numbers.length; i++) {
-            for (int j = 0; j < numbers[0].length; j++) {
+            for (int j = 0; j < numbers[HEAD].length; j++) {
                 board[i][j] = new Tile(numbers[i][j]);
             }
         }
     }
     public int[][] snapshotNumbers() {
-        int[][] out = new int[board.length][board[0].length];
+        int[][] out = new int[board.length][board[HEAD].length];
         for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
+            for (int j = 0; j < board[HEAD].length; j++) {
                 out[i][j] = get(i, j).getNumber();
             }
         }
