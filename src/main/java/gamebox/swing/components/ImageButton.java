@@ -1,6 +1,8 @@
 package gamebox.swing.components;
 
 import gamebox.game_samepic.picture.service.entity.Picture;
+import gamebox.swing.components.constants.ComponentsString;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -8,10 +10,6 @@ import java.io.IOException;
 import java.net.URL;
 
 public class ImageButton extends JButton {
-    private static final String IMAGE_PATH_KEY = "imagePath";
-    private static final String IMAGE_ID_KEY = "imageId";
-    private static final String IMAGE_GROUP_KEY = "imageGroup";
-
     private final Picture picture;
 
     public ImageButton(Picture picture) {
@@ -22,9 +20,9 @@ public class ImageButton extends JButton {
 
     private void initButton() {
         if (picture != null) {
-            putClientProperty(IMAGE_ID_KEY, picture.getId());
-            putClientProperty(IMAGE_PATH_KEY, picture.getPath());
-            putClientProperty(IMAGE_GROUP_KEY, picture.getGroup());
+            putClientProperty(ComponentsString.IMAGE_ID_KEY, picture.getId());
+            putClientProperty(ComponentsString.IMAGE_PATH_KEY, picture.getPath());
+            putClientProperty(ComponentsString.IMAGE_GROUP_KEY, picture.getGroup());
             setBorderPainted(false);
             setContentAreaFilled(true);
             setFocusPainted(false);

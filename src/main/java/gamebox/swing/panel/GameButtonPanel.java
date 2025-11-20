@@ -1,23 +1,16 @@
 package gamebox.swing.panel;
 
 import gamebox.swing.components.RoundedButton;
+import gamebox.swing.panel.constants.PanelNumber;
+import gamebox.swing.panel.constants.PanelString;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class GameButtonPanel extends JPanel{
-    private static final String FONT_TITLE = "맑은 고딕";
-    private static final int FONT_SIZE = 48;
-    private static final int BUTTON_WIDTH = 560;
-    private static final int BUTTON_HEIGHT = 134;
-    private static final int GAME_2048_BUTTON_POSITION_X = 220;
-    private static final int GAME_2048_BUTTON_POSITION_Y = 0;
-    private static final int GAME_SAME_PIC_BUTTON_POSITION_X = 220;
-    private static final int GAME_SAME_PIC_BUTTON_POSITION_Y = 164;
-
-    private static final RoundedButton game2048Button = new RoundedButton("2048");
-    private static final RoundedButton gameSamePicButton = new RoundedButton("같은 그림 찾기");
+    private static final RoundedButton game2048Button = new RoundedButton(PanelString.GAME_2048_TITLE);
+    private static final RoundedButton gameSamePicButton = new RoundedButton(PanelString.GAME_SAME_PIC_TITLE);
 
     public GameButtonPanel(){
         setBackground(Color.white);
@@ -28,16 +21,16 @@ public class GameButtonPanel extends JPanel{
 
     private void setButton() {
         game2048Button.setBounds(
-                GAME_2048_BUTTON_POSITION_X, GAME_2048_BUTTON_POSITION_Y,
-                BUTTON_WIDTH, BUTTON_HEIGHT
+                PanelNumber.GAME_2048_BUTTON_POSITION_X, PanelNumber.GAME_2048_BUTTON_POSITION_Y,
+                PanelNumber.BUTTON_WIDTH, PanelNumber.BUTTON_HEIGHT
         );
         gameSamePicButton.setBounds(
-                GAME_SAME_PIC_BUTTON_POSITION_X, GAME_SAME_PIC_BUTTON_POSITION_Y,
-                BUTTON_WIDTH, BUTTON_HEIGHT
+                PanelNumber.GAME_SAME_PIC_BUTTON_POSITION_X, PanelNumber.GAME_SAME_PIC_BUTTON_POSITION_Y,
+                PanelNumber.BUTTON_WIDTH, PanelNumber.BUTTON_HEIGHT
         );
 
-        game2048Button.setFont(new Font(FONT_TITLE, Font.BOLD, FONT_SIZE));
-        gameSamePicButton.setFont(new Font(FONT_TITLE, Font.BOLD, FONT_SIZE));
+        game2048Button.setFont(new Font(PanelString.FONT, Font.BOLD, PanelNumber.FONT_SIZE));
+        gameSamePicButton.setFont(new Font(PanelString.FONT, Font.BOLD, PanelNumber.FONT_SIZE));
     }
 
     private void addComponents(){
