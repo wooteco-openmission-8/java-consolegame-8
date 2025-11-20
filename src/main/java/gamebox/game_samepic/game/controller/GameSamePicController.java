@@ -35,7 +35,6 @@ public class GameSamePicController implements Game {
         int rows = difficulty.getRows();
         int cols = difficulty.getCols();
 
-        gameSamePicService.initializePictures();
         gameSamePicService.newGame(rows, cols);
     }
 
