@@ -96,9 +96,9 @@ public class PanelNumber {
     // title
     public static final int TITLE_FONT_SIZE = 96;
     public static final int TITLE_POSITION_X = 244;
-    public static final int TITLE_POSITION_Y = 10;
-    public static final int TITLE_WIDTH = 193;
-    public static final int TITLE_HEIGHT = 60;
+    public static final int TITLE_POSITION_Y = 139;
+    public static final int TITLE_WIDTH = 512;
+    public static final int TITLE_HEIGHT = 84;
     // selectGameTitle
     public static final int SELECT_GAME_TITLE_FONT_SIZE = 40;
     public static final int SELECT_GAME_TITLE_POSITION_X = 244;
