@@ -13,9 +13,37 @@ public class ImageButton extends JButton {
     private final Picture picture;
 
     public ImageButton(Picture picture) {
-        this.picture = picture;;
-        setOpaque(false);
+        this.picture = picture;
         initButton();
+        setContentAreaFilled(false);   // 기본 배경 제거
+        setFocusPainted(false);
+        setBorderPainted(false);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g.create();
+
+        // 부드러운 곡선
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        // 배경색
+        g2.setColor(getBackground());
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30);  // ← 30,30이 둥글기 정도
+
+        super.paintComponent(g2);
+        g2.dispose();
+    }
+
+    @Override
+    protected void paintBorder(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g.create();
+
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setColor(getForeground());
+        g2.drawRoundRect(0, 0, getWidth(), getHeight(), 30, 30);
+
+        g2.dispose();
     }
 
     private void initButton() {
