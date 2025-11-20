@@ -1,19 +1,19 @@
 package gamebox.game_samepic.game.service;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.net.URL;
-
-import static org.junit.jupiter.api.Assertions.*;
+import javax.imageio.ImageIO;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class GameSamePicServiceTest {
     @Test
     @DisplayName("이미지 경로 테스트")
     void imagePathTest() {
-        String path = "images/find_same/strawberry.png";
+        String path = "images/find_same/fullimage.png";
 
         URL url = Thread.currentThread().getContextClassLoader().getResource(path);
 

@@ -1,12 +1,12 @@
 package gamebox.game_2048.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import gamebox.game_2048.entity.Direction;
 import gamebox.game_2048.entity.GameStatus;
 import gamebox.game_2048.entity.Tile;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.*;
 
 class Game2048ServiceTest {
 
@@ -25,7 +25,7 @@ class Game2048ServiceTest {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 Tile tile = service.getTile(i, j);
-                if (tile.getNumber() != 0) {
+                if (tile.number() != 0) {
                     value++;
                 }
             }
@@ -43,7 +43,7 @@ class Game2048ServiceTest {
         for (int r = 0; r < 4; r++) {
             for (int c = 0; c < 4; c++) {
                 Tile tile = service.getTile(r, c);
-                if (tile.getNumber() != 0) {
+                if (tile.number() != 0) {
                     tileCount++;
                 }
             }
