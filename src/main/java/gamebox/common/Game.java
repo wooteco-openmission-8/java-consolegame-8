@@ -1,7 +1,5 @@
 package gamebox.common;
 
-import gamebox.game_samepic.game.entity.Difficulty;
-
 /**
  * 게임 인터페이스
  */

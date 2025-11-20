@@ -1,11 +1,11 @@
 package gamebox.game_2048.controller;
 
+import gamebox.common.Difficulty;
 import gamebox.common.Game;
 import gamebox.game_2048.entity.Direction;
 import gamebox.game_2048.entity.GameStatus;
 import gamebox.game_2048.entity.Tile;
 import gamebox.game_2048.service.Game2048Service;
-import gamebox.game_samepic.game.entity.Difficulty;
 import java.awt.Point;
 
 /**

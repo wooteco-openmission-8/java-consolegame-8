@@ -1,19 +1,24 @@
 package gamebox.swing.panel;
 
+import gamebox.common.Difficulty;
 import gamebox.game_2048.controller.Game2048Controller;
-import gamebox.game_2048.entity.Tile;
 import gamebox.game_2048.entity.GameStatus;
-import gamebox.game_samepic.game.entity.Difficulty;
+import gamebox.game_2048.entity.Tile;
 import gamebox.swing.components.Grid;
 import gamebox.swing.components.RoundedButton;
 import gamebox.swing.components.TilePanel;
 import gamebox.swing.listener.GameListener;
 import gamebox.swing.swing_util.SwingUtils;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
+import java.awt.Point;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 public class Game2048Panel extends JPanel {
     private static final String RESET_MESSAGE = "게임을 초기화하시겠습니까?";
@@ -21,16 +26,14 @@ public class Game2048Panel extends JPanel {
     private static final String WIN_MESSAGE = "You WIN!";
     private static final String GAME_OVER_MESSAGE = "Game Over!";
     private static final int GRID_SIZE = 4;
-
+    private final Game2048Controller controller;
     private RoundedButton resetButton;
     private JPanel gamePanel;
     private TilePanel[][] tilePanels;
-    private final Game2048Controller controller;
-
     private boolean isProcessing = false;
+
     /**
-     * Game2048Panel(BorderLayout) -> resetPanel(NORTH) + gamePanel(CENTER)
-     * gamePanel(GridLayout) -> tilePanels(Grid)
+     * Game2048Panel(BorderLayout) -> resetPanel(NORTH) + gamePanel(CENTER) gamePanel(GridLayout) -> tilePanels(Grid)
      */
     public Game2048Panel() {
         this.controller = new Game2048Controller();
@@ -94,7 +97,9 @@ public class Game2048Panel extends JPanel {
         gamePanel.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (isProcessing) return;
+                if (isProcessing) {
+                    return;
+                }
 
                 boolean moved = switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP -> controller.moveUp();
@@ -140,7 +145,7 @@ public class Game2048Panel extends JPanel {
                 TilePanel tilePanel = new TilePanel();
                 Tile t = controller.getTile(r, c);
 
-                tilePanel.setTile(t.getNumber(), t.getTextColor(), t.getBackgroundColor());
+                tilePanel.setTile(t.number(), t.getTextColor(), t.getBackgroundColor());
 
                 tilePanels[r][c] = tilePanel;
                 gamePanel.add(tilePanel);

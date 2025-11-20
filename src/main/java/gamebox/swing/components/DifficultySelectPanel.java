@@ -1,11 +1,12 @@
 package gamebox.swing.components;
 
-import gamebox.game_samepic.game.entity.Difficulty;
+import gamebox.common.Difficulty;
 import gamebox.util.exceptions.ErrorType;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
 import java.util.function.Consumer;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class DifficultySelectPanel extends JPanel {
     private static final String FONT = "맑은 고딕";
