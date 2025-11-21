@@ -67,11 +67,56 @@
 
 ## ⚡ 실행 방법 (How to run)
 
-// TODO : 실행방법 추가
+GameBox는 Windows와 macOS 환경에서 실행할 수 있는 데스크톱 애플리케이션입니다.
+운영체제별 실행 방법은 아래를 참고해 주세요.
 
-[macOS](https://github.com/wooteco-openmission-8/java-gamebox-8/releases/download/v-1.0.0-macOS/GameBox-1.0.0.dmg)
+### 🪟 Windows 실행 방법
 
-[windows](https://github.com/wooteco-openmission-8/java-gamebox-8/releases/download/v1.0.0-windows/GameBox.zip)
+**다운로드:** [GameBox.zip (Windows)](https://github.com/wooteco-openmission-8/java-gamebox-8/releases/download/v1.0.0-windows/GameBox.zip)
+
+### 1. 압축 해제
+- ZIP 파일 우클릭 → **모두 압축 해제**  
+- 압축 해제 후 폴더 안에 **GameBox.exe**가 포함되어 있어야 합니다.
+
+### 2. 실행
+- `GameBox.exe` 더블클릭으로 실행합니다.
+
+### 3. SmartScreen 경고 발생 시
+처음 실행 시 아래 메시지가 표시될 수 있습니다:
+
+> “Windows는 PC를 보호하기 위해 확인되지 않은 앱의 실행을 차단했습니다.”
+
+해결 방법:
+1. 경고창에서 **추가 정보** 클릭  
+2. **실행** 버튼 클릭
+
+---
+
+### 🍎 macOS 실행 방법
+
+**다운로드:** [GameBox-1.0.0.dmg (macOS)](https://github.com/wooteco-openmission-8/java-gamebox-8/releases/download/v-1.0.0-macOS/GameBox-1.0.0.dmg)
+
+### 1. DMG 파일 열기
+- `GameBox-1.0.0.dmg` 파일을 더블클릭하여 마운트합니다.  
+- Finder 창에서 `GameBox.app`을 확인합니다.
+
+### 2. 앱 이동 (권장)
+- `GameBox.app` → `Applications` 폴더로 드래그하여 이동합니다.
+
+### 3. 보안 경고 발생 시 해결
+처음 실행 시 아래와 같은 메시지가 표시될 수 있습니다:
+
+> “GameBox.app은(는) 확인되지 않은 개발자가 배포했기 때문에 열 수 없습니다.”
+
+해결 방법:
+1. **시스템 설정 → 개인정보 보호 및 보안**으로 이동  
+2. 하단에서 **'열기' 또는 '허용'**을 선택  
+3. 다시 `GameBox.app` 실행
+
+### 4. 실행
+- Applications 폴더 또는 Launchpad에서 GameBox를 실행합니다.
+
+---
 
 ## 👥 협업 방식
 
