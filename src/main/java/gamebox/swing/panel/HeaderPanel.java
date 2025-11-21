@@ -1,5 +1,6 @@
 package gamebox.swing.panel;
 
+import gamebox.swing.components.GameColors;
 import gamebox.swing.components.RoundedButton;
 import gamebox.swing.listener.GameListener;
 import gamebox.swing.panel.constants.PanelNumber;
@@ -22,7 +23,7 @@ public class HeaderPanel extends JPanel {
                 PanelNumber.HEADER_PANEL_POSITION_X, PanelNumber.HEADER_PANEL_POSITION_Y,
                 PanelNumber.HEADER_PANEL_WIDTH, PanelNumber.HEADER_PANEL_HEIGHT
         );
-        setBackground(Color.white);
+        setBackground(GameColors.beige);
         setLayout(null);
         setInitialContents();
         addContents();
@@ -30,6 +31,9 @@ public class HeaderPanel extends JPanel {
 
     private void setInitialContents() {
         homeButton.setFont(new Font(PanelString.FONT, Font.BOLD, PanelNumber.HOME_BUTTON_FONT_SIZE));
+        homeButton.setButtonColors(
+                GameColors.orange, GameColors.brown
+        );
         homeButton.setBounds(
                 PanelNumber.HOME_BUTTON_POSITION_X, PanelNumber.HOME_BUTTON_POSITION_Y,
                 PanelNumber.HOME_BUTTON_WIDTH, PanelNumber.HOME_BUTTON_HEIGHT
@@ -52,6 +56,9 @@ public class HeaderPanel extends JPanel {
 
     private void setResetButton() {
         resetButton.setFont(new Font(PanelString.FONT, Font.BOLD, PanelNumber.RESET_BUTTON_FONT_SIZE));
+        resetButton.setButtonColors(
+                GameColors.orange, GameColors.brown
+        );
         resetButton.setBounds(
                 PanelNumber.RESET_BUTTON_POSITION_X, PanelNumber.RESET_BUTTON_POSITION_Y,
                 PanelNumber.RESET_BUTTON_WIDTH, PanelNumber.RESET_BUTTON_HEIGHT
@@ -62,6 +69,7 @@ public class HeaderPanel extends JPanel {
 
     private void setGame2048Title() {
         game2048Title.setFont(new Font(PanelString.FONT, Font.BOLD, PanelNumber.GAME_2048_TITLE_FONT_SIZE));
+        game2048Title.setForeground(GameColors.brown);
         game2048Title.setBounds(
                 PanelNumber.GAME_2048_TITLE_POSITION_X, PanelNumber.GAME_2048_TITLE_POSITION_Y,
                 PanelNumber.GAME_2048_TITLE_WIDTH, PanelNumber.GAME_2048_TITLE_HEIGHT
@@ -72,6 +80,9 @@ public class HeaderPanel extends JPanel {
 
     private void setDifficultyButton() {
         selectDifficultyButton.setFont(new Font(PanelString.FONT, Font.BOLD, PanelNumber.DIFFICULTY_BUTTON_FONT_SIZE));
+        selectDifficultyButton.setButtonColors(
+                GameColors.orange, GameColors.brown
+        );
         selectDifficultyButton.setBounds(
                 PanelNumber.DIFFICULTY_BUTTON_POSITION_X, PanelNumber.DIFFICULTY_BUTTON_POSITION_Y,
                 PanelNumber.DIFFICULTY_BUTTON_WIDTH, PanelNumber.DIFFICULTY_BUTTON_HEIGHT
@@ -82,6 +93,7 @@ public class HeaderPanel extends JPanel {
 
     private void setGameSamePicTitle() {
         gameSamePicTitle.setFont(new Font(PanelString.FONT, Font.BOLD, PanelNumber.GAME_SAME_PIC_TITLE_FONT_SIZE));
+        gameSamePicTitle.setForeground(GameColors.brown);
         gameSamePicTitle.setBounds(
                 PanelNumber.GAME_SAME_PIC_TITLE_POSITION_X, PanelNumber.GAME_SAME_PIC_TITLE_POSITION_Y,
                 PanelNumber.GAME_SAME_PIC_TITLE_WIDTH, PanelNumber.GAME_SAME_PIC_TITLE_HEIGHT

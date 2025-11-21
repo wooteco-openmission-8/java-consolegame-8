@@ -17,7 +17,7 @@ public class DifficultySelectPanel extends JPanel {
 
     public DifficultySelectPanel(Consumer<Difficulty> onDifficultySelected) {
         this.onDifficultySelected = onDifficultySelected;
-        setBackground(Color.white);
+        setBackground(GameColors.beige);
         setLayout(null);
         initializeUI();
     }
@@ -44,7 +44,7 @@ public class DifficultySelectPanel extends JPanel {
                 ComponentsNumber.BUTTON_PANEL_POSITION_X, ComponentsNumber.BUTTON_PANEL_POSITION_Y,
                 ComponentsNumber.BUTTON_PANEL_WIDTH, ComponentsNumber.BUTTON_PANEL_HEIGHT
         );
-        buttonPanel.setBackground(Color.white);
+        buttonPanel.setBackground(GameColors.beige);
         buttonPanel.setLayout(null);
 
         createButtons(buttonPanel);

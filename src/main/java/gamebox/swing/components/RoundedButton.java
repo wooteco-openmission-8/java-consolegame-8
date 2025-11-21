@@ -4,36 +4,50 @@ import javax.swing.*;
 import java.awt.*;
 
 public class RoundedButton extends JButton {
-      public RoundedButton() { super(); decorate(); } 
-      public RoundedButton(String text) { super(text); decorate(); }
-      public RoundedButton(Action action) { super(action); decorate(); }
-      public RoundedButton(Icon icon) { super(icon); decorate(); }
-      public RoundedButton(String text, Icon icon) { super(text, icon); decorate(); }
-      protected void decorate() { setBorderPainted(false); setOpaque(false); }
+    private Color bgColor = GameColors.brown;      // 기본 배경색
+    private Color textColor = GameColors.beige; // 기본 글자색
 
-      @Override 
-      protected void paintComponent(Graphics g) {
-         Color c=new Color(0,0,0); //배경색 결정
-         Color o=new Color(255, 255, 255); //글자색 결정
+    public RoundedButton(String text) { super(text); decorate(); }
 
-         int width = getWidth(); 
-         int height = getHeight(); 
-         Graphics2D graphics = (Graphics2D) g; 
-         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    public void setButtonColors(Color bg, Color text) {
+        this.bgColor = bg;
+        this.textColor = text;
+        repaint();
+    }
 
-         if (getModel().isArmed()) { graphics.setColor(c.darker()); } 
-         else if (getModel().isRollover()) { graphics.setColor(c.brighter()); } 
-         else { graphics.setColor(c); }
+    protected void decorate() {
+        setBorderPainted(false);
+        setOpaque(false);
+    }
 
-         graphics.fillRoundRect(0, 0, width, height, 20, 20);
-         FontMetrics fontMetrics = graphics.getFontMetrics(); 
-         Rectangle stringBounds = fontMetrics.getStringBounds(this.getText(), graphics).getBounds(); 
-         int textX = (width - stringBounds.width) / 2; 
-         int textY = (height - stringBounds.height) / 2 + fontMetrics.getAscent(); 
-         graphics.setColor(o); 
-         graphics.setFont(getFont()); 
-         graphics.drawString(getText(), textX, textY); 
-         graphics.dispose(); 
-         super.paintComponent(g); 
-         }
-      }
+    @Override
+    protected void paintComponent(Graphics g) {
+
+        Graphics2D graphics = (Graphics2D) g;
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        int width = getWidth();
+        int height = getHeight();
+
+        // 상태에 따라 밝기 변화
+        Color colorToUse = bgColor;
+        if (getModel().isArmed()) colorToUse = bgColor.darker();
+        else if (getModel().isRollover()) colorToUse = bgColor.brighter();
+
+        graphics.setColor(colorToUse);
+        graphics.fillRoundRect(0, 0, width, height, 20, 20);
+
+        // 글자
+        graphics.setFont(getFont());
+        graphics.setColor(textColor);
+
+        FontMetrics fm = graphics.getFontMetrics();
+        int textX = (width - fm.stringWidth(getText())) / 2;
+        int textY = (height - fm.getHeight()) / 2 + fm.getAscent();
+
+        graphics.drawString(getText(), textX, textY);
+
+        graphics.dispose();
+        super.paintComponent(g);
+    }
+}
