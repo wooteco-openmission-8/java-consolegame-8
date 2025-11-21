@@ -4,6 +4,7 @@ import gamebox.common.Difficulty;
 import gamebox.game_2048.controller.Game2048Controller;
 import gamebox.game_2048.entity.GameStatus;
 import gamebox.game_2048.entity.Tile;
+import gamebox.swing.components.GameColors;
 import gamebox.swing.components.Grid;
 import gamebox.swing.components.RoundedButton;
 import gamebox.swing.components.TilePanel;
@@ -35,7 +36,7 @@ public class Game2048Panel extends JPanel {
 
         setLayout(null);
         setFocusable(false);
-        setBackground(Color.white);
+        setBackground(GameColors.beige);
 
         setGamePanel();
         setGridWrapper();
@@ -46,7 +47,7 @@ public class Game2048Panel extends JPanel {
 
     private void setGamePanel() {
         gamePanel = Grid.createGridPanel(PanelNumber.GRID_SIZE, PanelNumber.GRID_SIZE);
-        gamePanel.setBackground(Color.BLACK);
+        gamePanel.setBackground(GameColors.light_brown);
         gamePanel.setPreferredSize(new Dimension(PanelNumber.GAME_PANEL_WIDTH, PanelNumber.GAME_PANEL_HEIGHT));
 
         addKeyListenerToPanel();
@@ -93,7 +94,7 @@ public class Game2048Panel extends JPanel {
 
     private void setGridWrapper() {
         JPanel wrapper = new JPanel(new GridBagLayout());
-        wrapper.setBackground(Color.WHITE);
+        wrapper.setBackground(GameColors.beige);
         wrapper.setBounds(
                 PanelNumber.WRAPPER_POSITION_X, PanelNumber.WRAPPER_POSITION_Y,
                 PanelNumber.WRAPPER_WIDTH, PanelNumber.WRAPPER_HEIGHT

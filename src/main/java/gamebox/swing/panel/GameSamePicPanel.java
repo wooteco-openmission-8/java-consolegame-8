@@ -8,6 +8,7 @@ import gamebox.game_samepic.game.service.GameSamePicService;
 import gamebox.game_samepic.picture.service.entity.Picture;
 import gamebox.game_samepic.picture.service.repository.PictureRepository;
 import gamebox.swing.components.DifficultySelectPanel;
+import gamebox.swing.components.GameColors;
 import gamebox.swing.components.Grid;
 import gamebox.swing.components.ImageButton;
 import gamebox.swing.panel.constants.PanelNumber;
@@ -30,8 +31,6 @@ import static gamebox.swing.panel.constants.PanelString.CARD_GAME;
 import static gamebox.swing.panel.constants.PanelString.GAME_SELECT;
 
 public class GameSamePicPanel extends JPanel {
-    private final Color defaultColor = new Color(245, 245, 245);
-
     private final GameSamePicController controller;
     private final JPanel containerPanel;
     private final CardLayout cardLayout;
@@ -70,7 +69,7 @@ public class GameSamePicPanel extends JPanel {
         imageButtons.clear();
 
         JPanel gamePanel = new JPanel(null);
-        gamePanel.setBackground(Color.white);
+        gamePanel.setBackground(GameColors.beige);
 
         drawBoard(gamePanel);
 
@@ -84,7 +83,7 @@ public class GameSamePicPanel extends JPanel {
         GameSamePicBoard gameSamePicBoard = controller.getBoard();
 
         JPanel gridPanel = Grid.createGridPanel(gameSamePicBoard.getRows(), gameSamePicBoard.getCols());
-        gridPanel.setBackground(Color.black);
+        gridPanel.setBackground(GameColors.brown);
         gridPanel.setBounds(
                 PanelNumber.GRID_POSITION_X, PanelNumber.GRID_POSITION_Y,
                 PanelNumber.GRID_WIDTH, PanelNumber.GRID_HEIGHT
@@ -113,7 +112,8 @@ public class GameSamePicPanel extends JPanel {
         btn.setPreferredSize(new Dimension(PanelNumber.IMAGE_BUTTON_SIZE, PanelNumber.IMAGE_BUTTON_SIZE));
         btn.setText(PanelString.HIDDEN_CARD_TEXT);
         btn.setFont(new Font(PanelString.FONT, Font.BOLD, PanelNumber.IMAGE_BUTTON_FONT_SIZE));
-        btn.setBackground(defaultColor);
+        btn.setForeground(GameColors.brown);
+        btn.setBackground(GameColors.beige);
         btn.setIcon(null);
 
         btn.addActionListener(e -> handleCardClick(index));
@@ -198,7 +198,8 @@ public class GameSamePicPanel extends JPanel {
     private void showCardBack(ImageButton btn) {
         btn.setIcon(null);
         btn.setText(PanelString.HIDDEN_CARD_TEXT);
-        btn.setBackground(defaultColor);
+        btn.setForeground(GameColors.brown);
+        btn.setBackground(GameColors.beige);
     }
 
     private void checkGameOver() {

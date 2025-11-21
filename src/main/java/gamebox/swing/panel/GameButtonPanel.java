@@ -1,5 +1,6 @@
 package gamebox.swing.panel;
 
+import gamebox.swing.components.GameColors;
 import gamebox.swing.components.RoundedButton;
 import gamebox.swing.panel.constants.PanelNumber;
 import gamebox.swing.panel.constants.PanelString;
@@ -13,7 +14,7 @@ public class GameButtonPanel extends JPanel{
     private static final RoundedButton gameSamePicButton = new RoundedButton(PanelString.GAME_SAME_PIC_TITLE);
 
     public GameButtonPanel(){
-        setBackground(Color.white);
+        setBackground(GameColors.beige);
         setLayout(null);
         setButton();
         addComponents();

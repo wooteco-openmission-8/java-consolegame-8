@@ -91,8 +91,8 @@ public class PanelNumber {
     // logo
     public static final int LOGO_POSITION_X = 27;
     public static final int LOGO_POSITION_Y = 10;
-    public static final int LOGO_WIDTH = 193;
-    public static final int LOGO_HEIGHT = 60;
+    public static final int LOGO_WIDTH = 150;
+    public static final int LOGO_HEIGHT = 150;
     // title
     public static final int TITLE_FONT_SIZE = 96;
     public static final int TITLE_POSITION_X = 244;

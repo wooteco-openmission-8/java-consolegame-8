@@ -1,6 +1,7 @@
 package gamebox.swing.components;
 
 import gamebox.swing.components.constants.ComponentsNumber;
+import gamebox.swing.panel.constants.PanelString;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,7 +36,7 @@ public class TilePanel extends JPanel {
             label.setText("");
         }
         label.setForeground(textColor);
-        label.setFont(new Font("맑은 고딕", Font.BOLD, 50));
+        label.setFont(new Font(PanelString.FONT, Font.BOLD, ComponentsNumber.TILE_LABEL_FONT_SIZE));
         setBackground(backgroundColor);
         repaint();
     }
