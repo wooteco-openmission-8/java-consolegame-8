@@ -4,6 +4,8 @@ import gamebox.game_2048.entity.Direction;
 import gamebox.game_2048.entity.Game2048Board;
 import gamebox.game_2048.entity.GameStatus;
 import gamebox.game_2048.entity.Tile;
+import gamebox.util.exceptions.ErrorType;
+
 import java.awt.Point;
 import java.util.Arrays;
 import java.util.Collections;
@@ -46,6 +48,9 @@ public class Game2048Service {
      * @return 이동이 발생했으면 true
      */
     public boolean tileMove(Direction direction) {
+        if (board.isWin()) {
+            throw new IllegalArgumentException(ErrorType.GAME_ALREADY_OVER.getMessage());
+        }
         return switch (direction) {
             case UP -> moveVertical(false);
             case DOWN -> moveVertical(true);

@@ -9,17 +9,14 @@ import gamebox.swing.components.Grid;
 import gamebox.swing.components.RoundedButton;
 import gamebox.swing.components.TilePanel;
 import gamebox.swing.listener.GameListener;
+import gamebox.swing.listener.GameStatusModalListener;
 import gamebox.swing.listener.constants.ListenerString;
 import gamebox.swing.panel.constants.PanelNumber;
-import gamebox.swing.panel.constants.PanelString;
 import gamebox.swing.swing_util.SwingUtils;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.Point;
+
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
@@ -128,7 +125,9 @@ public class Game2048Panel extends JPanel {
 
     private void updateBoard() {
         drawTiles();
-        checkGameStatus();
+        while (checkGameStatus()) {
+            controller.start(Difficulty.EASY);
+        }
     }
 
     private void drawTiles() {
@@ -154,13 +153,16 @@ public class Game2048Panel extends JPanel {
         }
     }
 
-    private void checkGameStatus() {
+    private boolean checkGameStatus() {
         GameStatus status = controller.getGameStatus();
         if (status == GameStatus.WIN) {
-            JOptionPane.showMessageDialog(this, PanelString.WIN_MESSAGE);
-        } else if (status == GameStatus.GAME_OVER) {
-            JOptionPane.showMessageDialog(this, PanelString.GAME_OVER_MESSAGE);
+            return GameStatusModalListener.showModal(this, "재시작 하시겠습니까?", "⭐⭐⭐클리어⭐⭐⭐");
         }
+
+        if (status == GameStatus.GAME_OVER) {
+            return GameStatusModalListener.showModal(this, "재시작 하시겠습니까?", "Game Over");
+        }
+        return false;
     }
 
     public void setResetButton(RoundedButton resetButton) {
