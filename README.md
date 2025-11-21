@@ -20,20 +20,50 @@
 
 ## 🕹️ 기능 소개
 
-### 1. 메인 화면
+>세부 기능 및 구현 내용 👉 [Swing README](https://github.com/wooteco-openmission-8/java-gamebox-8/tree/feature/swing)
+
+### 📌 메인 화면
 
 ![메인 화면](images/main_screen.png)
-- 세부 기능 및 구현 내용: [Swing README](https://github.com/wooteco-openmission-8/java-gamebox-8/tree/feature/swing)
+> **메인 화면에서 두 가지 게임 중 하나를 선택할 수 있습니다.**
 
-### 2. 2048
+<br>
+
+### 📌 2048 게임 화면
 
 ![2048 게임 화면](images/2048_screen.png)
-- 세부 기능 및 구현 내용: [2048 README](https://github.com/wooteco-openmission-8/java-gamebox-8/tree/feature/2048)
+> **2048 게임을 플레이하는 화면입니다.**
+> 
+> 세부 기능 및 구현 내용 👉 [2048 README](https://github.com/wooteco-openmission-8/java-gamebox-8/tree/feature/2048)
+- 키보드를 사용해 동일한 숫자 타일을 합쳐 더 큰 숫자를 만드는 게임입니다.
+- **새 게임 버튼** - 현재 보드를 초기화하고 새로 시작합니다.
+- **홈으로 버튼** - 메인 화면으로 이동합니다.
 
-### 3. 같은 그림 찾기
+<br>
 
-![같은 그림 찾기 화면](images/samepic_screen.png)
-- 세부 기능 및 구현 내용: [같은그림찾기 README](https://github.com/wooteco-openmission-8/java-gamebox-8/tree/feature/samepic)
+### 📌 같은 그림 찾기
+
+![같은 그림 찾기 화면](images/samepic_difficulty_screen.png)
+> **같은 그림 찾기 세 가지 난이도 중 하나를 선택할 수 있습니다.**
+> 
+> 세부 기능 및 구현 내용 👉 [같은그림찾기 README](https://github.com/wooteco-openmission-8/java-gamebox-8/tree/feature/samepic)
+- 난이도에 따라 카드 개수와 보드 크기가 달라집니다.
+<br>
+<br>
+<p align="center">
+  <img src="images/samepic_easy_screen.png" width="45%" />
+  <img src="images/samepic_medium_screen.png" width="45%" />
+  <img src="images/samepic_hard_screen.png" width="45%" />
+</p>
+
+> **같은 그림 찾기 쉬움/보통/어려움 난이도의 게임 화면입니다.**
+- 클릭하여 뒤집고, 같은 카드 2장을 맞추면 제거됩니다.
+
+<br>
+
+### 🎬 플레이 gif
+
+![GameBox Demo](images/play.gif)
 
 ## ⚡ 실행 방법 (How to run)
 
