@@ -9,6 +9,9 @@ public enum ErrorType {
     INVALID_INDEX("유효하지 않은 카드 인덱스입니다: "),
     NOT_EXIST_PICTURE("Picture를 찾을 수 없습니다. ID: "),
 
+    //2048
+    GAME_ALREADY_OVER("이미 게임이 종료 되었습니다."),
+
     // swing
     INVALID_SELECTED_DIFFICULTY("난이도 선택이 잘못됐습니다.");
 
