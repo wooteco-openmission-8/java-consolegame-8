@@ -127,6 +127,7 @@ public class Game2048Panel extends JPanel {
         drawTiles();
         while (checkGameStatus()) {
             controller.start(Difficulty.EASY);
+            updateBoard();
         }
     }
 
