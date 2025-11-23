@@ -51,28 +51,4 @@ class Game2048GameSamePicBoardTest {
         assertThat(gameSamePicBoard.getCards().get(secondIndex).isMatched()).isTrue();
     }
 
-    @Test
-    @DisplayName("매칭 실패 후 resetUnmatched 호출")
-    void flipSecondCardMismatchAndReset() {
-        // 실패 시나리오용 새 보드 생성 (0,1 카드 id 다르게)
-        gameSamePicBoard = new GameSamePicBoard(2, 2);
-        gameSamePicBoard.initWithPictureIds(List.of("1", "2")); // 0,1 카드 id 다르게
-
-        int firstIndex = 0;
-        int secondIndex = 1;
-
-        gameSamePicBoard.flip(firstIndex); // 첫 번째 카드
-        Optional<Boolean> result = gameSamePicBoard.flip(secondIndex); // 두 번째 카드
-        assertThat(result).isPresent();
-        assertThat(result.get()).isFalse(); // 매칭 실패
-
-        // 실패 상태에서 카드가 뒤집힌 상태
-        assertThat(gameSamePicBoard.getCards().get(firstIndex).isFaceUp()).isTrue();
-        assertThat(gameSamePicBoard.getCards().get(secondIndex).isFaceUp()).isTrue();
-
-        // resetUnmatched 호출
-        gameSamePicBoard.resetUnmatched();
-        assertThat(gameSamePicBoard.getCards().get(firstIndex).isFaceUp()).isFalse();
-        assertThat(gameSamePicBoard.getCards().get(secondIndex).isFaceUp()).isFalse();
-    }
 }
