@@ -94,7 +94,7 @@ GameBox는 Windows와 macOS 환경에서 실행할 수 있는 데스크톱 애�
 
 ### 🍎 macOS 실행 방법
 
-**다운로드:** [GameBox-1.0.0.dmg (macOS)](https://github.com/wooteco-openmission-8/java-gamebox-8/releases/download/v1.0.1-macOS/GameBox-1.0.1.dmg)
+**다운로드:** [GameBox-1.0.1.dmg (macOS)](https://github.com/wooteco-openmission-8/java-gamebox-8/releases/download/v1.0.1-macOS/GameBox-1.0.1.dmg)
 
 ### 1. DMG 파일 열기
 - `GameBox-1.0.0.dmg` 파일을 더블클릭하여 마운트합니다.  
